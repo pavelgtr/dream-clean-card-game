@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Choice Juego de Memoria</title>
+    <link rel="stylesheet" href="style.css">
+     <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>¡Bienvenido al Juego de Memoria Green Choice!</h1>
+    <p>¿Qué estoy haciendo aquí? Estás a punto de embarcarte en un viaje divertido para probar tu memoria y aprender sobre los increíbles productos de limpieza Green Choice y sus beneficios para el medio ambiente. ¡Prepárate para desafiarte a ti mismo y posiblemente ganar premios!</p>
+    
+    <h2>Reglas:</h2>
+    <ul>
+        <li>Empareja tarjetas para aprender sobre los productos Green Choice.</li>
+        <li>Cada nivel aumenta en dificultad: más tarjetas, menos tiempo.</li>
+        <li>¡Gana puntos rápidamente al emparejar tarjetas y sube en la clasificación!</li>
+    </ul>
+    
+    <h2>Para Empezar:</h2>
+    <form id="startForm" onsubmit="event.preventDefault(); submitForm();">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <button type="submit">Continue</button>
+    </form>
+</body>
+</html>
