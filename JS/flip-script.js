@@ -11,6 +11,12 @@
 // and possibly the individual card sizes as well.
 
 
+const soundEffects = {
+  click: new Audio('../sounds/flip.wav'),
+  error: new Audio('../sounds/fail.wav'),
+  win: new Audio('../sounds/cheer.wav')
+};
+
 function submitForm() {
   // TODO: send to a server)
   const email = document.getElementById("email").value;
@@ -133,13 +139,14 @@ function flipCard() {
   // If it is, simply return without doing anything further.
   if (this === flippedCard1) return; // this = the card that was clicked 
 
+   // Play click sound
+   soundEffects.click.play();
+
+   soundEffects.click.currentTime = 0;
+
   // Add the "is-flipped" class to the card that was clicked (`this`),
   // which should trigger any associated CSS to visually flip the card.
   this.classList.add("is-flipped");
-
-  // Play the flip sound
-  document.getElementById("flip-sound").play();
-
 
   // Check if a card has already been flipped during this turn.
   if (!hasFlippedCard) {
@@ -161,7 +168,14 @@ function checkForMatch() {
   let isMatch =
     flippedCard1.querySelector("img").src === flippedCard2.querySelector("img").src;
 
-  isMatch ? disableCards() : unflipCards();
+    if (isMatch) {
+      // Play match sound
+      soundEffects.win.play();
+  
+      disableCards();
+    } else {
+      unflipCards();
+    }
 }
 
 function disableCards() {
@@ -187,6 +201,10 @@ function unflipCards() {
       flippedCard1.classList.remove("is-flipped");
       flippedCard2.classList.remove("is-flipped");
   
+
+      // Play error sound
+    soundEffects.error.play();
+
       // Call the resetBoard function after the two cards have been flipped back.
       // This function likely resets the variables and state of the game board, allowing for further actions.
       // This may include unlocking the game board and clearing references to the currently flipped cards.

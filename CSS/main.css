@@ -42,14 +42,14 @@ h2 {
 }
 
 /* Animation keyframes for the glowing effect */
-@keyframes glow {
+/* @keyframes glow {
     from {
         text-shadow: 0 0 10px var(--light), 0 0 20px var(--secondary);
     }
     to {
         text-shadow: 0 0 20px var(--primary), 0 0 30px var(--complementary-to-primary);
     }
-}
+} */
 
 
 /* Additional styling for your game's container to place the h2 above */
