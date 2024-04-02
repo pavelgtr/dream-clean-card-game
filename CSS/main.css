@@ -1,117 +1,170 @@
 :root {
-    --primary: #5FCFD5;
-    --complementary-to-primary: #CF5F77; /* A soft red-pink */
-    --secondary: #5ED1D6;
-    --complementary-to-secondary: #D65E7A; /* A variation of red-pink */
-    --doncella-grey: #505961; 
-    --complementary-to-grey: #9F5059; /* A warm reddish-grey */
-    --dream-clean-green: #02AFAB; 
-    --complementary-to-green: #AF024F; /* A deep magenta */
-    --light: #f3f3f3; 
-    /* Fonts */
-    --font-body: 'OpenSans', 'sans-serif';
+  --primary: #5fcfd5;
+  --complementary-to-primary: #cf5f77; /* A soft red-pink */
+  --secondary: #5ed1d6;
+  --complementary-to-secondary: #d65e7a; /* A variation of red-pink */
+  --doncella-grey: #505961;
+  --complementary-to-grey: #9f5059; /* A warm reddish-grey */
+  --dream-clean-green: #02afab;
+  --complementary-to-green: #af024f; /* A deep magenta */
+  --light: #f3f3f3;
+  --font-body: "OpenSans", "sans-serif";
 }
 
 body {
-    font-family: var(--font-body);
+  font-family: var(--font-body);
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to bottom left,
+    var(--dream-clean-green),
+    var(--complementary-to-green)
+  );
+}
+
+h2 {
+  font-family: "Open Sans", sans-serif; /* Using the font you defined */
+  font-size: 3rem; /* Adjust size as needed */
+  text-align: center; /* Center the text */
+  color: var(--light); /* Light color for the text */
+  text-transform: uppercase; /* Uppercase letters for a game-like appearance */
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
+  background-image: linear-gradient(
+    45deg,
+    var(--primary),
+    var(--secondary)
+  ); /* Gradient effect */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Apply the gradient to the text */
+  margin: 0 auto 20px; /* Center the heading and add space below */
+  padding-top: 20px; /* Space on top */
+  animation: glow 2s ease-in-out infinite alternate; /* Animation for a glowing effect */
+}
+
+/* Animation keyframes for the glowing effect */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px var(--light), 0 0 20px var(--secondary);
+    }
+    to {
+        text-shadow: 0 0 20px var(--primary), 0 0 30px var(--complementary-to-primary);
+    }
+}
+
+
+/* Additional styling for your game's container to place the h2 above */
+.cards-container {
+    position: relative;
+    padding-top: 70px; /* Space for the h2 */
+}
+
+/* Position your h2 absolute to the .cards-container */
+.cards-container h2 {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%); /* Center it horizontally */
     width: 100%;
-    min-height: 100vh;
 }
 
 .card {
-    margin: 100px auto 0;  /*top center bottom */
-    width: 400px;
-    height: 600px;
+  width: 180px;
+  height: 180px;
 }
 
 .card__inner {
-width: 100%;
-height: 100%;
-transition: transform 1s;
-transform-style: preserve-3d;
-cursor: pointer;
-position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 2s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
 }
 
-.card__inner.is-flipped { /* is-flipped will be applied from JS */
-    transform: rotateY(180deg);
+.card__inner.is-flipped {
+  /* is-flipped will be applied from JS */
+  transform: rotateY(180deg);
 }
 
 .card__face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-   -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    overflow: hidden;
-    border-radius: 16px;
-    box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
 }
 
 .card__face--front {
-    background-image: linear-gradient(to bottom right, var(--primary), var(--dream-clean-green));
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--primary),
+    var(--dream-clean-green)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card__face--front h2 {
-    color: var(--light);
-    font-size: 32px;
-}
-
-.card__face--back  {
-    background-color: var(--light);
-    transform: rotateY(180deg);
+.card__face--back {
+  background-color: var(--light);
+  transform: rotateY(180deg);
 }
 
 .card__content {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .card__header {
-    position: relative;
-    /* padding: 30px 30px 0px; */
-    /* width: 100%; */
-    /* height: 100%; */
+  width: 100%;
+  height: 100%;
 }
 
 .card__header::after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    /* border-radius: 0 0 50% 0; */
-    background-image: linear-gradient(to bottom left, var(--primary) 10%, var(--secondary) 115%);
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image: linear-gradient(
+    to bottom left,
+    var(--primary) 10%,
+    var(--secondary) 115%
+  );
 }
-
 
 .pp {
-    display: block;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto 30px;
-    border: 2px solid var(--light);
-    object-fit: cover;
-}
-
-.card__header h2 {
-    color: var(--light);
-    font: 32px;
-    font-weight: 400;
-    text-transform: uppercase;
-    text-align: center;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto 30px;
+  object-fit: cover;
 }
 
 .card__body {
-    padding: 10px 30px 5px;
-    text-align: center;
-    color: var(--light);
-    font-weight: 100;
-    font-size: small;
+  padding: 10px 30px 5px;
+  text-align: center;
+  color: var(--light);
+  font-weight: 100;
+  font-size: small;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 5 columns */
+  gap: 0;
+  grid-gap: 0; /* No space between cards */
+  padding: 0;
+  max-width: 720px; /* Or however wide you want it */
+  margin: 0 auto; /* Center the grid */
+
+  justify-items: stretch; /* Stretch the items to fill the grid area */
+  align-items: stretch; /* Stretch the items to fill the grid area */
+  width: 100%; /* Set the container to fill the width */
 }

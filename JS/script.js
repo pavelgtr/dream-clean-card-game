@@ -33,10 +33,10 @@ const imagesArray = [
   "../images/g.jpg",
   "../images/h.jpg",
   "../images/h.jpg",
-  // "../images/i.jpg",
-  // "../images/i.jpg",
-  // '../images/j.jpg',
-  // '../images/j.jpg',
+  "../images/i.jpg",
+  "../images/i.jpg",
+  '../images/j.jpg',
+  '../images/j.jpg',
 ];
 
 // Fisher-Yates Shuffle function
