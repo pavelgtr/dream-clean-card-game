@@ -1,0 +1,117 @@
+:root {
+    --primary: #5FCFD5;
+    --complementary-to-primary: #CF5F77; /* A soft red-pink */
+    --secondary: #5ED1D6;
+    --complementary-to-secondary: #D65E7A; /* A variation of red-pink */
+    --doncella-grey: #505961; 
+    --complementary-to-grey: #9F5059; /* A warm reddish-grey */
+    --dream-clean-green: #02AFAB; 
+    --complementary-to-green: #AF024F; /* A deep magenta */
+    --light: #f3f3f3; 
+    /* Fonts */
+    --font-body: 'OpenSans', 'sans-serif';
+}
+
+body {
+    font-family: var(--font-body);
+    width: 100%;
+    min-height: 100vh;
+}
+
+.card {
+    margin: 100px auto 0;  /*top center bottom */
+    width: 400px;
+    height: 600px;
+}
+
+.card__inner {
+width: 100%;
+height: 100%;
+transition: transform 1s;
+transform-style: preserve-3d;
+cursor: pointer;
+position: relative;
+}
+
+.card__inner.is-flipped { /* is-flipped will be applied from JS */
+    transform: rotateY(180deg);
+}
+
+.card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+   -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card__face--front {
+    background-image: linear-gradient(to bottom right, var(--primary), var(--dream-clean-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card__face--front h2 {
+    color: var(--light);
+    font-size: 32px;
+}
+
+.card__face--back  {
+    background-color: var(--light);
+    transform: rotateY(180deg);
+}
+
+.card__content {
+    width: 100%;
+    height: 100%;
+}
+
+.card__header {
+    position: relative;
+    /* padding: 30px 30px 0px; */
+    /* width: 100%; */
+    /* height: 100%; */
+}
+
+.card__header::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    /* border-radius: 0 0 50% 0; */
+    background-image: linear-gradient(to bottom left, var(--primary) 10%, var(--secondary) 115%);
+}
+
+
+.pp {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto 30px;
+    border: 2px solid var(--light);
+    object-fit: cover;
+}
+
+.card__header h2 {
+    color: var(--light);
+    font: 32px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.card__body {
+    padding: 10px 30px 5px;
+    text-align: center;
+    color: var(--light);
+    font-weight: 100;
+    font-size: small;
+}
