@@ -12,21 +12,72 @@
 }
 
 body {
-  font-family: var(--font-body);
-  width: 100%;
+  /* font-family: var(--font-body); */
+  /* width: 100%; */
   min-height: 100vh;
   background-image: linear-gradient(
-    to bottom left,
+    to bottom right,
     var(--dream-clean-green),
-    var(--complementary-to-green)
+    var(--light)
   );
+}
+
+.game-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px; /* Adjust the gap between the sidebar and game board as needed */
+}
+
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the elements in the sidebar */
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#play-button {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+#timer,
+#score {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+#errors {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  /* Add any additional styling you need here */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-wrapper {
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  .game-sidebar {
+      width: 100%;
+      order: -1; /* Sidebar goes above on small screens */
+  }
+  
+  .cards-container {
+      width: 100%;
+  }
 }
 
 h2 {
   font-family: "Open Sans", sans-serif; /* Using the font you defined */
-  font-size: 3rem; /* Adjust size as needed */
+  font-size: 6rem; /* Adjust size as needed */
   text-align: center; /* Center the text */
-  color: var(--light); /* Light color for the text */
+  color: var(--light); 
   text-transform: uppercase; /* Uppercase letters for a game-like appearance */
   text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
   background-image: linear-gradient(
@@ -36,9 +87,14 @@ h2 {
   ); /* Gradient effect */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; /* Apply the gradient to the text */
-  margin: 0 auto 20px; /* Center the heading and add space below */
+  margin: 100px auto 20px; /* Center the heading and add space below */
   padding-top: 20px; /* Space on top */
   animation: glow 2s ease-in-out infinite alternate; /* Animation for a glowing effect */
+}
+
+h3 {
+  color: var(--light);
+  font-size: 40px;
 }
 
 /* Animation keyframes for the glowing effect */
