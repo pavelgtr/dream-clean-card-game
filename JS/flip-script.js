@@ -1,3 +1,20 @@
+function submitForm() {
+  // Example of capturing data - in reality, you'd do more (store, send to a server, etc.)
+  const email = document.getElementById("email").value;
+  const name = document.getElementById("name").value;
+  alert(
+    `¡Gracias por unirte, ${name}! Tu correo ${email} ha sido registrado. ¡Comencemos el juego!`
+  );
+
+  // Clear fields
+  document.getElementById("email").value = "";
+  document.getElementById("name").value = "";
+
+  // Redirect to the next page
+  window.location.href = "HTML/flip-card.html"; // Redirects to the game page
+}
+
+
 const imagesArray = [
   "../images/a.jpg",
   "../images/a.jpg",
@@ -11,14 +28,14 @@ const imagesArray = [
   "../images/e.jpg",
   "../images/f.jpg",
   "../images/f.jpg",
-  "../images/g.jpg",
-  "../images/g.jpg",
-  "../images/h.jpg",
-  "../images/h.jpg",
-  "../images/i.jpg",
-  "../images/i.jpg",
-  "../images/j.jpg",
-  "../images/j.jpg",
+  // "../images/g.jpg",
+  // "../images/g.jpg",
+  // "../images/h.jpg",
+  // "../images/h.jpg",
+  // "../images/i.jpg",
+  // "../images/i.jpg",
+  // "../images/j.jpg",
+  // "../images/j.jpg",
 ];
 
 const soundEffects = {
@@ -33,10 +50,12 @@ let gameBoardLocked = false;
 let timer = null;
 let secondsElapsed = 0;
 let errorCount = 0;
+let scoreCount = 0;
 
 const timerDisplay = document.getElementById("timer");
 const errorDisplay = document.getElementById("errors");
 const playButton = document.getElementById("play-button");
+const scoreDisplay = document.getElementById('score');
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
@@ -85,7 +104,12 @@ function flipCard(event, index) {
 
 function checkForMatch() {
   const isMatch = flippedCard1.querySelector("img").src === flippedCard2.querySelector("img").src;
-  isMatch ? disableCards() : unflipCards();
+  isMatch ? (disableCards(), incrementScore()) : unflipCards();
+}
+
+function incrementScore() {
+  scoreCount++;
+  scoreDisplay.textContent = `Score: ${scoreCount}`;
 }
 
 function disableCards() {
@@ -137,6 +161,26 @@ function formatTime(seconds) {
 function startGame() {
   resetGame();
   startTimer();
+ 
+  
+  // Change the button text to 'Stop'
+  playButton.textContent = 'Stop';
+
+  // Add an event listener for the 'Stop' button functionality
+  playButton.removeEventListener('click', startGame); // Remove the event listener for starting the game
+  playButton.addEventListener('click', stopGame); // Add the event listener for stopping the game
+}
+
+function stopGame() {
+  stopTimer();
+  resetGame();
+
+  // Change the button text back to 'Play'
+  playButton.textContent = 'Play';
+
+  // Change event listeners back for the next round
+  playButton.removeEventListener('click', stopGame); // Remove the event listener for stopping the game
+  playButton.addEventListener('click', startGame); // Add the event listener for starting the game
 }
 
 function resetGame() {
@@ -151,4 +195,5 @@ playButton.addEventListener("click", startGame);
 
 // Initialize the game
 document.addEventListener("DOMContentLoaded", startGame);
+
 
