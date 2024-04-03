@@ -30,7 +30,7 @@ function submitForm() {
   document.getElementById("name").value = "";
 
   // Redirect to the next page
-  window.location.href = "flip-card.html"; // Redirects to the game page
+  window.location.href = "HTML/flip-card.html"; // Redirects to the game page
 }
 
 const imagesArray = [

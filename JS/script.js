@@ -16,28 +16,28 @@ function submitForm() {
 
 //photos array
 
-const imagesArray = [
-  "../images/a.jpg",
-  "../images/a.jpg",
-  "../images/b.jpg",
-  "../images/b.jpg",
-  "../images/c.jpg",
-  "../images/c.jpg",
-  "../images/d.jpg",
-  "../images/d.jpg",
-  "../images/e.jpg",
-  "../images/e.jpg",
-  "../images/f.jpg",
-  "../images/f.jpg",
-  "../images/g.jpg",
-  "../images/g.jpg",
-  "../images/h.jpg",
-  "../images/h.jpg",
-  "../images/i.jpg",
-  "../images/i.jpg",
-  '../images/j.jpg',
-  '../images/j.jpg',
-];
+// const imagesArray = [
+//   "../images/a.jpg",
+//   "../images/a.jpg",
+//   "../images/b.jpg",
+//   "../images/b.jpg",
+//   "../images/c.jpg",
+//   "../images/c.jpg",
+//   "../images/d.jpg",
+//   "../images/d.jpg",
+//   "../images/e.jpg",
+//   "../images/e.jpg",
+//   "../images/f.jpg",
+//   "../images/f.jpg",
+//   "../images/g.jpg",
+//   "../images/g.jpg",
+//   "../images/h.jpg",
+//   "../images/h.jpg",
+//   "../images/i.jpg",
+//   "../images/i.jpg",
+//   '../images/j.jpg',
+//   '../images/j.jpg',
+// ];
 
 // Fisher-Yates Shuffle function
 function shuffle(array) {
