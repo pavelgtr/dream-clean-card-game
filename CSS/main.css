@@ -1,3 +1,68 @@
+
+/* --------------------------------- FONTS DONCELLA --------------------------------- */
+@font-face {
+  font-family: SourceSansPro-Regular;
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Regular.woff")   format("woff");
+}
+
+@font-face {
+  font-family: SourceSansPro-Semibold;
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Semibold.woff")   format("woff");
+}
+
+@font-face {
+  font-family: SourceSansPro-Bold;
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Semibold.woff")   format("woff");
+}
+
+@font-face {
+  font-family: SourceSansPro-Light;
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Light.woff")   format("woff");
+}
+
+
+@font-face {
+  font-family:'OpenSans';
+  src: url('../../fonts/OpenSans/OpenSans-Light.eot');
+  src:
+    url('../../fonts/OpenSans/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/OpenSans/OpenSans-Light.woff') format('woff'),
+    url('../../fonts/OpenSans/OpenSans-Light.ttf') format('truetype'),
+    url('../../fonts/OpenSans/OpenSans-Light.svg#OpenSans-Light') format('svg')
+  ;
+  font-weight:300;
+  font-style:normal;
+}
+
+@font-face {
+  font-family:'OpenSans';
+  src: url('../../fonts/OpenSans/OpenSans-Regular.eot');
+  src:
+    url('../../fonts/OpenSans/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/OpenSans/OpenSans-Regular.woff') format('woff'),
+    url('../../fonts/OpenSans/OpenSans-Regular.ttf') format('truetype'),
+    url('../../fonts/OpenSans/OpenSans-Regular.svg#OpenSans-Regular') format('svg')
+  ;
+  font-weight:normal;
+  font-style:normal;
+}
+
+@font-face {
+  font-family:'Santiago';
+  src: url('../../fonts/Santiago/Santiago.eot');
+  src:
+    url('../../fonts/Santiago/Santiago.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/Santiago/Santiago.woff') format('woff'),
+    url('../../fonts/Santiago/Santiago.ttf') format('truetype'),
+    url('../../fonts/Santiago/Santiago.svg#Santiago') format('svg')
+  ;
+  font-weight:normal;
+  font-style:normal;
+}
+/* --------------------------------- FONTS DONCELLA --------------------------------- */
+
+
+
 :root {
   --primary: #5fcfd5;
   --complementary-to-primary: #cf5f77; /* A soft red-pink */
