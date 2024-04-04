@@ -1,17 +1,50 @@
-function submitForm() {
-  // Example of capturing data - in reality, you'd do more (store, send to a server, etc.)
-  const email = document.getElementById("email").value;
-  const name = document.getElementById("name").value;
-  alert(
-    `¡Gracias por unirte, ${name}! Tu correo ${email} ha sido registrado. ¡Comencemos el juego!`
-  );
+// function submitForm() {
+//   // Example of capturing data - in reality, you'd do more (store, send to a server, etc.)
+//   const email = document.getElementById("email").value;
+//   const name = document.getElementById("name").value;
+//   alert(
+//     `¡Gracias por unirte, ${name}! Tu correo ${email} ha sido registrado. ¡Comencemos el juego!`
+//   );
 
-  // Clear fields
-  document.getElementById("email").value = "";
-  document.getElementById("name").value = "";
+//   // Clear fields
+//   document.getElementById("email").value = "";
+//   document.getElementById("name").value = "";
 
-  // Redirect to the next page
-  window.location.href = "HTML/flip-card.html"; // Redirects to the game page
+//   // Redirect to the next page
+//   window.location.href = "HTML/flip-card.html"; // Redirects to the game page
+// }
+
+
+window.onload = function() {
+  const modal = document.getElementById("myModal");
+  const span = document.getElementsByClassName("close")[0];
+  const form = document.getElementById("signinForm");
+
+  // When the user loads the page, open the modal
+  modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user submits the form, capture the nickname and email, then close the modal
+  form.onsubmit = function(event) {
+    event.preventDefault(); // Prevent form from submitting normally
+    const nickname = document.getElementById("nickname").value;
+    const email = document.getElementById("email").value;
+    
+    // TODO: You can store or use the nickname and email as needed
+
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 }
 
 
