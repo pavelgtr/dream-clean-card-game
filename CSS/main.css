@@ -79,19 +79,26 @@ The Modal (background) */
 
 /* Modal Content */
 .modal-content {
+  position: relative; /* Needed for absolute positioning of children */
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  margin: 25% auto; 
+  padding: 70px;
+  border: 5px solid #dedbdb;
+  width: 30%; /* Could be more or less, depending on screen size */
+  border-radius: 15px;
 }
 
 /* The Close Button */
 .close {
+  position: absolute; /* Position absolutely within the .modal-content */
+  top: 10px; /* Adjust as needed for distance from top */
+  right: 10px; /* Adjust as needed for distance from right */
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
+  cursor: pointer; /* Change the cursor to signify clickable action */
+
 }
 
 .close:hover,
@@ -150,31 +157,37 @@ body {
 
 .game-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  /* border: 3px solid red; */
 }
 
-.game-sidebar {
+.game-status-bar {
     display: flex;
-    flex-direction: column;
     align-items: center; 
     justify-content: space-between;
-    padding: 50px 10px;
-    background: var(--dream-clean-green);
+    background: var(--complementary-to-primary);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: var(--font-body);
-    margin-top: 10%;
     color: var(--light);
-    height: 20vh;
-    margin-left: 40px;
-    margin-right: -100px;
+    margin: 0 auto;
+    min-width: 720px;
 }
 
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 5 columns */
+  gap: 0;
+  grid-gap: 0; /* No space between cards */
+  padding: 0;
+  max-width: 720px; /* Or however wide you want it */
+  margin: 0 auto; /* Center the grid */
 
-.cards-container h2 {
-  
+  justify-items: stretch; /* Stretch the items to fill the grid area */
+  align-items: stretch; /* Stretch the items to fill the grid area */
+  width: 100%; /* Set the container to fill the width */
 }
+
 
 h3 {
   color: var(--light);
@@ -192,26 +205,11 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Slightly softer text shadow */
   margin: 20px auto; /* Balanced space around h2 */
   padding: 10px 0; /* Less padding than h1 for a less dominant appearance */
-  /* No background image or text clipping to keep it simpler */
 }
 
-/* Additional styling for your game's container to place the h2 above */
-.cards-container {
-    position: relative;
-    padding-top: 70px; /* Space for the h2 */
-}
-
-/* Position your h2 absolute to the .cards-container */
-.cards-container h2 {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%); /* Center it horizontally */
-    width: 100%;
-}
 
 .card {
-  width: 180px;
+  width: 180px; 
   height: 180px;
 }
 
@@ -298,18 +296,6 @@ h2 {
   font-size: small;
 }
 
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 5 columns */
-  gap: 0;
-  grid-gap: 0; /* No space between cards */
-  padding: 0;
-  max-width: 720px; /* Or however wide you want it */
-  margin: 0 auto; /* Center the grid */
 
-  justify-items: stretch; /* Stretch the items to fill the grid area */
-  align-items: stretch; /* Stretch the items to fill the grid area */
-  width: 100%; /* Set the container to fill the width */
-}
 
 
