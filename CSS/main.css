@@ -101,6 +101,31 @@ The Modal (background) */
   cursor: pointer;
 }
 
+
+/* ---------------------------------Header Styles --------------------------------- */
+.game-header {
+  background-color: #02afab; /* A nice green color, you can change it to whatever you like */
+  color: #ffffff; /* White text color for contrast */
+  padding: 10px 0; /* Some padding around the text */
+  text-align: center; /* Center the text */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow to lift the header */
+}
+
+.game-header h1 {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif; /* This should match your branding font */
+  font-size: 2em; /* Adjust the size as needed */
+  text-transform: uppercase; /* Optional: Makes all the letters uppercase */
+  letter-spacing: 2px; /* Optional: Increases spacing between letters */
+  padding: 100px;
+}
+
+/* Logo Styles (if you have a logo image) */
+.logo {
+  height: 50px; /* Adjust size as needed */
+  vertical-align: middle; /* Aligns the image vertically in the header */
+}
 :root {
   --primary: #5fcfd5;
   --complementary-to-primary: #cf5f77; /* A soft red-pink */
@@ -156,26 +181,19 @@ h3 {
   font-size: 40px;
 }
 
-h1 {
-  text-align: center;
-  font-family: "Open Sans", sans-serif; /* Using the font you defined */
-  font-size: 6rem; /* Adjust size as needed */
-  text-align: center; /* Center the text */
-  color: var(--light); 
-  text-transform: uppercase; /* Uppercase letters for a game-like appearance */
-  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
-  background-image: linear-gradient(
-    45deg,
-    var(--primary),
-    var(--secondary)
-  ); /* Gradient effect */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; /* Apply the gradient to the text */
-  margin: 100px auto 20px; /* Center the heading and add space below */
-  padding-top: 20px; /* Space on top */
-  animation: glow 2s ease-in-out infinite alternate; /* Animation for a glowing effect */
-}
 
+
+h2 {
+  text-align: center;
+  font-family: "Open Sans", sans-serif; /* Keep the font consistent with h1 */
+  font-size: 3rem; /* Smaller size than h1 for visual hierarchy */
+  color: var(--secondary); /* Use the secondary color for contrast */
+  text-transform: uppercase; /* Maintain uppercase letters */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Slightly softer text shadow */
+  margin: 20px auto; /* Balanced space around h2 */
+  padding: 10px 0; /* Less padding than h1 for a less dominant appearance */
+  /* No background image or text clipping to keep it simpler */
+}
 
 /* Additional styling for your game's container to place the h2 above */
 .cards-container {

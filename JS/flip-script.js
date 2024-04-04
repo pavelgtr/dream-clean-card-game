@@ -1,19 +1,3 @@
-// function submitForm() {
-//   // Example of capturing data - in reality, you'd do more (store, send to a server, etc.)
-//   const email = document.getElementById("email").value;
-//   const name = document.getElementById("name").value;
-//   alert(
-//     `¡Gracias por unirte, ${name}! Tu correo ${email} ha sido registrado. ¡Comencemos el juego!`
-//   );
-
-//   // Clear fields
-//   document.getElementById("email").value = "";
-//   document.getElementById("name").value = "";
-
-//   // Redirect to the next page
-//   window.location.href = "HTML/flip-card.html"; // Redirects to the game page
-// }
-
 
 window.onload = function() {
   const modal = document.getElementById("myModal");
