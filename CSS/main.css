@@ -297,5 +297,51 @@ h2 {
 }
 
 
+/* Scoreboard Styles */
+.scoreboard {
+  max-width: 720px; /* Match the width of your game */
+  margin: 20px auto; /* Center the scoreboard */
+  padding: 20px;
+  background: var(--light); /* Use a light background for the scoreboard */
+  box-shadow: 0px 3px 18px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.scoreboard-title {
+  text-align: center;
+  color: var(--dream-clean-green); /* Theme color for the title */
+  margin-bottom: 10px;
+}
+
+.scoreboard-list {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+}
+
+.scoreboard-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* A subtle line between entries */
+}
+
+.scoreboard-list li:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.scoreboard-list .player-icon {
+  /* Adjust the styling as needed */
+}
+
+.scoreboard-list .player-name {
+  flex-grow: 1; /* Allow the name to fill the space */
+  padding-left: 10px; /* Spacing between icon and name */
+}
+
+.scoreboard-list .player-time {
+  /* Adjust the styling as needed */
+}
 
 
