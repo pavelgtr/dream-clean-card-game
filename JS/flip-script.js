@@ -1,3 +1,10 @@
+ // TODO: Puntos:
+// Bono por rapidez:  +10 si terminas en menos 3 minutos, +20  en menos de 2 minutos, +30 en menos de 1 minuto (analizar los break points de tiempo)
+// Error: take away -2 points, also keep track of errors throughout, don't reset on every round 
+// declare match end after three rounds 
+
+
+
 // <----------------------------------------- INSTRUCTIONS & SIGN-IN MODALS -----------------------------------------> //
 
 window.onload = function () {
@@ -61,6 +68,18 @@ let timer = null;
 let secondsElapsed = 0;
 let errorCount = 0;
 let scoreCount = 0;
+let matchedPairsCount = 0;
+let gameLevel = 1; 
+
+function setPointsPerMatch() {
+  if (gameLevel === 1) {
+    pointsPerMatch = 10;
+  } else if (gameLevel === 2) {
+    pointsPerMatch = 15;
+  } else if (gameLevel === 3) {
+    pointsPerMatch = 20;
+  }
+}
 
 
 const timerDisplay = document.getElementById("timer");
@@ -76,10 +95,7 @@ const soundEffects = {
 
 
 
-
-
-
-const imagesArray = [
+const levelOne = [
  "../images/a.jpg",
  "../images/a-1.jpg",
  "../images/b.jpg",
@@ -90,7 +106,27 @@ const imagesArray = [
  "../images/d-1.jpg",
 ];
 
+const levelTwo = [
+  "../images/levelTwo/a.jpg", 
+  "../images/levelTwo/a-1.jpg",
+  "../images/levelTwo/b.jpg",
+  "../images/levelTwo/b-1.jpg",
+  "../images/levelTwo/c.jpg",
+  "../images/levelTwo/c-1.jpg",
+  "../images/levelTwo/d.jpg",
+  "../images/levelTwo/d-1.jpg",
+ ];
 
+ const levelThree = [
+  "../images/levelThree/a.jpg",
+  "../images/levelThree/a-1.jpg",
+  "../images/levelThree/b.jpg",
+  "../images/levelThree/b-1.jpg",
+  "../images/levelThree/c.jpg",
+  "../images/levelThree/c-1.jpg",
+  "../images/levelThree/d.jpg",
+  "../images/levelThree/d-1.jpg",
+ ];
 
 
 function shuffleArray(array) {
@@ -122,21 +158,16 @@ function createCards(imagesArray) {
 }
 
 
+function flipCard(event) { //deleted index (2nd) parameter, not needed 
 
-
-
-
-function flipCard(event, index) {
  if (gameBoardLocked) return;
  const card = event.currentTarget;
- if (card === flippedCard1) return;
-
+ if (card === flippedCard1) return; // Prevents matching a card with itself by clicking the same card twice
 
  soundEffects.click.play();
  card.classList.add("is-flipped");
 
-
- if (!hasFlippedCard) {
+ if (!hasFlippedCard) { 
    hasFlippedCard = true;
    flippedCard1 = card;
  } else {
@@ -144,6 +175,7 @@ function flipCard(event, index) {
    gameBoardLocked = true;
    checkForMatch();
  }
+
 }
 
 
@@ -154,19 +186,34 @@ function checkForMatch() {
   // Check if the base filenames are the same
  const isMatch = baseName1 === baseName2;
 
-
  if (isMatch) {
    disableCards();
    incrementScore();
+   matchedPairsCount++; // Increment the count of matched pairs
+   checkEndOfRound(); // New function to check if the game should end
  } else {
    unflipCards();
  }
 }
 
+function checkEndOfRound() {
+  // Check if all pairs are matched
+  const totalPairs = 4; // Total number of pairs to be matched for a round
+  if (matchedPairsCount === totalPairs) {
+    setTimeout(() => {
+      alert('Congratulations! You have found all matches in this round!');
+      // Logic to start the next round or reset the game
+      resetGame(); // or startNextRound(); if you have a function to advance the round
+    }, 1000);
+  }
+}
 
 function incrementScore() {
- scoreCount++;
+ scoreCount += pointsPerMatch;
  scoreDisplay.textContent = `Score: ${scoreCount}`;
+ setTimeout(() => {
+  alert(`Mortal! Lograste hacer un match. Tu score ahora es ${scoreCount}`);
+}, 1000);
 }
 
 
@@ -188,18 +235,15 @@ function unflipCards() {
  }, 1500);
 }
 
-
 function resetTurn() {
  [hasFlippedCard, gameBoardLocked] = [false, false];
  [flippedCard1, flippedCard2] = [null, null];
 }
 
-
 function incrementError() {
  errorCount++;
  errorDisplay.textContent = `Errors: ${errorCount}`;
 }
-
 
 function startTimer() {
  timer = setInterval(() => {
@@ -208,21 +252,18 @@ function startTimer() {
  }, 1000);
 }
 
-
 function formatTime(seconds) {
  const mins = Math.floor(seconds / 60);
  const secs = seconds % 60;
  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
 
-
 function startGame() {
  resetGame();
  startTimer();
-
+ setPointsPerMatch(); // Set points per match based on the current game level
 
 }
-
 
 function stopGame() {
  stopTimer();
@@ -231,12 +272,27 @@ function stopGame() {
 
 }
 
-
 function resetGame() {
  stopTimer();
  errorCount = 0;
+ 
  errorDisplay.textContent = "Errors: 0";
- createCards(imagesArray);
+
+ if ((scoreCount >= 40) && (scoreCount < 80)) {
+  gameLevel = 2;
+  createCards(levelTwo);
+  matchedPairsCount = 0;
+} else if (scoreCount >= 80) {
+  gameLevel = 3;
+  createCards(levelThree); // This should be levelThree for the third level
+  matchedPairsCount = 0;
+} else {
+  gameLevel = 1;
+  createCards(levelOne);
+}
+
+ setPointsPerMatch(); // Update points per match based on the new level
+ 
  resetTurn();
 }
 
