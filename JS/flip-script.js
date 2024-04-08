@@ -1,5 +1,3 @@
-
-
 // <----------------------------------------- INSTRUCTIONS & SIGN-IN MODALS -----------------------------------------> //
 
 window.onload = function () {
@@ -39,7 +37,9 @@ window.onload = function () {
       const nickname = document.getElementById("nickname").value;
       const email = document.getElementById("email").value;
 
-      // TODO: Handle the nickname and email (store them, send them to a server, etc.)
+      // Save the user data in localStorage
+      localStorage.setItem("userNickname", nickname);
+      localStorage.setItem("userEmail", email);
 
       signinModal.style.display = "none";
     };
@@ -56,39 +56,73 @@ window.onload = function () {
 };
 
 function displayFinalResults() {
-  console.log('displayFinalResults called')
-  document.getElementById('finalScore').textContent = `Final Score: ${scoreCount}`;
-  document.getElementById('totalErrors').textContent = `Total Errors: ${errorCount}`;
-  document.getElementById('totalTime').textContent = `Total Time: ${formatTime(secondsElapsed)}`;
+  console.log("displayFinalResults called");
 
-  const finalResultsModal = document.getElementById('finalResultsModal');
+  if (finalResultsDisplayed) return; // Prevent multiple calls
+  finalResultsDisplayed = true;
+
+  document.getElementById(
+    "finalScore"
+  ).textContent = `Final Score: ${scoreCount}`;
+  document.getElementById(
+    "totalErrors"
+  ).textContent = `Total Errors: ${errorCount}`;
+  document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
+    secondsElapsed
+  )}`;
+
+  const finalResultsModal = document.getElementById("finalResultsModal");
   finalResultsModal.style.display = "block";
 
   // Adding restart button
-  const restartButton = document.createElement('button');
-  restartButton.textContent = 'Restart Game';
-  restartButton.classList.add('restart-button');
-  restartButton.onclick = function() {
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "Restart Game";
+  restartButton.classList.add("restart-button");
+  restartButton.onclick = function () {
     finalResultsModal.style.display = "none";
     resetGame();
   };
   finalResultsModal.appendChild(restartButton);
 
-  const closeButton = finalResultsModal.querySelector('.close-button');
-  closeButton.onclick = function() {
+  const closeButton = finalResultsModal.querySelector(".close-button");
+  closeButton.onclick = function () {
     finalResultsModal.style.display = "none";
     resetGame();
   };
 
-  window.onclick = function(event) {
+  window.onclick = function (event) {
     if (event.target == finalResultsModal) {
       finalResultsModal.style.display = "none";
       resetGame();
     }
   };
+
+  // Save the final score for the user
+  const finalScore = {
+    name: localStorage.getItem('userNickname') || 'You',
+    time: formatTime(secondsElapsed),
+    scoreCount: scoreCount
+  };
+
+  // Create a new score object for the current user
+  const currentUserScore = {
+    name: localStorage.getItem("userNickname") || "You", // Use 'You' as fallback
+    time: formatTime(secondsElapsed),
+    scoreCount: scoreCount,
+  };
+
+  // Get existing scores from localStorage or initialize an empty array
+  const existingScores = getSavedScores();
+
+  // Add the current user's score to the array of scores
+  existingScores.push(currentUserScore);
+
+  // Save the updated array back to localStorage
+  localStorage.setItem("scores", JSON.stringify(existingScores));
+
+  // Update the scoreboard with the new scores
+  updateScoreboard(existingScores);
 }
-
-
 
 let hasFlippedCard = false;
 let flippedCard1, flippedCard2;
@@ -99,6 +133,8 @@ let errorCount = 0;
 let scoreCount = 0;
 let matchedPairsCount = 0;
 let gameLevel = 1;
+let finalResultsDisplayed = false;
+
 
 const timerDisplay = document.getElementById("timer");
 const errorDisplay = document.getElementById("errors");
@@ -206,6 +242,9 @@ function flipCard(event) {
   const card = event.currentTarget;
   if (card === flippedCard1) return; // Prevents matching a card with itself by clicking the same card twice
 
+  //check if the card has already been matched
+   if (card.classList.contains('matched')) return;
+
   soundEffects.click.play();
   card.classList.add("is-flipped");
 
@@ -265,7 +304,6 @@ function checkEndOfRound() {
   }
 }
 
-
 function incrementScore(speedBonus = 0) {
   scoreCount += pointsPerMatch + speedBonus;
   scoreDisplay.textContent = `Score: ${scoreCount}`;
@@ -275,6 +313,10 @@ function incrementScore(speedBonus = 0) {
 }
 
 function disableCards() {
+   // Add the matched class to both cards
+   flippedCard1.classList.add('matched');
+   flippedCard2.classList.add('matched');
+
   flippedCard1.removeEventListener("click", flipCard);
   flippedCard2.removeEventListener("click", flipCard);
   resetTurn();
@@ -338,29 +380,29 @@ function stopGame() {
 
 function resetGame() {
   stopTimer();
-
+  finalResultsDisplayed = false;
   // This will now correctly check if the current game has finished level 3
   if (gameLevel === 3) {
-      displayFinalResults(); // Show final results
-      // Prepare for a new game
-      gameLevel = 1; // Reset to level one for a new game
-      scoreCount = 0; // Optionally reset score for a new game
-      errorCount = 0; // Optionally reset errors for a new game
-      // No need to create cards or start the timer here as the game has ended
-      // and the player will need to manually start a new game
-      return; // Exit the function to prevent further execution
+    displayFinalResults(); // Show final results
+    // Prepare for a new game
+    gameLevel = 1; // Reset to level one for a new game
+    scoreCount = 0; // Optionally reset score for a new game
+    errorCount = 0; // Optionally reset errors for a new game
+    // No need to create cards or start the timer here as the game has ended
+    // and the player will need to manually start a new game
+    return; // Exit the function to prevent further execution
   } else {
-      // If not at the end of the third level, increment and prepare for the next level
-      gameLevel++;
+    // If not at the end of the third level, increment and prepare for the next level
+    gameLevel++;
   }
 
   // Based on the new gameLevel, set up the game
   if (gameLevel === 1) {
-      createCards(levelOne);
+    createCards(levelOne);
   } else if (gameLevel === 2) {
-      createCards(levelTwo);
+    createCards(levelTwo);
   } else if (gameLevel === 3) {
-      createCards(levelThree);
+    createCards(levelThree);
   }
 
   matchedPairsCount = 0;
@@ -378,15 +420,12 @@ function stopTimer() {
   timerDisplay.textContent = "Time: 00:00";
 }
 
-
-
-
 function updateScoreboard(scores) {
-  const scoreboardList = document.querySelector('.scoreboard-list');
-  scoreboardList.innerHTML = ''; // Clear current scoreboard entries
+  const scoreboardList = document.querySelector(".scoreboard-list");
+  scoreboardList.innerHTML = ""; // Clear current scoreboard entries
 
   scores.forEach((score, index) => {
-    const playerItem = document.createElement('li');
+    const playerItem = document.createElement("li");
     playerItem.innerHTML = `
       <span class="player-position">${index + 1}</span>
       <span class="player-name">${score.name}</span>
@@ -395,23 +434,87 @@ function updateScoreboard(scores) {
     `;
     scoreboardList.appendChild(playerItem);
   });
+
+  localStorage.setItem('scores', JSON.stringify(scores));
+  displayScores(); // Add this function to show the scores on the leaderboard
+}
+
+function displayScores() {
+  const scores = JSON.parse(localStorage.getItem('scores')) || [];
+  updateScoreboard(scores);
 }
 
 // Example scores data - replace this with actual game data
 const exampleScores = [
-    { name: 'John Brown', time: '00:24.24', scoreCount: 100 },
-    { name: 'Lenora Weathers', time: '00:32.34', scoreCount: 95 },
-    { name: 'Juan Bocachica', time: '00:24.24', scoreCount: 80 },
-    { name: 'Esperanza Fugaz', time: '00:32.34', scoreCount: 75 },
-    { name: 'Fulgencio Batista', time: '00:35.10', scoreCount: 70 },
-    { name: 'Mercedes Risueño', time: '00:40.42', scoreCount: 65 },
-    { name: 'Armando Casas', time: '00:43.58', scoreCount: 60 },
-    { name: 'Luz del Alba', time: '00:45.16', scoreCount: 55 },
-    { name: 'Evaristo Liriano', time: '00:47.29', scoreCount: 50 },
-    { name: 'Dolores Delano', time: '00:52.33', scoreCount: 45 },
-    { name: 'Cristóbal Manguera', time: '00:54.14', scoreCount: 40 },
-    { name: 'Milagros Milán', time: '00:59.78', scoreCount: 35 }
+  { name: "John Brown", time: "00:24.24", scoreCount: 100 },
+  { name: "Lenora Weathers", time: "00:32.34", scoreCount: 95 },
+  { name: "Juan Bocachica", time: "00:24.24", scoreCount: 80 },
+  { name: "Esperanza Fugaz", time: "00:32.34", scoreCount: 75 },
+  { name: "Fulgencio Batista", time: "00:35.10", scoreCount: 70 },
+  { name: "Mercedes Risueño", time: "00:40.42", scoreCount: 65 },
+  { name: "Armando Casas", time: "00:43.58", scoreCount: 60 },
+  { name: "Luz del Alba", time: "00:45.16", scoreCount: 55 },
+  { name: "Evaristo Liriano", time: "00:47.29", scoreCount: 50 },
+  { name: "Dolores Delano", time: "00:52.33", scoreCount: 45 },
+  { name: "Cristóbal Manguera", time: "00:54.14", scoreCount: 40 },
+  { name: "Milagros Milán", time: "00:59.78", scoreCount: 35 },
 ];
 
 // Call this function with actual data when needed
 updateScoreboard(exampleScores);
+
+// LocalStorage
+
+//store the user's nickname and email when they submit the sign-in form:
+form.onsubmit = function (event) {
+  event.preventDefault();
+  const nickname = document.getElementById("nickname").value;
+  const email = document.getElementById("email").value;
+
+  // Save the user data in localStorage
+  localStorage.setItem("userNickname", nickname);
+  localStorage.setItem("userEmail", email);
+
+  signinModal.style.display = "none";
+  startGame(); // Begin the game after signing in
+
+};
+
+// update scores
+
+function updateScoreboard(scores) {
+  const scoreboardList = document.querySelector(".scoreboard-list");
+  scoreboardList.innerHTML = ""; // Clear current scoreboard entries
+
+  scores.forEach((score, index) => {
+    const playerItem = document.createElement("li");
+    playerItem.innerHTML = `
+      <span class="player-position">${index + 1}</span>
+      <span class="player-name">${score.name}</span>
+      <span class="player-time">${score.time}</span>
+      <span class="player-score">${score.scoreCount}</span>
+    `;
+    scoreboardList.appendChild(playerItem);
+  });
+
+  // Save the scores in localStorage
+  localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+function getSavedScores() {
+  // Retrieve the scores from localStorage
+  const savedScores = localStorage.getItem("scores");
+  return savedScores ? JSON.parse(savedScores) : [];
+}
+
+// Example usage:
+updateScoreboard(exampleScores); // Call this when you need to update the scoreboard
+
+// When the game loads, you can display the saved scores:
+document.addEventListener("DOMContentLoaded", () => {
+  startGame();
+  const savedScores = getSavedScores();
+  updateScoreboard(savedScores);
+  displayScores(); // This will load and display the scores from localStorage
+
+});
