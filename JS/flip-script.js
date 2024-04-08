@@ -1,367 +1,53 @@
 // <----------------------------------------- INSTRUCTIONS & SIGN-IN MODALS -----------------------------------------> //
 
-window.onload = function () {
-  // First, show the instruction modal
-  const instructionModal = document.getElementById("instructionModal");
-  const instructionSpan = instructionModal.querySelector(".close");
+// Initialize the game
+document.addEventListener("DOMContentLoaded", function() {
+  displayInstructionModal();
+  setupModalsAndForm();
+});
 
+
+function displayInstructionModal() {
+  const instructionModal = document.getElementById("instructionModal");
   instructionModal.style.display = "block";
 
-  // Close the instruction modal when the 'x' is clicked
-  instructionSpan.onclick = function () {
-    instructionModal.style.display = "none";
-  };
-
-  // Close the instruction modal and show sign-in modal when 'Start Game' is clicked
-  const startGameButton = document.getElementById("startGameButton");
-  startGameButton.onclick = function () {
+  document.getElementById("startGameButton").onclick = function () {
     instructionModal.style.display = "none";
     showSignInModal();
   };
 
-  function showSignInModal() {
-    const signinModal = document.getElementById("signinModal");
-    const signinSpan = signinModal.querySelector(".close");
-    const form = document.getElementById("signinForm");
-
-    signinModal.style.display = "block";
-
-    // Close the sign-in modal when the 'x' is clicked
-    signinSpan.onclick = function () {
-      signinModal.style.display = "none";
-    };
-
-    // When the user submits the sign-in form, capture the data
-    form.onsubmit = function (event) {
-      event.preventDefault(); // Prevent the form from submitting normally
-      const nickname = document.getElementById("nickname").value;
-      const email = document.getElementById("email").value;
-
-      // Save the user data in localStorage
-      localStorage.setItem("userNickname", nickname);
-      localStorage.setItem("userEmail", email);
-
-      signinModal.style.display = "none";
-    };
-  }
-
-  // Close modals when clicking outside of them
-  window.onclick = function (event) {
-    if (event.target == instructionModal) {
-      instructionModal.style.display = "none";
-    } else if (event.target == signinModal) {
-      signinModal.style.display = "none";
-    }
+  document.querySelector("#instructionModal .close").onclick = function () {
+    instructionModal.style.display = "none";
   };
-};
+}
+function showSignInModal() {
+  const signinModal = document.getElementById("signinModal");
+  signinModal.style.display = "block";
 
-function displayFinalResults() {
-  console.log("displayFinalResults called");
-
-  if (finalResultsDisplayed) return; // Prevent multiple calls
-  finalResultsDisplayed = true;
-
-  document.getElementById(
-    "finalScore"
-  ).textContent = `Final Score: ${scoreCount}`;
-  document.getElementById(
-    "totalErrors"
-  ).textContent = `Total Errors: ${errorCount}`;
-  document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
-    secondsElapsed
-  )}`;
-
-  const finalResultsModal = document.getElementById("finalResultsModal");
-  finalResultsModal.style.display = "block";
-
-  // Adding restart button
-  const restartButton = document.createElement("button");
-  restartButton.textContent = "Restart Game";
-  restartButton.classList.add("restart-button");
-  restartButton.onclick = function () {
-    finalResultsModal.style.display = "none";
-    resetGame();
-  };
-  finalResultsModal.appendChild(restartButton);
-
-  const closeButton = finalResultsModal.querySelector(".close-button");
-  closeButton.onclick = function () {
-    finalResultsModal.style.display = "none";
-    resetGame();
+  document.querySelector("#signinModal .close").onclick = function () {
+    signinModal.style.display = "none";
   };
 
-  window.onclick = function (event) {
-    if (event.target == finalResultsModal) {
-      finalResultsModal.style.display = "none";
-      resetGame();
-    }
+  document.getElementById("signinForm").onsubmit = function (event) {
+    event.preventDefault();
+    const nickname = document.getElementById("nickname").value;
+    const email = document.getElementById("email").value;
+    localStorage.setItem("userNickname", nickname);
+    localStorage.setItem("userEmail", email);
+    signinModal.style.display = "none";
+    // Additional actions after form submission, like starting the game, can be added here
   };
-
-  // Save the final score for the user
-  const finalScore = {
-    name: localStorage.getItem('userNickname') || 'You',
-    time: formatTime(secondsElapsed),
-    scoreCount: scoreCount
-  };
-
-  // Create a new score object for the current user
-  const currentUserScore = {
-    name: localStorage.getItem("userNickname") || "You", // Use 'You' as fallback
-    time: formatTime(secondsElapsed),
-    scoreCount: scoreCount,
-  };
-
-  // Get existing scores from localStorage or initialize an empty array
-  const existingScores = getSavedScores();
-
-  // Add the current user's score to the array of scores
-  existingScores.push(currentUserScore);
-
-  // Save the updated array back to localStorage
-  localStorage.setItem("scores", JSON.stringify(existingScores));
-
-  // Update the scoreboard with the new scores
-  updateScoreboard(existingScores);
+}
+function setupModalsAndForm() {
+  startGame();
+  const savedScores = getSavedScores();
+  updateScoreboard(savedScores);
+  // Assuming displayScores() is intended to refresh or update the displayed scores
+  displayScores(); // This will load and display the scores from localStorage
 }
 
-let hasFlippedCard = false;
-let flippedCard1, flippedCard2;
-let gameBoardLocked = false;
-let timer = null;
-let secondsElapsed = 0;
-let errorCount = 0;
-let scoreCount = 0;
-let matchedPairsCount = 0;
-let gameLevel = 1;
-let finalResultsDisplayed = false;
 
-
-const timerDisplay = document.getElementById("timer");
-const errorDisplay = document.getElementById("errors");
-const scoreDisplay = document.getElementById("score");
-
-const soundEffects = {
-  click: new Audio("../sounds/flip.wav"),
-  error: new Audio("../sounds/fail.wav"),
-  win: new Audio("../sounds/cheer.wav"),
-};
-
-const levelOne = [
-  "../images/a.jpg",
-  "../images/a-1.jpg",
-  "../images/b.jpg",
-  "../images/b-1.jpg",
-  "../images/c.jpg",
-  "../images/c-1.jpg",
-  "../images/d.jpg",
-  "../images/d-1.jpg",
-];
-
-const levelTwo = [
-  "../images/levelTwo/a.jpg",
-  "../images/levelTwo/a-1.jpg",
-  "../images/levelTwo/b.jpg",
-  "../images/levelTwo/b-1.jpg",
-  "../images/levelTwo/c.jpg",
-  "../images/levelTwo/c-1.jpg",
-  "../images/levelTwo/d.jpg",
-  "../images/levelTwo/d-1.jpg",
-];
-
-const levelThree = [
-  "../images/levelThree/a.jpg",
-  "../images/levelThree/a-1.jpg",
-  "../images/levelThree/b.jpg",
-  "../images/levelThree/b-1.jpg",
-  "../images/levelThree/c.jpg",
-  "../images/levelThree/c-1.jpg",
-  "../images/levelThree/d.jpg",
-  "../images/levelThree/d-1.jpg",
-];
-
-function setPointsPerMatch() {
-  if (gameLevel === 1) {
-    pointsPerMatch = 10;
-  } else if (gameLevel === 2) {
-    pointsPerMatch = 15;
-  } else if (gameLevel === 3) {
-    pointsPerMatch = 20;
-  }
-}
-
-function calculateSpeedBonus() {
-  if (secondsElapsed < 60) {
-    // less than 1 minute
-    return 30;
-  } else if (secondsElapsed < 120) {
-    // less than 2 minutes
-    return 20;
-  } else if (secondsElapsed < 180) {
-    // less than 3 minutes
-    return 10;
-  } else {
-    return 0; // No bonus
-  }
-}
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function createCards(imagesArray) {
-  const container = document.querySelector(".cards-container");
-  shuffleArray(imagesArray);
-  container.innerHTML = imagesArray
-    .map(
-      (imageSrc, index) => `
-   <div class="card">
-     <div class="card__inner" onclick="flipCard(event, ${index})">
-       <div class="card__face card__face--front"><h3>?</h3></div>
-       <div class="card__face card__face--back">
-         <div class="card__content">
-           <div class="card__header">
-             <img src="${imageSrc}" alt="Card image ${index}" class="pp">
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- `
-    )
-    .join("");
-}
-
-function flipCard(event) {
-  //deleted index (2nd) parameter, not needed
-
-  if (gameBoardLocked) return;
-  const card = event.currentTarget;
-  if (card === flippedCard1) return; // Prevents matching a card with itself by clicking the same card twice
-
-  //check if the card has already been matched
-   if (card.classList.contains('matched')) return;
-
-  soundEffects.click.play();
-  card.classList.add("is-flipped");
-
-  if (!hasFlippedCard) {
-    hasFlippedCard = true;
-    flippedCard1 = card;
-  } else {
-    flippedCard2 = card;
-    gameBoardLocked = true;
-    checkForMatch();
-  }
-}
-
-function checkForMatch() {
-  // Extract the base filename by removing the '.jpg' and '-1' parts
-  let baseName1 = flippedCard1
-    .querySelector("img")
-    .src.split("/")
-    .pop()
-    .replace(".jpg", "")
-    .replace("-1", "");
-  let baseName2 = flippedCard2
-    .querySelector("img")
-    .src.split("/")
-    .pop()
-    .replace(".jpg", "")
-    .replace("-1", "");
-  // Check if the base filenames are the same
-  const isMatch = baseName1 === baseName2;
-
-  if (isMatch) {
-    disableCards();
-    const speedBonus = calculateSpeedBonus(); // Calculate the bonus
-    incrementScore(speedBonus);
-    matchedPairsCount++; // Increment the count of matched pairs
-    checkEndOfRound(); // New function to check if the game should end
-  } else {
-    unflipCards();
-  }
-}
-
-function checkEndOfRound() {
-  const totalPairs = 4; // Total number of pairs to be matched for a round
-  if (matchedPairsCount === totalPairs) {
-    if (gameLevel < 3) {
-      // If it's round 1 or 2, congratulate and proceed to reset for the next round
-      setTimeout(() => {
-        alert("Congratulations! You have found all matches in this round!");
-        resetGame(); // Prepares the game for the next round
-      }, 1000);
-    } else {
-      // If it's the end of round 3, show final results instead
-      setTimeout(() => {
-        displayFinalResults(); // Show final results and potentially reset the game
-      }, 1000);
-    }
-  }
-}
-
-function incrementScore(speedBonus = 0) {
-  scoreCount += pointsPerMatch + speedBonus;
-  scoreDisplay.textContent = `Score: ${scoreCount}`;
-  //  setTimeout(() => {
-  //   alert(`Mortal! Lograste hacer un match. Tu score ahora es ${scoreCount}`);
-  // }, 1000);
-}
-
-function disableCards() {
-   // Add the matched class to both cards
-   flippedCard1.classList.add('matched');
-   flippedCard2.classList.add('matched');
-
-  flippedCard1.removeEventListener("click", flipCard);
-  flippedCard2.removeEventListener("click", flipCard);
-  resetTurn();
-  soundEffects.win.play();
-}
-
-function unflipCards() {
-  setTimeout(() => {
-    flippedCard1.classList.remove("is-flipped");
-    flippedCard2.classList.remove("is-flipped");
-    soundEffects.error.play();
-    incrementError();
-    resetTurn();
-  }, 1500);
-}
-
-function resetTurn() {
-  [hasFlippedCard, gameBoardLocked] = [false, false];
-  [flippedCard1, flippedCard2] = [null, null];
-}
-
-function incrementError() {
-  errorCount++;
-  errorDisplay.textContent = `Errors: ${errorCount}`;
-
-  // Deduct points for error with lower limit check
-  scoreCount = Math.max(0, scoreCount - 2); // Ensure score does not go below 0
-  scoreDisplay.textContent = `Score: ${scoreCount}`; // Update score display
-}
-
-function startTimer() {
-  timer = setInterval(() => {
-    secondsElapsed++;
-    timerDisplay.textContent = `Time: ${formatTime(secondsElapsed)}`;
-  }, 1000);
-}
-
-function formatTime(seconds) {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins.toString().padStart(2, "0")}:${secs
-    .toString()
-    .padStart(2, "0")}`;
-}
-
+// < ---------------------------------------------- GAME MECHANICS ---------------------------------------------- >
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
   createCards(levelOne); // Start with level one cards
@@ -372,13 +58,15 @@ function startGame() {
   resetTurn();
   startTimer(); // Start the timer for the game
 }
-
-function stopGame() {
-  stopTimer();
-  resetGame();
+function startTimer() {
+  timer = setInterval(() => {
+    secondsElapsed++;
+    timerDisplay.textContent = `Time: ${formatTime(secondsElapsed)}`;
+  }, 1000);
 }
-
 function resetGame() {
+  scoreSubmitted = false;
+
   stopTimer();
   finalResultsDisplayed = false;
   // This will now correctly check if the current game has finished level 3
@@ -410,15 +98,153 @@ function resetGame() {
   resetTurn();
   startTimer(); // Restart the timer for the next level
 }
+function stopGame() {
+  stopTimer();
+  resetGame();
+}
+function flipCard(event) {
+  //deleted index (2nd) parameter, not needed
 
-// Initialize the game
-document.addEventListener("DOMContentLoaded", startGame);
+  if (gameBoardLocked) return;
+  const card = event.currentTarget;
+  if (card === flippedCard1) return; // Prevents matching a card with itself by clicking the same card twice
 
+  //check if the card has already been matched
+   if (card.classList.contains('matched')) return;
+
+  soundEffects.click.play();
+  card.classList.add("is-flipped");
+
+  if (!hasFlippedCard) {
+    hasFlippedCard = true;
+    flippedCard1 = card;
+  } else {
+    flippedCard2 = card;
+    gameBoardLocked = true;
+    checkForMatch();
+  }
+}
+function checkForMatch() {
+  // Extract the base filename by removing the '.jpg' and '-1' parts
+  let baseName1 = flippedCard1
+    .querySelector("img")
+    .src.split("/")
+    .pop()
+    .replace(".jpg", "")
+    .replace("-1", "");
+  let baseName2 = flippedCard2
+    .querySelector("img")
+    .src.split("/")
+    .pop()
+    .replace(".jpg", "")
+    .replace("-1", "");
+  // Check if the base filenames are the same
+  const isMatch = baseName1 === baseName2;
+
+  if (isMatch) {
+    disableCards();
+    const speedBonus = calculateSpeedBonus(); // Calculate the bonus
+    incrementScore(speedBonus);
+    matchedPairsCount++; // Increment the count of matched pairs
+    checkEndOfRound(); // New function to check if the game should end
+  } else {
+    unflipCards();
+  }
+}
+function unflipCards() {
+  setTimeout(() => {
+    flippedCard1.classList.remove("is-flipped");
+    flippedCard2.classList.remove("is-flipped");
+    soundEffects.error.play();
+    incrementError();
+    resetTurn();
+  }, 1500);
+}
+function disableCards() {
+  // Add the matched class to both cards
+  flippedCard1.classList.add('matched');
+  flippedCard2.classList.add('matched');
+
+ flippedCard1.removeEventListener("click", flipCard);
+ flippedCard2.removeEventListener("click", flipCard);
+ resetTurn();
+ soundEffects.win.play();
+}
+function checkEndOfRound() {
+  const totalPairs = 4; // Total number of pairs to be matched for a round
+  if (matchedPairsCount === totalPairs) {
+    if (gameLevel < 3) {
+      // If it's round 1 or 2, congratulate and proceed to reset for the next round
+      setTimeout(() => {
+        alert("Congratulations! You have found all matches in this round!");
+        resetGame(); // Prepares the game for the next round
+      }, 1000);
+    } else {
+      // If it's the end of round 3, show final results instead
+      setTimeout(() => {
+        displayFinalResults(); // Show final results and potentially reset the game
+      }, 1000);
+    }
+  }
+}
+function resetTurn() {
+  [hasFlippedCard, gameBoardLocked] = [false, false];
+  [flippedCard1, flippedCard2] = [null, null];
+}
+function incrementScore(speedBonus = 0) {
+  scoreCount += pointsPerMatch + speedBonus;
+  scoreDisplay.textContent = `Score: ${scoreCount}`;
+  //  setTimeout(() => {
+  //   alert(`Mortal! Lograste hacer un match. Tu score ahora es ${scoreCount}`);
+  // }, 1000);
+}
+function incrementError() {
+  errorCount++;
+  errorDisplay.textContent = `Errors: ${errorCount}`;
+
+  // Deduct points for error with lower limit check
+  scoreCount = Math.max(0, scoreCount - 2); // Ensure score does not go below 0
+  scoreDisplay.textContent = `Score: ${scoreCount}`; // Update score display
+}
 function stopTimer() {
   clearInterval(timer);
   secondsElapsed = 0;
   timerDisplay.textContent = "Time: 00:00";
 }
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins.toString().padStart(2, "0")}:${secs
+    .toString()
+    .padStart(2, "0")}`;
+}
+function setPointsPerMatch() {
+  if (gameLevel === 1) {
+    pointsPerMatch = 10;
+  } else if (gameLevel === 2) {
+    pointsPerMatch = 15;
+  } else if (gameLevel === 3) {
+    pointsPerMatch = 20;
+  }
+}
+function calculateSpeedBonus() {
+  if (secondsElapsed < 60) {
+    // less than 1 minute
+    return 30;
+  } else if (secondsElapsed < 120) {
+    // less than 2 minutes
+    return 20;
+  } else if (secondsElapsed < 180) {
+    // less than 3 minutes
+    return 10;
+  } else {
+    return 0; // No bonus
+  }
+}
+
+
+
+// < ---------------------------------------------- SCORE MANAGMENT ---------------------------------------------- >
 
 function updateScoreboard(scores) {
   const scoreboardList = document.querySelector(".scoreboard-list");
@@ -435,14 +261,223 @@ function updateScoreboard(scores) {
     scoreboardList.appendChild(playerItem);
   });
 
-  localStorage.setItem('scores', JSON.stringify(scores));
-  displayScores(); // Add this function to show the scores on the leaderboard
+  // Save the scores in localStorage
+  localStorage.setItem("scores", JSON.stringify(scores));
 }
-
 function displayScores() {
   const scores = JSON.parse(localStorage.getItem('scores')) || [];
   updateScoreboard(scores);
 }
+// function displayFinalResults() {
+//   console.log("displayFinalResults called");
+
+//   if (finalResultsDisplayed) return; // Prevent multiple calls
+//   finalResultsDisplayed = true;
+
+//   document.getElementById(
+//     "finalScore"
+//   ).textContent = `Final Score: ${scoreCount}`;
+//   document.getElementById(
+//     "totalErrors"
+//   ).textContent = `Total Errors: ${errorCount}`;
+//   document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
+//     secondsElapsed
+//   )}`;
+
+//   const finalResultsModal = document.getElementById("finalResultsModal");
+//   finalResultsModal.style.display = "block";
+
+//   // Adding restart button
+//   const restartButton = document.createElement("button");
+//   restartButton.textContent = "Restart Game";
+//   restartButton.classList.add("restart-button");
+//   restartButton.onclick = function () {
+//     finalResultsModal.style.display = "none";
+//     resetGame();
+//   };
+//   finalResultsModal.appendChild(restartButton);
+
+//   const closeButton = finalResultsModal.querySelector(".close-button");
+//   closeButton.onclick = function () {
+//     finalResultsModal.style.display = "none";
+//     resetGame();
+//   };
+
+//   window.onclick = function (event) {
+//     if (event.target == finalResultsModal) {
+//       finalResultsModal.style.display = "none";
+//       resetGame();
+//     }
+//   };
+
+//   // Save the final score for the user
+//   const finalScore = {
+//     name: localStorage.getItem('userNickname') || 'You',
+//     time: formatTime(secondsElapsed),
+//     scoreCount: scoreCount
+//   };
+
+//   // Create a new score object for the current user
+//   const currentUserScore = {
+//     name: localStorage.getItem("userNickname") || "You", // Use 'You' as fallback
+//     time: formatTime(secondsElapsed),
+//     scoreCount: scoreCount,
+//   };
+
+//   // Get existing scores from localStorage or initialize an empty array
+//   const existingScores = getSavedScores();
+
+//   // Add the current user's score to the array of scores
+//   existingScores.push(currentUserScore);
+
+//   // Save the updated array back to localStorage
+//   localStorage.setItem("scores", JSON.stringify(existingScores));
+
+//   // Update the scoreboard with the new scores
+//   updateScoreboard(existingScores);
+// }
+
+function displayFinalResults() {
+  console.log("displayFinalResults called");
+
+  if (finalResultsDisplayed || scoreSubmitted) return; // Check the flag here too
+  finalResultsDisplayed = true;
+
+  document.getElementById("finalScore").textContent = `Final Score: ${scoreCount}`;
+  document.getElementById("totalErrors").textContent = `Total Errors: ${errorCount}`;
+  document.getElementById("totalTime").textContent = `Total Time: ${formatTime(secondsElapsed)}`;
+
+  const finalResultsModal = document.getElementById("finalResultsModal");
+  finalResultsModal.style.display = "block";
+
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "Restart Game";
+  restartButton.classList.add("restart-button");
+  restartButton.onclick = function () {
+    finalResultsModal.style.display = "none";
+    resetGame();
+  };
+  finalResultsModal.appendChild(restartButton);
+
+  const closeButton = finalResultsModal.querySelector(".close-button");
+  closeButton.onclick = function () {
+    finalResultsModal.style.display = "none";
+    // Do not call resetGame here if you don't want to start a new game immediately
+  };
+
+  if (!scoreSubmitted) {
+    let existingScores = getSavedScores(); // Retrieve existing scores
+    const currentUserScore = {
+        name: localStorage.getItem("userNickname") || "Anonymous",
+        email: localStorage.getItem("userEmail") || "No email provided", // If you want to save email as well.
+        time: formatTime(secondsElapsed),
+        score: scoreCount,
+    };
+
+    existingScores.push(currentUserScore); // Add new score
+    localStorage.setItem("scores", JSON.stringify(existingScores)); // Save updated scores array
+    updateScoreboard(existingScores); // Update the scoreboard display
+    scoreSubmitted = true;
+}
+}
+function getSavedScores() {
+  // Retrieve the scores from localStorage
+  const savedScores = localStorage.getItem("scores");
+  return savedScores ? JSON.parse(savedScores) : [];
+}
+
+
+
+// < ---------------------------------------------- UTILITY FUNCTIONS ---------------------------------------------- >
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+function createCards(imagesArray) {
+  const container = document.querySelector(".cards-container");
+  shuffleArray(imagesArray);
+  container.innerHTML = imagesArray
+    .map(
+      (imageSrc, index) => `
+   <div class="card">
+     <div class="card__inner" onclick="flipCard(event, ${index})">
+       <div class="card__face card__face--front"><h3>?</h3></div>
+       <div class="card__face card__face--back">
+         <div class="card__content">
+           <div class="card__header">
+             <img src="${imageSrc}" alt="Card image ${index}" class="pp">
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ `
+    )
+    .join("");
+}
+
+
+
+
+// < ---------------------------------------------- Global Variables and Assets ---------------------------------------------- >
+
+let hasFlippedCard = false;
+let flippedCard1, flippedCard2;
+let gameBoardLocked = false;
+let timer = null;
+let secondsElapsed = 0;
+let errorCount = 0;
+let scoreCount = 0;
+let matchedPairsCount = 0;
+let gameLevel = 1;
+let finalResultsDisplayed = false;
+let scoreSubmitted = false;
+const timerDisplay = document.getElementById("timer");
+const errorDisplay = document.getElementById("errors");
+const scoreDisplay = document.getElementById("score");
+
+const soundEffects = {
+  click: new Audio("../sounds/flip.wav"),
+  error: new Audio("../sounds/fail.wav"),
+  win: new Audio("../sounds/cheer.wav"),
+};
+const levelOne = [
+  "../images/a.jpg",
+  "../images/a-1.jpg",
+  "../images/b.jpg",
+  "../images/b-1.jpg",
+  "../images/c.jpg",
+  "../images/c-1.jpg",
+  "../images/d.jpg",
+  "../images/d-1.jpg",
+];
+
+const levelTwo = [
+  "../images/levelTwo/a.jpg",
+  "../images/levelTwo/a-1.jpg",
+  "../images/levelTwo/b.jpg",
+  "../images/levelTwo/b-1.jpg",
+  "../images/levelTwo/c.jpg",
+  "../images/levelTwo/c-1.jpg",
+  "../images/levelTwo/d.jpg",
+  "../images/levelTwo/d-1.jpg",
+];
+const levelThree = [
+  "../images/levelThree/a.jpg",
+  "../images/levelThree/a-1.jpg",
+  "../images/levelThree/b.jpg",
+  "../images/levelThree/b-1.jpg",
+  "../images/levelThree/c.jpg",
+  "../images/levelThree/c-1.jpg",
+  "../images/levelThree/d.jpg",
+  "../images/levelThree/d-1.jpg",
+];
+
+
 
 // Example scores data - replace this with actual game data
 const exampleScores = [
@@ -464,9 +499,7 @@ const exampleScores = [
 updateScoreboard(exampleScores);
 
 // LocalStorage
-
-//store the user's nickname and email when they submit the sign-in form:
-form.onsubmit = function (event) {
+document.getElementById("signinForm").onsubmit = function(event) {
   event.preventDefault();
   const nickname = document.getElementById("nickname").value;
   const email = document.getElementById("email").value;
@@ -475,46 +508,18 @@ form.onsubmit = function (event) {
   localStorage.setItem("userNickname", nickname);
   localStorage.setItem("userEmail", email);
 
-  signinModal.style.display = "none";
-  startGame(); // Begin the game after signing in
+  // Hide the sign-in modal
+  document.getElementById("signinModal").style.display = "none";
 
+  // Begin the game after signing in
+  startGame();
 };
 
 // update scores
 
-function updateScoreboard(scores) {
-  const scoreboardList = document.querySelector(".scoreboard-list");
-  scoreboardList.innerHTML = ""; // Clear current scoreboard entries
 
-  scores.forEach((score, index) => {
-    const playerItem = document.createElement("li");
-    playerItem.innerHTML = `
-      <span class="player-position">${index + 1}</span>
-      <span class="player-name">${score.name}</span>
-      <span class="player-time">${score.time}</span>
-      <span class="player-score">${score.scoreCount}</span>
-    `;
-    scoreboardList.appendChild(playerItem);
-  });
-
-  // Save the scores in localStorage
-  localStorage.setItem("scores", JSON.stringify(scores));
-}
-
-function getSavedScores() {
-  // Retrieve the scores from localStorage
-  const savedScores = localStorage.getItem("scores");
-  return savedScores ? JSON.parse(savedScores) : [];
-}
 
 // Example usage:
 updateScoreboard(exampleScores); // Call this when you need to update the scoreboard
 
-// When the game loads, you can display the saved scores:
-document.addEventListener("DOMContentLoaded", () => {
-  startGame();
-  const savedScores = getSavedScores();
-  updateScoreboard(savedScores);
-  displayScores(); // This will load and display the scores from localStorage
 
-});
