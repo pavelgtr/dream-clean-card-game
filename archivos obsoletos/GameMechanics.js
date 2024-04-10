@@ -5,7 +5,7 @@ import { displayFinalResults } from "./Scoring.js";
 import { gameLevel, errorCount, scoreCount, matchedPairsCount, levelOne } from "./Globals.js";
 
 export function startGame() {
-    // gameLevel = 1; // Ensure the game starts at level one
+    gameLevel = 1; // Ensure the game starts at level one
     createCards(levelOne); // Start with level one cards
     errorCount = 0; // Reset errors if starting a new game
     scoreCount = 0; // Reset score if starting a new game

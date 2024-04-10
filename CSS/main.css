@@ -61,9 +61,17 @@
 }
 /* --------------------------------- END FONTS DONCELLA --------------------------------- *//* 
 
+* {
 
+}
 
 The Modal (background) */
+
+
+* {
+  padding: 0;
+  margin: 0;
+}
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -111,9 +119,7 @@ The Modal (background) */
 
 /* ---------------------------------Header Styles --------------------------------- */
 .game-header {
-  background-color: #02afab; /* A nice green color, you can change it to whatever you like */
-  color: #ffffff; /* White text color for contrast */
-  padding: 10px 0; /* Some padding around the text */
+  background-color: #ffffff; /* A nice green color, you can change it to whatever you like */
   text-align: center; /* Center the text */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow to lift the header */
 }
@@ -125,7 +131,7 @@ The Modal (background) */
   font-size: 2em; /* Adjust the size as needed */
   text-transform: uppercase; /* Optional: Makes all the letters uppercase */
   letter-spacing: 2px; /* Optional: Increases spacing between letters */
-  padding: 100px;
+  /* padding: 100px; */
 }
 
 /* Logo Styles (if you have a logo image) */
@@ -148,11 +154,14 @@ The Modal (background) */
 
 body {
   min-height: 100vh;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to bottom right,
     var(--dream-clean-green),
     var(--light)
-  );
+  ); */
+
+
+  background: rgba(95,207,213,0.09);
 }
 
 .game-wrapper {
@@ -164,15 +173,36 @@ body {
 }
 
 .game-status-bar {
-    display: flex;
-    align-items: center; 
-    justify-content: space-between;
-    background: var(--complementary-to-primary);
-    border-radius: 10px;
-    color: var(--light);
-    margin: 0 auto;
-    min-width: 720px;
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+  color: #9A9A9A;
+  border-radius: 10px;
+  color: var(--light);
+  margin: 0 auto;
+  padding: 10px; /* Add some padding */
+  min-width: 720px;
+  max-width: 100%; /* Add a max-width to ensure it doesn't overflow the screen width */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  font-size: 1.2rem; /* Adjust the font size as needed */
 }
+
+/* Additional CSS for the timer image and text */
+#timer {
+  width: 30px; /* Adjust based on your image's aspect ratio */
+  height: 30px; /* Adjust to match the width or as needed */
+  margin-right: 10px; /* Add some margin to separate image from text */
+  color: black;
+}
+
+#score {
+ color: black;
+}
+#timer span {
+  color: black; /* Or #000000 for black */
+}
+
+
 
 .cards-container {
   display: grid;
@@ -239,19 +269,26 @@ h2 {
 }
 
 .card__face--front {
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to bottom right,
     var(--primary),
     var(--dream-clean-green)
-  );
+  ); */
+  background-color: #5FC6CC;
+  color: #5FC6CC;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .card__face--back {
-  background-color: var(--light);
+  background-color: #5FC6CC;
   transform: rotateY(180deg);
+}
+
+.card__face--front img {
+  width: 100%;
+  height: 100%;
 }
 
 .card__content {

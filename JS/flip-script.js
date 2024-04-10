@@ -1,25 +1,41 @@
+// TODO add total time of all 3 rounds 
+//       add score to scoreboard 
+// time format in score board should be min:ss 
+//       check local storage functionality (we can check this at a later prompt)
+
+// LEFT OFF AT
+
+//2. Add score to scoreboard
+// 3. Time format on scoreboard should be min:ss
+
+
+
+
 // <----------------------------------------- INSTRUCTIONS & SIGN-IN MODALS -----------------------------------------> //
 
 // Initialize the game
 document.addEventListener("DOMContentLoaded", function() {
-  displayInstructionModal();
+  // displayInstructionModal();
   setupModalsAndForm();
 });
 
+// no instructions for now
+//   function displayInstructionModal() {
+//   const instructionModal = document.getElementById("instructionModal");
+//   instructionModal.style.display = "block";
 
-function displayInstructionModal() {
-  const instructionModal = document.getElementById("instructionModal");
-  instructionModal.style.display = "block";
+  
 
-  document.getElementById("startGameButton").onclick = function () {
-    instructionModal.style.display = "none";
-    showSignInModal();
-  };
+//   document.getElementById("startGameButton").onclick = function () {
+//     instructionModal.style.display = "none";
+//     showSignInModal();
+//   };
 
-  document.querySelector("#instructionModal .close").onclick = function () {
-    instructionModal.style.display = "none";
-  };
-}
+//   document.querySelector("#instructionModal .close").onclick = function () {
+//     instructionModal.style.display = "none";
+//   };
+// }
+
 function showSignInModal() {
   const signinModal = document.getElementById("signinModal");
   signinModal.style.display = "block";
@@ -40,16 +56,18 @@ function showSignInModal() {
 }
 function setupModalsAndForm() {
   startGame();
+  showSignInModal();
   const savedScores = getSavedScores();
   updateScoreboard(savedScores);
   // Assuming displayScores() is intended to refresh or update the displayed scores
   displayScores(); // This will load and display the scores from localStorage
 }
 
-
 // < ---------------------------------------------- GAME MECHANICS ---------------------------------------------- >
+
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
+  totalTime = 0;
   createCards(levelOne); // Start with level one cards
   errorCount = 0; // Reset errors if starting a new game
   scoreCount = 0; // Reset score if starting a new game
@@ -58,11 +76,14 @@ function startGame() {
   resetTurn();
   startTimer(); // Start the timer for the game
 }
+
+function updateTimerDisplay(seconds) {
+  timerDisplay.innerHTML = `<img src="./images/Menu/clock.jpg" alt="Clock" style="width:20px; height:20px; vertical-align:middle;"> ${formatTime(seconds)}`;
+}
 function startTimer() {
   timer = setInterval(() => {
     secondsElapsed++;
-    timerDisplay.textContent = `Time: ${formatTime(secondsElapsed)}`;
-  }, 1000);
+    updateTimerDisplay(secondsElapsed);  }, 1000);
 }
 function resetGame() {
   scoreSubmitted = false;
@@ -71,6 +92,7 @@ function resetGame() {
   finalResultsDisplayed = false;
   // This will now correctly check if the current game has finished level 3
   if (gameLevel === 3) {
+    totalTime += secondsElapsed 
     displayFinalResults(); // Show final results
     // Prepare for a new game
     gameLevel = 1; // Reset to level one for a new game
@@ -127,13 +149,14 @@ function flipCard(event) {
 function checkForMatch() {
   // Extract the base filename by removing the '.jpg' and '-1' parts
   let baseName1 = flippedCard1
-    .querySelector("img")
+  .querySelector(".card__face--back img")
     .src.split("/")
     .pop()
     .replace(".jpg", "")
     .replace("-1", "");
   let baseName2 = flippedCard2
-    .querySelector("img")
+  .querySelector(".card__face--back img")
+
     .src.split("/")
     .pop()
     .replace(".jpg", "")
@@ -200,7 +223,7 @@ function incrementScore(speedBonus = 0) {
 }
 function incrementError() {
   errorCount++;
-  errorDisplay.textContent = `Errors: ${errorCount}`;
+  // errorDisplay.textContent = `Errors: ${errorCount}`;
 
   // Deduct points for error with lower limit check
   scoreCount = Math.max(0, scoreCount - 2); // Ensure score does not go below 0
@@ -209,14 +232,18 @@ function incrementError() {
 function stopTimer() {
   clearInterval(timer);
   secondsElapsed = 0;
-  timerDisplay.textContent = "Time: 00:00";
+  // timerDisplay.textContent = "Time: 00:00";
+  updateTimerDisplay(secondsElapsed);
 }
 function formatTime(seconds) {
+  if (isNaN(seconds)) {
+    console.error('Invalid time value passed to formatTime:', seconds);
+    return '00:00';
+  }
+
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  return `${mins.toString().padStart(2, "0")}:${secs
-    .toString()
-    .padStart(2, "0")}`;
+  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
 function setPointsPerMatch() {
   if (gameLevel === 1) {
@@ -242,8 +269,6 @@ function calculateSpeedBonus() {
   }
 }
 
-
-
 // < ---------------------------------------------- SCORE MANAGMENT ---------------------------------------------- >
 
 function updateScoreboard(scores) {
@@ -253,11 +278,11 @@ function updateScoreboard(scores) {
   scores.forEach((score, index) => {
     const playerItem = document.createElement("li");
     playerItem.innerHTML = `
-      <span class="player-position">${index + 1}</span>
-      <span class="player-name">${score.name}</span>
-      <span class="player-time">${score.time}</span>
-      <span class="player-score">${score.scoreCount}</span>
-    `;
+  <span class="player-position">${index + 1}</span>
+  <span class="player-name">${score.name}</span>
+  <span class="player-time">${formatTime(score.time)}</span>
+  <span class="player-score">${score.scoreCount}</span>
+`;
     scoreboardList.appendChild(playerItem);
   });
 
@@ -268,83 +293,23 @@ function displayScores() {
   const scores = JSON.parse(localStorage.getItem('scores')) || [];
   updateScoreboard(scores);
 }
-// function displayFinalResults() {
-//   console.log("displayFinalResults called");
-
-//   if (finalResultsDisplayed) return; // Prevent multiple calls
-//   finalResultsDisplayed = true;
-
-//   document.getElementById(
-//     "finalScore"
-//   ).textContent = `Final Score: ${scoreCount}`;
-//   document.getElementById(
-//     "totalErrors"
-//   ).textContent = `Total Errors: ${errorCount}`;
-//   document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
-//     secondsElapsed
-//   )}`;
-
-//   const finalResultsModal = document.getElementById("finalResultsModal");
-//   finalResultsModal.style.display = "block";
-
-//   // Adding restart button
-//   const restartButton = document.createElement("button");
-//   restartButton.textContent = "Restart Game";
-//   restartButton.classList.add("restart-button");
-//   restartButton.onclick = function () {
-//     finalResultsModal.style.display = "none";
-//     resetGame();
-//   };
-//   finalResultsModal.appendChild(restartButton);
-
-//   const closeButton = finalResultsModal.querySelector(".close-button");
-//   closeButton.onclick = function () {
-//     finalResultsModal.style.display = "none";
-//     resetGame();
-//   };
-
-//   window.onclick = function (event) {
-//     if (event.target == finalResultsModal) {
-//       finalResultsModal.style.display = "none";
-//       resetGame();
-//     }
-//   };
-
-//   // Save the final score for the user
-//   const finalScore = {
-//     name: localStorage.getItem('userNickname') || 'You',
-//     time: formatTime(secondsElapsed),
-//     scoreCount: scoreCount
-//   };
-
-//   // Create a new score object for the current user
-//   const currentUserScore = {
-//     name: localStorage.getItem("userNickname") || "You", // Use 'You' as fallback
-//     time: formatTime(secondsElapsed),
-//     scoreCount: scoreCount,
-//   };
-
-//   // Get existing scores from localStorage or initialize an empty array
-//   const existingScores = getSavedScores();
-
-//   // Add the current user's score to the array of scores
-//   existingScores.push(currentUserScore);
-
-//   // Save the updated array back to localStorage
-//   localStorage.setItem("scores", JSON.stringify(existingScores));
-
-//   // Update the scoreboard with the new scores
-//   updateScoreboard(existingScores);
-// }
 
 function displayFinalResults() {
-  console.log("displayFinalResults called");
+  const newScore = {
+    name: localStorage.getItem('userNickname') || 'Anonymous',
+    time: totalTime, // The total time for all rounds, which needs to be formatted
+    scoreCount: scoreCount
+  };
+
+  const scores = getSavedScores();
+scores.push(newScore);
+updateScoreboard(scores);
 
   if (finalResultsDisplayed || scoreSubmitted) return; // Check the flag here too
   finalResultsDisplayed = true;
 
   document.getElementById("finalScore").textContent = `Final Score: ${scoreCount}`;
-  document.getElementById("totalErrors").textContent = `Total Errors: ${errorCount}`;
+  // document.getElementById("totalErrors").textContent = `Total Errors: ${errorCount}`;
   document.getElementById("totalTime").textContent = `Total Time: ${formatTime(secondsElapsed)}`;
 
   const finalResultsModal = document.getElementById("finalResultsModal");
@@ -387,7 +352,6 @@ function getSavedScores() {
 }
 
 
-
 // < ---------------------------------------------- UTILITY FUNCTIONS ---------------------------------------------- >
 
 function shuffleArray(array) {
@@ -405,7 +369,7 @@ function createCards(imagesArray) {
       (imageSrc, index) => `
    <div class="card">
      <div class="card__inner" onclick="flipCard(event, ${index})">
-       <div class="card__face card__face--front"><h3>?</h3></div>
+       <div class="card__face card__face--front"><img src="./images/Menu/Game-Match-GC.png" alt="card-back-design"></div>
        <div class="card__face card__face--back">
          <div class="card__content">
            <div class="card__header">
@@ -422,7 +386,6 @@ function createCards(imagesArray) {
 
 
 
-
 // < ---------------------------------------------- Global Variables and Assets ---------------------------------------------- >
 
 let hasFlippedCard = false;
@@ -436,8 +399,10 @@ let matchedPairsCount = 0;
 let gameLevel = 1;
 let finalResultsDisplayed = false;
 let scoreSubmitted = false;
+let totalTime = 0;
+
 const timerDisplay = document.getElementById("timer");
-const errorDisplay = document.getElementById("errors");
+// const errorDisplay = document.getElementById("errors");
 const scoreDisplay = document.getElementById("score");
 
 const soundEffects = {
@@ -446,14 +411,14 @@ const soundEffects = {
   win: new Audio("../sounds/cheer.wav"),
 };
 const levelOne = [
-  "../images/a.jpg",
-  "../images/a-1.jpg",
-  "../images/b.jpg",
-  "../images/b-1.jpg",
-  "../images/c.jpg",
-  "../images/c-1.jpg",
-  "../images/d.jpg",
-  "../images/d-1.jpg",
+  "../images/levelOne/a.jpg",
+  "../images/levelOne/a-1.jpg",
+  "../images/levelOne/b.jpg",
+  "../images/levelOne/b-1.jpg",
+  "../images/levelOne/c.jpg",
+  "../images/levelOne/c-1.jpg",
+  "../images/levelOne/d.jpg",
+  "../images/levelOne/d-1.jpg",
 ];
 
 const levelTwo = [
