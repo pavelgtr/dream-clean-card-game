@@ -1,13 +1,5 @@
-// TODO add total time of all 3 rounds 
-//       add score to scoreboard 
-// time format in score board should be min:ss 
-//       check local storage functionality (we can check this at a later prompt)
-
-// LEFT OFF AT
-
-//2. Add score to scoreboard
-// 3. Time format on scoreboard should be min:ss
-
+// TODO timer starts before modal is completed 
+// align cards in 3 
 
 
 
@@ -419,6 +411,10 @@ const levelOne = [
   "../images/levelOne/c-1.jpg",
   "../images/levelOne/d.jpg",
   "../images/levelOne/d-1.jpg",
+  "../images/levelOne/e.jpg",
+  "../images/levelOne/e-1.jpg",
+  "../images/levelOne/f.jpg",
+  "../images/levelOne/f-1.jpg",
 ];
 
 const levelTwo = [
@@ -430,6 +426,10 @@ const levelTwo = [
   "../images/levelTwo/c-1.jpg",
   "../images/levelTwo/d.jpg",
   "../images/levelTwo/d-1.jpg",
+  "../images/levelTwo/e.jpg",
+  "../images/levelTwo/e-1.jpg",
+  "../images/levelTwo/f.jpg",
+  "../images/levelTwo/f-1.jpg",
 ];
 const levelThree = [
   "../images/levelThree/a.jpg",
@@ -440,6 +440,10 @@ const levelThree = [
   "../images/levelThree/c-1.jpg",
   "../images/levelThree/d.jpg",
   "../images/levelThree/d-1.jpg",
+  "../images/levelThree/e.jpg",
+  "../images/levelThree/e-1.jpg",
+  "../images/levelThree/f.jpg",
+  "../images/levelThree/f-1.jpg",
 ];
 
 

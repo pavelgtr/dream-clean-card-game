@@ -1,72 +1,77 @@
-
 /* --------------------------------- FONTS DONCELLA --------------------------------- */
 @font-face {
   font-family: SourceSansPro-Regular;
-  src: url("../../fonts/SourceSansPro/SourceSansPro-Regular.woff")   format("woff");
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Regular.woff")
+    format("woff");
 }
 
 @font-face {
   font-family: SourceSansPro-Semibold;
-  src: url("../../fonts/SourceSansPro/SourceSansPro-Semibold.woff")   format("woff");
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Semibold.woff")
+    format("woff");
 }
 
 @font-face {
   font-family: SourceSansPro-Bold;
-  src: url("../../fonts/SourceSansPro/SourceSansPro-Semibold.woff")   format("woff");
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Semibold.woff")
+    format("woff");
 }
 
 @font-face {
   font-family: SourceSansPro-Light;
-  src: url("../../fonts/SourceSansPro/SourceSansPro-Light.woff")   format("woff");
-}
-
-
-@font-face {
-  font-family:'OpenSans';
-  src: url('../../fonts/OpenSans/OpenSans-Light.eot');
-  src:
-    url('../../fonts/OpenSans/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
-    url('../../fonts/OpenSans/OpenSans-Light.woff') format('woff'),
-    url('../../fonts/OpenSans/OpenSans-Light.ttf') format('truetype'),
-    url('../../fonts/OpenSans/OpenSans-Light.svg#OpenSans-Light') format('svg')
-  ;
-  font-weight:300;
-  font-style:normal;
+  src: url("../../fonts/SourceSansPro/SourceSansPro-Light.woff") format("woff");
 }
 
 @font-face {
-  font-family:'OpenSans';
-  src: url('../../fonts/OpenSans/OpenSans-Regular.eot');
-  src:
-    url('../../fonts/OpenSans/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
-    url('../../fonts/OpenSans/OpenSans-Regular.woff') format('woff'),
-    url('../../fonts/OpenSans/OpenSans-Regular.ttf') format('truetype'),
-    url('../../fonts/OpenSans/OpenSans-Regular.svg#OpenSans-Regular') format('svg')
-  ;
-  font-weight:normal;
-  font-style:normal;
+  font-family: "OpenSans";
+  src: url("../../fonts/OpenSans/OpenSans-Light.eot");
+  src: url("../../fonts/OpenSans/OpenSans-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../fonts/OpenSans/OpenSans-Light.woff") format("woff"),
+    url("../../fonts/OpenSans/OpenSans-Light.ttf") format("truetype"),
+    url("../../fonts/OpenSans/OpenSans-Light.svg#OpenSans-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
 }
 
 @font-face {
-  font-family:'Santiago';
-  src: url('../../fonts/Santiago/Santiago.eot');
-  src:
-    url('../../fonts/Santiago/Santiago.eot?#iefix') format('embedded-opentype'),
-    url('../../fonts/Santiago/Santiago.woff') format('woff'),
-    url('../../fonts/Santiago/Santiago.ttf') format('truetype'),
-    url('../../fonts/Santiago/Santiago.svg#Santiago') format('svg')
-  ;
-  font-weight:normal;
-  font-style:normal;
-}
-/* --------------------------------- END FONTS DONCELLA --------------------------------- *//* 
-
-* {
-
+  font-family: "OpenSans";
+  src: url("../../fonts/OpenSans/OpenSans-Regular.eot");
+  src: url("../../fonts/OpenSans/OpenSans-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../fonts/OpenSans/OpenSans-Regular.woff") format("woff"),
+    url("../../fonts/OpenSans/OpenSans-Regular.ttf") format("truetype"),
+    url("../../fonts/OpenSans/OpenSans-Regular.svg#OpenSans-Regular")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
 }
 
-The Modal (background) */
+@font-face {
+  font-family: "OpenSans"; /* Keep the font-family name the same */
+  src: url("../../fonts/OpenSans/OpenSans-Semibold.eot");
+  src: url("../../fonts/OpenSans/OpenSans-Semibold.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../fonts/OpenSans/OpenSans-Semibold.woff") format("woff"),
+    url("../../fonts/OpenSans/OpenSans-Semibold.ttf") format("truetype"),
+    url("../../fonts/OpenSans/OpenSans-Semibold.svg#OpenSans-Semibold")
+      format("svg");
+  font-weight: 600; /* Set font-weight for Semi-Bold */
+  font-style: normal;
+}
 
+@font-face {
+  font-family: "Santiago";
+  src: url("../../fonts/Santiago/Santiago.eot");
+  src: url("../../fonts/Santiago/Santiago.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../fonts/Santiago/Santiago.woff") format("woff"),
+    url("../../fonts/Santiago/Santiago.ttf") format("truetype"),
+    url("../../fonts/Santiago/Santiago.svg#Santiago") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+/* --------------------------------- END FONTS DONCELLA --------------------------------- */
 
 * {
   padding: 0;
@@ -81,32 +86,117 @@ The Modal (background) */
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-  position: relative; /* Needed for absolute positioning of children */
-  background-color: #fefefe;
-  margin: 25% auto; 
-  padding: 70px;
-  border: 5px solid #dedbdb;
-  width: 30%; /* Could be more or less, depending on screen size */
-  border-radius: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 297px;
+  height: 400px;
+  margin: 400px auto;
+  letter-spacing: 0;
+  line-height: 24px;
+  
 }
+
+.modal-content p {
+  font-family: "OpenSansRoman-CondensedSemiBold";
+  font-weight: 500; /* Apply the Semi-Bold weight */
+  font-size: 24px;
+  color: #33bbc6;
+  letter-spacing: 0;
+  line-height: 24px;
+  padding-top: 80px;
+  
+}
+
+#modal-text-form-button {
+display: flex;
+flex-direction: column;
+padding-left: 30px;
+width: 233px;
+gap: 20px;
+}
+
+.modal-flow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#another-color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 297px;
+  height: 51px;
+  background-color: #33bbc6;
+}
+
+
 
 /* The Close Button */
 .close {
-  position: absolute; /* Position absolutely within the .modal-content */
-  top: 10px; /* Adjust as needed for distance from top */
-  right: 10px; /* Adjust as needed for distance from right */
+  font-family: "OpenSansRoman-CondensedSemiBold";
+  position: absolute;
+  top: 10px;
+  right: 20px;
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
-  cursor: pointer; /* Change the cursor to signify clickable action */
+  cursor: pointer;
+  color: #ffffff;
+  line-height: 32px;
+}
 
+.input-wrapper label {
+  /* font-family: "OpenSans", sans-serif; */
+  font-size: 14px;
+  color: #788995;
+  font-family: "OpenSansRoman-CondensedSemiBold";
+  font-size: 14px;
+  color: #788995;
+}
+
+.input-wrapper input {
+  background: #ffffff;
+  border: 1px solid #dde3e8;
+  border-radius: 3px;
+  width: 233px;
+  height: 46px;
+}
+
+.modal-content #continue {
+  width: 120px;
+  height: 42px;
+  background-color: #33bbc6;
+  border: none;
+  color: #ffffff;
+  font-family: OpenSans-Regular;
+  font-size: 12px;
+}
+
+#signinForm {
+  /* border: 2px solid red; */
+  gap: 20px;
+}
+
+#signinForm,
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper {
+}
+
+.x-container {
+  border: 2px solid red;
 }
 
 .close:hover,
@@ -116,6 +206,24 @@ The Modal (background) */
   cursor: pointer;
 }
 
+
+
+.back-arrow {
+  display: flex; /* Aligns the icon and text inline */
+  align-items: center; /* Centers items vertically */
+  cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+  background: none; /* Removes any default background */
+  border: none; /* Removes any default border */
+  font: inherit; /* Inherits font from parent elements */
+  padding: 10px; /* Add padding as necessary */
+  color: #788995;
+  font-family: OpenSans-Regular;
+  font-size: 12px;
+}
+
+.arrow-icon {
+  margin-right: 5px; /* Creates a small space between the icon and the text */
+}
 
 /* ---------------------------------Header Styles --------------------------------- */
 .game-header {
@@ -127,7 +235,7 @@ The Modal (background) */
 .game-header h1 {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif; /* This should match your branding font */
+  font-family: "Open Sans", sans-serif; /* This should match your branding font */
   font-size: 2em; /* Adjust the size as needed */
   text-transform: uppercase; /* Optional: Makes all the letters uppercase */
   letter-spacing: 2px; /* Optional: Increases spacing between letters */
@@ -160,23 +268,22 @@ body {
     var(--light)
   ); */
 
-
-  background: rgba(95,207,213,0.09);
+  background: rgba(95, 207, 213, 0.09);
 }
 
 .game-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  /* border: 3px solid red; */
+  align-items: center;
+  border: 3px solid red;
 }
 
 .game-status-bar {
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
-  color: #9A9A9A;
+  color: #9a9a9a;
   border-radius: 10px;
   color: var(--light);
   margin: 0 auto;
@@ -196,21 +303,19 @@ body {
 }
 
 #score {
- color: black;
+  color: black;
 }
 #timer span {
   color: black; /* Or #000000 for black */
 }
 
-
-
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 5 columns */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 0;
   grid-gap: 0; /* No space between cards */
   padding: 0;
-  max-width: 720px; /* Or however wide you want it */
+  max-width: 308px; /* Or however wide you want it */
   margin: 0 auto; /* Center the grid */
 
   justify-items: stretch; /* Stretch the items to fill the grid area */
@@ -218,13 +323,10 @@ body {
   width: 100%; /* Set the container to fill the width */
 }
 
-
 h3 {
   color: var(--light);
   font-size: 40px;
 }
-
-
 
 h2 {
   text-align: center;
@@ -237,9 +339,8 @@ h2 {
   padding: 10px 0; /* Less padding than h1 for a less dominant appearance */
 }
 
-
 .card {
-  width: 180px; 
+  width: 180px;
   height: 180px;
 }
 
@@ -274,15 +375,15 @@ h2 {
     var(--primary),
     var(--dream-clean-green)
   ); */
-  background-color: #5FC6CC;
-  color: #5FC6CC;
+  background-color: #5fc6cc;
+  color: #5fc6cc;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .card__face--back {
-  background-color: #5FC6CC;
+  background-color: #5fc6cc;
   transform: rotateY(180deg);
 }
 
@@ -333,7 +434,6 @@ h2 {
   font-size: small;
 }
 
-
 /* Scoreboard Styles */
 .scoreboard {
   max-width: 720px; /* Match the width of your game */
@@ -380,5 +480,3 @@ h2 {
 .scoreboard-list .player-time {
   /* Adjust the styling as needed */
 }
-
-
