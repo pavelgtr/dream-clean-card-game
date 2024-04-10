@@ -1,3 +1,16 @@
+:root {
+  --primary: #5fcfd5;
+  --complementary-to-primary: #cf5f77; /* A soft red-pink */
+  --secondary: #5ed1d6;
+  --complementary-to-secondary: #d65e7a; /* A variation of red-pink */
+  --doncella-grey: #505961;
+  --complementary-to-grey: #9f5059; /* A warm reddish-grey */
+  --dream-clean-green: #02afab;
+  --complementary-to-green: #af024f; /* A deep magenta */
+  --light: #f3f3f3;
+  --font-body: "OpenSans", "sans-serif";
+}
+
 /* --------------------------------- FONTS DONCELLA --------------------------------- */
 @font-face {
   font-family: SourceSansPro-Regular;
@@ -90,7 +103,6 @@
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-/* Modal Content */
 .modal-content {
   position: relative;
   display: flex;
@@ -101,7 +113,6 @@
   margin: 400px auto;
   letter-spacing: 0;
   line-height: 24px;
-  
 }
 
 .modal-content p {
@@ -112,15 +123,14 @@
   letter-spacing: 0;
   line-height: 24px;
   padding-top: 80px;
-  
 }
 
 #modal-text-form-button {
-display: flex;
-flex-direction: column;
-padding-left: 30px;
-width: 233px;
-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+  width: 233px;
+  gap: 20px;
 }
 
 .modal-flow {
@@ -136,8 +146,6 @@ gap: 20px;
   height: 51px;
   background-color: #33bbc6;
 }
-
-
 
 /* The Close Button */
 .close {
@@ -206,8 +214,6 @@ gap: 20px;
   cursor: pointer;
 }
 
-
-
 .back-arrow {
   display: flex; /* Aligns the icon and text inline */
   align-items: center; /* Centers items vertically */
@@ -231,7 +237,11 @@ gap: 20px;
   text-align: center; /* Center the text */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow to lift the header */
 }
-
+.gray-top {
+  width: 100%;
+  height: 40px;
+  background-color: #707174;
+}
 .game-header h1 {
   margin: 0;
   padding: 0;
@@ -242,85 +252,90 @@ gap: 20px;
   /* padding: 100px; */
 }
 
-/* Logo Styles (if you have a logo image) */
 .logo {
   height: 50px; /* Adjust size as needed */
   vertical-align: middle; /* Aligns the image vertically in the header */
 }
-:root {
-  --primary: #5fcfd5;
-  --complementary-to-primary: #cf5f77; /* A soft red-pink */
-  --secondary: #5ed1d6;
-  --complementary-to-secondary: #d65e7a; /* A variation of red-pink */
-  --doncella-grey: #505961;
-  --complementary-to-grey: #9f5059; /* A warm reddish-grey */
-  --dream-clean-green: #02afab;
-  --complementary-to-green: #af024f; /* A deep magenta */
-  --light: #f3f3f3;
-  --font-body: "OpenSans", "sans-serif";
-}
+
+/* ---------------------------------Game --------------------------------- */
 
 body {
-  min-height: 100vh;
-  /* background-image: linear-gradient(
-    to bottom right,
-    var(--dream-clean-green),
-    var(--light)
-  ); */
-
+  /* min-height: 100vh; */
   background: rgba(95, 207, 213, 0.09);
 }
 
 .game-wrapper {
+  width: 580px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border: 3px solid red;
 }
 
 .game-status-bar {
+  background-color: #ffffff;
   display: flex;
+  border: 1px solid #dde3e8;
+  width: 540px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  border-radius: 3px;
+  font-family: Helvetica;
+  font-size: 18px;
   color: #9a9a9a;
-  border-radius: 10px;
-  color: var(--light);
-  margin: 0 auto;
-  padding: 10px; /* Add some padding */
-  min-width: 720px;
-  max-width: 100%; /* Add a max-width to ensure it doesn't overflow the screen width */
-  box-sizing: border-box; /* Ensure padding and border are included in the width */
-  font-size: 1.2rem; /* Adjust the font size as needed */
+  text-align: left;
+  height: 37px;
+  margin: 20px 0;
 }
 
-/* Additional CSS for the timer image and text */
 #timer {
-  width: 30px; /* Adjust based on your image's aspect ratio */
-  height: 30px; /* Adjust to match the width or as needed */
-  margin-right: 10px; /* Add some margin to separate image from text */
-  color: black;
+  display: flex;
+  align-items: center;
+
+  justify-content: end;
+  gap: 5px;
+  width: 400px;
 }
 
 #score {
-  color: black;
-}
-#timer span {
-  color: black; /* Or #000000 for black */
+  color: #9a9a9a;
 }
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 0;
-  grid-gap: 0; /* No space between cards */
-  padding: 0;
-  max-width: 308px; /* Or however wide you want it */
-  margin: 0 auto; /* Center the grid */
+  grid-template-columns: repeat(3, 1fr);
+  width: 550px;
+  margin: 0 auto;
+  gap: 5px;
+}
 
-  justify-items: stretch; /* Stretch the items to fill the grid area */
-  align-items: stretch; /* Stretch the items to fill the grid area */
-  width: 100%; /* Set the container to fill the width */
+.bottom-buttons {
+  display: flex;
+  width: 550px;
+  justify-content: space-between;
+}
+
+.bottom-buttons button {
+  background-color: rgba(0, 170, 184, 0.8);
+  border-radius: 2px;
+  font-family: "OpenSansRoman-CondensedSemiBold";
+  font-size: 16px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 16px;
+  width: 140px;
+  height: 42px;
+  border: none;
+}
+
+.reset, .next-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  /* border: 2px solid red; */
 }
 
 h3 {
@@ -370,11 +385,6 @@ h2 {
 }
 
 .card__face--front {
-  /* background-image: linear-gradient(
-    to bottom right,
-    var(--primary),
-    var(--dream-clean-green)
-  ); */
   background-color: #5fc6cc;
   color: #5fc6cc;
   display: flex;
@@ -436,7 +446,7 @@ h2 {
 
 /* Scoreboard Styles */
 .scoreboard {
-  max-width: 720px; /* Match the width of your game */
+  /* max-width: 620px;  */
   margin: 20px auto; /* Center the scoreboard */
   padding: 20px;
   background: var(--light); /* Use a light background for the scoreboard */
@@ -479,4 +489,31 @@ h2 {
 
 .scoreboard-list .player-time {
   /* Adjust the styling as needed */
+}
+
+
+
+
+
+/* RESULTS PAGE */
+
+#result-final {
+
+padding-right: 5px;
+}
+
+.results-class {
+background-color: #FFFFFF;
+border: 1px solid #DDE3E8;
+border-radius: 3px;
+font-family: Helvetica;
+font-size: 18px;
+height: 46px;
+text-align: left;
+width: 285px;
+color: #9A9A9A;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
 }
