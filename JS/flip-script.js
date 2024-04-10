@@ -185,7 +185,8 @@ function disableCards() {
   soundEffects.win.play();
 }
 function checkEndOfRound() {
-  const totalPairs = 6; // Total number of pairs to be matched for a round
+  const anyCardArray = levelOne;
+  const totalPairs = anyCardArray.length / 2; // Total number of pairs to be matched for a round
   if (matchedPairsCount === totalPairs) {
     if (gameLevel < 3) {
       // If it's round 1 or 2, congratulate and proceed to reset for the next round
@@ -262,91 +263,7 @@ function calculateSpeedBonus() {
   }
 }
 
-// < ---------------------------------------------- SCORE MANAGMENT ---------------------------------------------- >
 
-function updateScoreboard(scores) {
-  const scoreboardList = document.querySelector(".scoreboard-list");
-  scoreboardList.innerHTML = ""; // Clear current scoreboard entries
-
-  scores.forEach((score, index) => {
-    const playerItem = document.createElement("li");
-    playerItem.innerHTML = `
-  <span class="player-position">${index + 1}</span>
-  <span class="player-name">${score.name}</span>
-  <span class="player-time">${formatTime(score.time)}</span>
-  <span class="player-score">${score.scoreCount}</span>
-`;
-    scoreboardList.appendChild(playerItem);
-  });
-
-  // Save the scores in localStorage
-  localStorage.setItem("scores", JSON.stringify(scores));
-}
-function displayScores() {
-  const scores = JSON.parse(localStorage.getItem("scores")) || [];
-  updateScoreboard(scores);
-}
-
-function displayFinalResults() {
-  const newScore = {
-    name: localStorage.getItem("userNickname") || "Anonymous",
-    time: totalTime, // The total time for all rounds, which needs to be formatted
-    scoreCount: scoreCount,
-  };
-
-  const scores = getSavedScores();
-  scores.push(newScore);
-  updateScoreboard(scores);
-
-  if (finalResultsDisplayed || scoreSubmitted) return; // Check the flag here too
-  finalResultsDisplayed = true;
-
-  document.getElementById(
-    "finalScore"
-  ).textContent = `Final Score: ${scoreCount}`;
-  // document.getElementById("totalErrors").textContent = `Total Errors: ${errorCount}`;
-  document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
-    secondsElapsed
-  )}`;
-
-  const finalResultsModal = document.getElementById("finalResultsModal");
-  finalResultsModal.style.display = "block";
-
-  const restartButton = document.createElement("button");
-  restartButton.textContent = "Restart Game";
-  restartButton.classList.add("restart-button");
-  restartButton.onclick = function () {
-    finalResultsModal.style.display = "none";
-    resetGame();
-  };
-  finalResultsModal.appendChild(restartButton);
-
-  const closeButton = finalResultsModal.querySelector(".close-button");
-  closeButton.onclick = function () {
-    finalResultsModal.style.display = "none";
-    // Do not call resetGame here if you don't want to start a new game immediately
-  };
-
-  if (!scoreSubmitted) {
-    let existingScores = getSavedScores(); // Retrieve existing scores
-    const currentUserScore = {
-      name: localStorage.getItem("userNickname") || "Anonymous",
-      email: localStorage.getItem("userEmail") || "No email provided", // If you want to save email as well.
-      time: formatTime(secondsElapsed),
-      score: scoreCount,
-    };
-
-    existingScores.push(currentUserScore); // Add new score
-    localStorage.setItem("scores", JSON.stringify(existingScores)); // Save updated scores array
-    updateScoreboard(existingScores); // Update the scoreboard display
-    scoreSubmitted = true;
-  }
-}
-function getSavedScores() {
-  // Retrieve the scores from localStorage
-  const savedScores = localStorage.getItem("scores");
-  return savedScores ? JSON.parse(savedScores) : [];
-}
 
 // < ---------------------------------------------- UTILITY FUNCTIONS ---------------------------------------------- >
 
@@ -436,19 +353,23 @@ const soundEffects = {
   error: new Audio("../sounds/fail.wav"),
   win: new Audio("../sounds/cheer.wav"),
 };
+
+
+// < ---------------------------------------------- ARRAYS ---------------------------------------------- >
+
 const levelOne = [
   "../images/levelOne/a.jpg",
   "../images/levelOne/a-1.jpg",
   "../images/levelOne/b.jpg",
   "../images/levelOne/b-1.jpg",
-  "../images/levelOne/c.jpg",
-  "../images/levelOne/c-1.jpg",
-  "../images/levelOne/d.jpg",
-  "../images/levelOne/d-1.jpg",
-  "../images/levelOne/e.jpg",
-  "../images/levelOne/e-1.jpg",
-  "../images/levelOne/f.jpg",
-  "../images/levelOne/f-1.jpg",
+  // "../images/levelOne/c.jpg",
+  // "../images/levelOne/c-1.jpg",
+  // "../images/levelOne/d.jpg",
+  // "../images/levelOne/d-1.jpg",
+  // "../images/levelOne/e.jpg",
+  // "../images/levelOne/e-1.jpg",
+  // "../images/levelOne/f.jpg",
+  // "../images/levelOne/f-1.jpg",
 ];
 
 const levelTwo = [
@@ -456,30 +377,140 @@ const levelTwo = [
   "../images/levelTwo/a-1.jpg",
   "../images/levelTwo/b.jpg",
   "../images/levelTwo/b-1.jpg",
-  "../images/levelTwo/c.jpg",
-  "../images/levelTwo/c-1.jpg",
-  "../images/levelTwo/d.jpg",
-  "../images/levelTwo/d-1.jpg",
-  "../images/levelTwo/e.jpg",
-  "../images/levelTwo/e-1.jpg",
-  "../images/levelTwo/f.jpg",
-  "../images/levelTwo/f-1.jpg",
+  // "../images/levelTwo/c.jpg",
+  // "../images/levelTwo/c-1.jpg",
+  // "../images/levelTwo/d.jpg",
+  // "../images/levelTwo/d-1.jpg",
+  // "../images/levelTwo/e.jpg",
+  // "../images/levelTwo/e-1.jpg",
+  // "../images/levelTwo/f.jpg",
+  // "../images/levelTwo/f-1.jpg",
 ];
 const levelThree = [
   "../images/levelThree/a.jpg",
   "../images/levelThree/a-1.jpg",
   "../images/levelThree/b.jpg",
   "../images/levelThree/b-1.jpg",
-  "../images/levelThree/c.jpg",
-  "../images/levelThree/c-1.jpg",
-  "../images/levelThree/d.jpg",
-  "../images/levelThree/d-1.jpg",
-  "../images/levelThree/e.jpg",
-  "../images/levelThree/e-1.jpg",
-  "../images/levelThree/f.jpg",
-  "../images/levelThree/f-1.jpg",
+  // "../images/levelThree/c.jpg",
+  // "../images/levelThree/c-1.jpg",
+  // "../images/levelThree/d.jpg",
+  // "../images/levelThree/d-1.jpg",
+  // "../images/levelThree/e.jpg",
+  // "../images/levelThree/e-1.jpg",
+  // "../images/levelThree/f.jpg",
+  // "../images/levelThree/f-1.jpg",
 ];
 
+
+
+
+
+
+// < ---------------------------------------------- SCORE MANAGMENT ---------------------------------------------- >
+
+
+
+
+function getScoreboardData() {
+  const savedScores = getSavedScores(); // Assuming you have your score-saving logic in place 
+  // ... additional data manipulation if needed 
+  return savedScores;
+}
+
+
+
+function updateScoreboard(scores) {
+  const scoreboardList = document.querySelector(".scoreboard-list");
+  scoreboardList.innerHTML = ""; // Clear current scoreboard entries
+
+  scores.forEach((score, index) => {
+    const playerItem = document.createElement("li");
+    playerItem.innerHTML = `
+  <span class="player-position">${index + 1}</span>
+  <span class="player-name">${score.name}</span>
+  <span class="player-time">${formatTime(score.time)}</span>
+  <span class="player-score">${score.scoreCount}</span>
+`;
+    scoreboardList.appendChild(playerItem);
+  });
+
+  // Save the scores in localStorage
+  localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+// Call this function with actual data when needed
+updateScoreboard(exampleScores);
+
+
+function displayScores() {
+  const scores = JSON.parse(localStorage.getItem("scores")) || [];
+  updateScoreboard(scores);
+}
+
+function displayFinalResults() {
+  const newScore = {
+    name: localStorage.getItem("userNickname") || "Anonymous",
+    time: totalTime, // The total time for all rounds, which needs to be formatted
+    scoreCount: scoreCount,
+  };
+
+  const scores = getSavedScores(); // Retrieve the array of existing scores
+  scores.push(newScore); // Add the new score to the array
+  updateScoreboard(scores); // Update the scoreboard (you might need to refresh the display depending on how you've set this up
+
+  if (finalResultsDisplayed || scoreSubmitted) return; // Check the flag here too
+  finalResultsDisplayed = true;
+
+  document.getElementById(
+    "finalScore"
+  ).textContent = `Final Score: ${scoreCount}`;
+  // document.getElementById("totalErrors").textContent = `Total Errors: ${errorCount}`;
+  document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
+    secondsElapsed
+  )}`;
+  
+  const finalResultsModal = document.getElementById("finalResultsModal");
+  finalResultsModal.style.display = "block";
+
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "Restart Game";
+  restartButton.classList.add("restart-button");
+  restartButton.onclick = function () {
+    finalResultsModal.style.display = "none";
+    resetGame();
+  };
+  finalResultsModal.appendChild(restartButton);
+
+  const closeButton = finalResultsModal.querySelector(".close-button");
+  closeButton.onclick = function () {
+    finalResultsModal.style.display = "none";
+    // Do not call resetGame here if you don't want to start a new game immediately
+  };
+
+  if (!scoreSubmitted) {
+    let existingScores = getSavedScores(); // Retrieve existing scores
+    const currentUserScore = {
+      name: localStorage.getItem("userNickname") || "Anonymous",
+      email: localStorage.getItem("userEmail") || "No email provided", // If you want to save email as well.
+      time: formatTime(secondsElapsed),
+      score: scoreCount,
+    };
+    
+    updateScoreboard(existingScores); // Update the scoreboard display
+    scoreSubmitted = true;
+  }
+}
+
+
+
+
+
+
+function getSavedScores() {
+  // Retrieve the scores from localStorage
+  const savedScores = localStorage.getItem("scores");
+  return savedScores ? JSON.parse(savedScores) : [];
+}
 // Example scores data - replace this with actual game data
 const exampleScores = [
   { name: "John Brown", time: "00:24.24", scoreCount: 100 },
@@ -496,8 +527,7 @@ const exampleScores = [
   { name: "Milagros Milán", time: "00:59.78", scoreCount: 35 },
 ];
 
-// Call this function with actual data when needed
-updateScoreboard(exampleScores);
+
 
 // LocalStorage
 
