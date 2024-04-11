@@ -1,0 +1,22 @@
+ <!-- Scoreboard Section -->
+  <div class="scoreboard">
+    <h2 class="scoreboard-title">Los Mejores Jugadores</h2>
+    <ol class="scoreboard-list">
+
+      <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          const scoreboardData = getScoreboardData(); // Fetch data from localStorage
+
+          const scoreboardList = document.querySelector('.scoreboard-list');
+          scoreboardData.forEach((player, index) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                    <span class="player-position">${index + 1}</span>
+                    <span class="player-name">${player.name}</span>
+                    <span class="player-time">${formatTime(player.time)}</span>  
+                    <span class="player-score">${player.scoreCount}</span> 
+                `;
+            scoreboardList.appendChild(listItem);
+          });
+        });
+      </script>

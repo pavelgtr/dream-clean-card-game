@@ -20,9 +20,32 @@
   <div class="results-class">
     <div id="result-final"><img src="../images/Menu/clock.jpg" alt="resultado-final">
     </div>
-    Tu Resultado: 01:47:00
+    <div class="results-class">
+      Tu Resultado: <span id="player-info"></span> </div>
+      <script src="../JS/flip-script.js"></script>
+    <script>
+      const userNickname = localStorage.getItem('userNickname');
+      const playerEmail = localStorage.getItem('userEmail');
+      const totalTime = localStorage.getItem('totalTime'); 
+      const formattedTime = formatTime(totalTime); // Pass in the totalTime
+      const playerInfoElement = document.getElementById('player-info');
+      playerInfoElement.textContent = `${userNickname}, y tu correo es: ${playerEmail}. Tiempo Total: ${formattedTime}`;
+    </script>
+ 
+
+    </ol>
   </div>
-  <!-- Final Results Modal -->
+ 
+
+
+</body>
+
+
+</html>
+
+
+
+ <!-- Final Results Modal
   <div id="finalResultsModal" class="modal">
     <div class="modal-content">
       <span class="close-button">×</span>
@@ -31,37 +54,4 @@
       <p id="totalErrors">Total Errors: 0</p>
       <p id="totalTime">Total Time: 00:00</p>
     </div>
-  </div>
-
-  <!-- Scoreboard Section -->
-  <div class="scoreboard">
-    <h2 class="scoreboard-title">Los Mejores Jugadores</h2>
-    <ol class="scoreboard-list">
-
-      <script>
-        window.addEventListener('DOMContentLoaded', () => {
-          const scoreboardData = getScoreboardData(); // Fetch data from localStorage
-
-          const scoreboardList = document.querySelector('.scoreboard-list');
-          scoreboardData.forEach((player, index) => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-                    <span class="player-position">${index + 1}</span>
-                    <span class="player-name">${player.name}</span>
-                    <span class="player-time">${formatTime(player.time)}</span>  
-                    <span class="player-score">${player.scoreCount}</span> 
-                `;
-            scoreboardList.appendChild(listItem);
-          });
-        });
-      </script>
-
-    </ol>
-  </div>
-  <script src="../JS/flip-script.js"></script>
-
-
-</body>
-
-
-</html>
+  </div> -->

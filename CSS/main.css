@@ -510,7 +510,8 @@ font-family: Helvetica;
 font-size: 18px;
 height: 46px;
 text-align: left;
-width: 285px;
+/* width: 285px; */
+width: 585px;
 color: #9A9A9A;
 display: flex;
 justify-content: center;

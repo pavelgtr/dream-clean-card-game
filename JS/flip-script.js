@@ -39,23 +39,19 @@ function showSignInModal() {
     localStorage.setItem("userNickname", nickname);
     localStorage.setItem("userEmail", email);
     signinModal.style.display = "none";
-    // Additional actions after form submission, like starting the game, can be added here
   };
 }
 function setupModalsAndForm() {
   startGame();
   showSignInModal();
-  const savedScores = getSavedScores();
-  updateScoreboard(savedScores);
-  // Assuming displayScores() is intended to refresh or update the displayed scores
-  displayScores(); // This will load and display the scores from localStorage
 }
 
 // < ---------------------------------------------- GAME MECHANICS ---------------------------------------------- >
 
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
-  totalTime = 0;
+  // totalTime = 0;
+
   createCards(levelOne); // Start with level one cards
   errorCount = 0; // Reset errors if starting a new game
   scoreCount = 0; // Reset score if starting a new game
@@ -84,7 +80,9 @@ function resetGame() {
   // This will now correctly check if the current game has finished level 3
   if (gameLevel === 3) {
     totalTime += secondsElapsed;
-    displayFinalResults(); // Show final results
+    localStorage.setItem('totalTime', totalTime);
+
+    displayFinalResults(); // I don't need this function right now******
     // Prepare for a new game
     gameLevel = 1; // Reset to level one for a new game
     scoreCount = 0; // Optionally reset score for a new game
@@ -197,7 +195,7 @@ function checkEndOfRound() {
     } else {
       // If it's the end of round 3, show final results instead
       setTimeout(() => {
-        displayFinalResults(); // Show final results and potentially reset the game
+        // displayFinalResults(); // Show final results and potentially reset the game
       }, 1000);
     }
   }
@@ -329,7 +327,14 @@ var emailInput = document.getElementById("email");
 
 continueButton.addEventListener("click", function (event) {
   if (nickname.checkValidity() && emailInput.checkValidity()) {
-    startTimer();
+    console.log("Name:", nickname.value, "Email:", emailInput.value); 
+    try {
+      startTimer();
+    } catch (error) {
+      console.error("Error starting timer:", error); // Log the error for debugging
+      // Display a user-friendly message (e.g., an alert box)
+      alert("Oops! Something went wrong starting the game. Please try again.");
+    }
   } else {
     form.reportValidity();
   }
@@ -406,144 +411,4 @@ const levelThree = [
 
 
 
-// < ---------------------------------------------- SCORE MANAGMENT ---------------------------------------------- >
-
-
-
-
-function getScoreboardData() {
-  const savedScores = getSavedScores(); // Assuming you have your score-saving logic in place 
-  // ... additional data manipulation if needed 
-  return savedScores;
-}
-
-
-
-function updateScoreboard(scores) {
-  const scoreboardList = document.querySelector(".scoreboard-list");
-  scoreboardList.innerHTML = ""; // Clear current scoreboard entries
-
-  scores.forEach((score, index) => {
-    const playerItem = document.createElement("li");
-    playerItem.innerHTML = `
-  <span class="player-position">${index + 1}</span>
-  <span class="player-name">${score.name}</span>
-  <span class="player-time">${formatTime(score.time)}</span>
-  <span class="player-score">${score.scoreCount}</span>
-`;
-    scoreboardList.appendChild(playerItem);
-  });
-
-  // Save the scores in localStorage
-  localStorage.setItem("scores", JSON.stringify(scores));
-}
-
-// Call this function with actual data when needed
-updateScoreboard(exampleScores);
-
-
-function displayScores() {
-  const scores = JSON.parse(localStorage.getItem("scores")) || [];
-  updateScoreboard(scores);
-}
-
-function displayFinalResults() {
-  const newScore = {
-    name: localStorage.getItem("userNickname") || "Anonymous",
-    time: totalTime, // The total time for all rounds, which needs to be formatted
-    scoreCount: scoreCount,
-  };
-
-  const scores = getSavedScores(); // Retrieve the array of existing scores
-  scores.push(newScore); // Add the new score to the array
-  updateScoreboard(scores); // Update the scoreboard (you might need to refresh the display depending on how you've set this up
-
-  if (finalResultsDisplayed || scoreSubmitted) return; // Check the flag here too
-  finalResultsDisplayed = true;
-
-  document.getElementById(
-    "finalScore"
-  ).textContent = `Final Score: ${scoreCount}`;
-  // document.getElementById("totalErrors").textContent = `Total Errors: ${errorCount}`;
-  document.getElementById("totalTime").textContent = `Total Time: ${formatTime(
-    secondsElapsed
-  )}`;
-  
-  const finalResultsModal = document.getElementById("finalResultsModal");
-  finalResultsModal.style.display = "block";
-
-  const restartButton = document.createElement("button");
-  restartButton.textContent = "Restart Game";
-  restartButton.classList.add("restart-button");
-  restartButton.onclick = function () {
-    finalResultsModal.style.display = "none";
-    resetGame();
-  };
-  finalResultsModal.appendChild(restartButton);
-
-  const closeButton = finalResultsModal.querySelector(".close-button");
-  closeButton.onclick = function () {
-    finalResultsModal.style.display = "none";
-    // Do not call resetGame here if you don't want to start a new game immediately
-  };
-
-  if (!scoreSubmitted) {
-    let existingScores = getSavedScores(); // Retrieve existing scores
-    const currentUserScore = {
-      name: localStorage.getItem("userNickname") || "Anonymous",
-      email: localStorage.getItem("userEmail") || "No email provided", // If you want to save email as well.
-      time: formatTime(secondsElapsed),
-      score: scoreCount,
-    };
-    
-    updateScoreboard(existingScores); // Update the scoreboard display
-    scoreSubmitted = true;
-  }
-}
-
-
-
-
-
-
-function getSavedScores() {
-  // Retrieve the scores from localStorage
-  const savedScores = localStorage.getItem("scores");
-  return savedScores ? JSON.parse(savedScores) : [];
-}
-// Example scores data - replace this with actual game data
-const exampleScores = [
-  { name: "John Brown", time: "00:24.24", scoreCount: 100 },
-  { name: "Lenora Weathers", time: "00:32.34", scoreCount: 95 },
-  { name: "Juan Bocachica", time: "00:24.24", scoreCount: 80 },
-  { name: "Esperanza Fugaz", time: "00:32.34", scoreCount: 75 },
-  { name: "Fulgencio Batista", time: "00:35.10", scoreCount: 70 },
-  { name: "Mercedes Risueño", time: "00:40.42", scoreCount: 65 },
-  { name: "Armando Casas", time: "00:43.58", scoreCount: 60 },
-  { name: "Luz del Alba", time: "00:45.16", scoreCount: 55 },
-  { name: "Evaristo Liriano", time: "00:47.29", scoreCount: 50 },
-  { name: "Dolores Delano", time: "00:52.33", scoreCount: 45 },
-  { name: "Cristóbal Manguera", time: "00:54.14", scoreCount: 40 },
-  { name: "Milagros Milán", time: "00:59.78", scoreCount: 35 },
-];
-
-
-
-// LocalStorage
-
-form.onsubmit = function (event) {
-  event.preventDefault();
-
-  const email = document.getElementById("email").value;
-
-  // Save the user data in localStorage
-  localStorage.setItem("userNickname", nickname);
-  localStorage.setItem("userEmail", email);
-
-  // Hide the sign-in modal
-  document.getElementById("signinModal").style.display = "none";
-
-  // Begin the game after signing in
-  startGame();
-};
 
