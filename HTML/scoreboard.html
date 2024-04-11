@@ -26,10 +26,10 @@
     <script>
       const userNickname = localStorage.getItem('userNickname');
       const playerEmail = localStorage.getItem('userEmail');
-      const totalTime = localStorage.getItem('totalTime'); 
-      const formattedTime = formatTime(totalTime); // Pass in the totalTime
+      // const totalTime = localStorage.getItem('totalTime'); 
+      // const formattedTime = formatTime(totalTime); // Pass in the totalTime
       const playerInfoElement = document.getElementById('player-info');
-      playerInfoElement.textContent = `${userNickname}, y tu correo es: ${playerEmail}. Tiempo Total: ${formattedTime}`;
+      playerInfoElement.textContent = `${userNickname}, y tu correo es: ${playerEmail}.`;
     </script>
  
 

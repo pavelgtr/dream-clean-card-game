@@ -50,8 +50,7 @@ function setupModalsAndForm() {
 
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
-  // totalTime = 0;
-
+  totalTime = 0;
   createCards(levelOne); // Start with level one cards
   errorCount = 0; // Reset errors if starting a new game
   scoreCount = 0; // Reset score if starting a new game
@@ -195,7 +194,7 @@ function checkEndOfRound() {
     } else {
       // If it's the end of round 3, show final results instead
       setTimeout(() => {
-        // displayFinalResults(); // Show final results and potentially reset the game
+        displayFinalResults(); // Show final results and potentially reset the game
       }, 1000);
     }
   }
