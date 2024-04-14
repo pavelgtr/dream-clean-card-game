@@ -1,5 +1,4 @@
-// TODO timer starts before modal is completed
-// TODO game matching is ending before all cards are matched
+// flip.script.js
 
 // <----------------------------------------- INSTRUCTIONS & SIGN-IN MODALS -----------------------------------------> //
 
@@ -9,20 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupModalsAndForm();
 });
 
-// no instructions for now
-//   function displayInstructionModal() {
-//   const instructionModal = document.getElementById("instructionModal");
-//   instructionModal.style.display = "block";
 
-//   document.getElementById("startGameButton").onclick = function () {
-//     instructionModal.style.display = "none";
-//     showSignInModal();
-//   };
-
-//   document.querySelector("#instructionModal .close").onclick = function () {
-//     instructionModal.style.display = "none";
-//   };
-// }
 
 function showSignInModal() {
   const signinModal = document.getElementById("signinModal");
@@ -411,3 +397,23 @@ const levelThree = [
 
 
 
+
+
+
+// OLD
+
+
+// no instructions for now
+//   function displayInstructionModal() {
+//   const instructionModal = document.getElementById("instructionModal");
+//   instructionModal.style.display = "block";
+
+//   document.getElementById("startGameButton").onclick = function () {
+//     instructionModal.style.display = "none";
+//     showSignInModal();
+//   };
+
+//   document.querySelector("#instructionModal .close").onclick = function () {
+//     instructionModal.style.display = "none";
+//   };
+// }
