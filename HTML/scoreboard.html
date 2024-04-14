@@ -45,10 +45,11 @@
 
     function displayTotalTime() {
       const totalTime = localStorage.getItem('totalTime');
+      console.log("Scoreboard - Retrieved Total Time:", totalTime); // Log the retrieved time
+
       const formattedTime = formatTime(totalTime);
       const totalTimeElement = document.getElementById('total-time');
       totalTimeElement.textContent = formattedTime;
-      console.log("Retrieved Total Time:", totalTime);
     }
 
     function formatTime(seconds) {

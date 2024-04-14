@@ -35,6 +35,7 @@ function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
   totalTime = 0;
   localStorage.setItem("startTime", new Date().getTime()); // Set start time
+  console.log("Game started - startTime set:", localStorage.getItem("startTime")); // Log the start time
 
   createCards(levelOne); // Start with level one cards
   errorCount = 0; // Reset errors if starting a new game
@@ -42,6 +43,7 @@ function startGame() {
   matchedPairsCount = 0; // Reset matched pairs count
   setPointsPerMatch(); // Set initial points per match
   resetTurn();
+  startTimer(); // Start the game timer
 }
 
 function updateTimerDisplay(seconds) {
@@ -57,55 +59,44 @@ function startTimer() {
 }
 
 function resetGame() {
-  console.log("Resetting game... Current Level:", gameLevel); // Log current level at reset
-  stopTimer();
-  finalResultsDisplayed = false;
-  
+  stopTimer();  // Always stop the timer when resetting the game
+
+  console.log("Current Game Level before increment:", gameLevel); // Log current level before increment for debugging
+
   if (gameLevel === 3) {
-    console.log("Reached end of round 3"); // Confirm this is reached
-
-
-    // displayFinalResults();
-    gameLevel = 1;
-    scoreCount = 0;
-    errorCount = 0;
-    totalTime = 0;
-
-     // Calculate total time
-     const currentTime = new Date().getTime();
-     const startTime = localStorage.getItem("startTime");
-     const elapsedTime = (currentTime - startTime) / 1000; // Convert milliseconds to seconds
-     totalTime += elapsedTime;
-    localStorage.setItem("startTime", new Date().getTime()); 
-
-    console.log("Storing Total Time:", totalTime);
-
-    localStorage.setItem("totalTime", totalTime); // Store total time
-    localStorage.setItem("totalScore", scoreCount);
-
-     // Redirect to the scoreboard page
-     window.location.href = "../HTML/scoreboard.html"; // Update the file path
-
-     console.log("Total Time:", totalTime); // Log total time
-
-     
+      // Handle the end of the last level
+      console.log("Final level reached. Calculating totalTime...");
+      const currentTime = new Date().getTime();
+      const startTime = localStorage.getItem("startTime");
+      const elapsedTime = (currentTime - startTime) / 1000;  // Convert milliseconds to seconds
+      totalTime += elapsedTime;
+      console.log("Final Total Time calculated:", totalTime);
+      
+      localStorage.setItem("totalTime", totalTime);  // Store total time
+      console.log("Total Time stored. Preparing to redirect...");
+      
+      // Delay before redirection
+      setTimeout(function() {
+          console.log("Redirecting to scoreboard...");
+          window.location.href = "../HTML/scoreboard.html";
+      }, 5000);  // Delay for 5000 milliseconds (5 seconds)
   } else {
-    gameLevel++;
-  }
+      gameLevel++; // Increment level here
+      console.log("Resetting game... Current Level after increment:", gameLevel); // Log current level after increment
 
-  if (gameLevel === 1) {
-    createCards(levelOne);
-  } else if (gameLevel === 2) {
-    createCards(levelTwo);
-  } else if (gameLevel === 3) {
-    createCards(levelThree);
-  }
+      // Determine the correct card set based on the current game level
+      let cardSet = gameLevel === 1 ? levelOne : gameLevel === 2 ? levelTwo : levelThree;
+      createCards(cardSet);
 
-  matchedPairsCount = 0;
-  setPointsPerMatch();
-  resetTurn();
-  startTimer();
+      // Reset game state for a new round
+      matchedPairsCount = 0;
+      setPointsPerMatch();
+      resetTurn();
+      startTimer();  // Restart the timer for the new game level
+  }
 }
+
+
 
 function stopGame() {
   stopTimer();
@@ -196,8 +187,8 @@ function checkEndOfRound() {
     } else {
       setTimeout(() => {
         console.log("Transitioning to scoreboard...");
-        window.location.href = "../HTML/scoreboard.html";
-        // displayFinalResults();
+        // window.location.href = "../HTML/scoreboard.html";
+        resetGame();
       }, 1000);
     }
     console.log("End of round reached."); // Add this line
