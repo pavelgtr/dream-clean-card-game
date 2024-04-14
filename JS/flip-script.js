@@ -1,14 +1,9 @@
-// flip.script.js
+// flip-script.js
 
-// <----------------------------------------- INSTRUCTIONS & SIGN-IN MODALS -----------------------------------------> //
-
-// Initialize the game
 document.addEventListener("DOMContentLoaded", function () {
-  // displayInstructionModal();
   setupModalsAndForm();
+  startGame();
 });
-
-
 
 function showSignInModal() {
   const signinModal = document.getElementById("signinModal");
@@ -20,67 +15,84 @@ function showSignInModal() {
 
   document.getElementById("signinForm").onsubmit = function (event) {
     event.preventDefault();
+
+    //store user name and email in localStorage
     const nickname = document.getElementById("nickname").value;
     const email = document.getElementById("email").value;
     localStorage.setItem("userNickname", nickname);
     localStorage.setItem("userEmail", email);
+    // localStorage ends here in case needs to be adjusted
+
     signinModal.style.display = "none";
   };
 }
+
 function setupModalsAndForm() {
-  startGame();
   showSignInModal();
 }
-
-// < ---------------------------------------------- GAME MECHANICS ---------------------------------------------- >
 
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
   totalTime = 0;
+  localStorage.setItem("startTime", new Date().getTime()); // Set start time
+
   createCards(levelOne); // Start with level one cards
   errorCount = 0; // Reset errors if starting a new game
   scoreCount = 0; // Reset score if starting a new game
   matchedPairsCount = 0; // Reset matched pairs count
   setPointsPerMatch(); // Set initial points per match
   resetTurn();
-  // startTimer();
 }
 
 function updateTimerDisplay(seconds) {
-  timerDisplay.innerHTML = `<img src="./images/Menu/clock.jpg" alt="Clock" style="width:20px; height:20px; vertical-align:middle;"> ${formatTime(
-    seconds
-  )}`;
+  totalTime = seconds; // Update totalTime
+  timerDisplay.innerHTML = `<img src="./images/Menu/clock.jpg" alt="Clock" style="width:20px; height:20px; vertical-align:middle;"> ${formatTime(seconds)}`;
 }
+
 function startTimer() {
   timer = setInterval(() => {
     secondsElapsed++;
     updateTimerDisplay(secondsElapsed);
   }, 1000);
 }
-function resetGame() {
-  scoreSubmitted = false;
 
+function resetGame() {
+  console.log("Resetting game... Current Level:", gameLevel); // Log current level at reset
   stopTimer();
   finalResultsDisplayed = false;
-  // This will now correctly check if the current game has finished level 3
+  
   if (gameLevel === 3) {
-    totalTime += secondsElapsed;
-    localStorage.setItem('totalTime', totalTime);
+    console.log("Reached end of round 3"); // Confirm this is reached
 
-    displayFinalResults(); // I don't need this function right now******
-    // Prepare for a new game
-    gameLevel = 1; // Reset to level one for a new game
-    scoreCount = 0; // Optionally reset score for a new game
-    errorCount = 0; // Optionally reset errors for a new game
-    // No need to create cards or start the timer here as the game has ended
-    // and the player will need to manually start a new game
-    return; // Exit the function to prevent further execution
+
+    // displayFinalResults();
+    gameLevel = 1;
+    scoreCount = 0;
+    errorCount = 0;
+    totalTime = 0;
+
+     // Calculate total time
+     const currentTime = new Date().getTime();
+     const startTime = localStorage.getItem("startTime");
+     const elapsedTime = (currentTime - startTime) / 1000; // Convert milliseconds to seconds
+     totalTime += elapsedTime;
+    localStorage.setItem("startTime", new Date().getTime()); 
+
+    console.log("Storing Total Time:", totalTime);
+
+    localStorage.setItem("totalTime", totalTime); // Store total time
+    localStorage.setItem("totalScore", scoreCount);
+
+     // Redirect to the scoreboard page
+     window.location.href = "../HTML/scoreboard.html"; // Update the file path
+
+     console.log("Total Time:", totalTime); // Log total time
+
+     
   } else {
-    // If not at the end of the third level, increment and prepare for the next level
     gameLevel++;
   }
 
-  // Based on the new gameLevel, set up the game
   if (gameLevel === 1) {
     createCards(levelOne);
   } else if (gameLevel === 2) {
@@ -92,20 +104,19 @@ function resetGame() {
   matchedPairsCount = 0;
   setPointsPerMatch();
   resetTurn();
-  startTimer(); // Restart the timer for the next level
+  startTimer();
 }
+
 function stopGame() {
   stopTimer();
   resetGame();
 }
-function flipCard(event) {
-  //deleted index (2nd) parameter, not needed
 
+function flipCard(event) {
   if (gameBoardLocked) return;
   const card = event.currentTarget;
-  if (card === flippedCard1) return; // Prevents matching a card with itself by clicking the same card twice
+  if (card === flippedCard1) return;
 
-  //check if the card has already been matched
   if (card.classList.contains("matched")) return;
 
   soundEffects.click.play();
@@ -120,8 +131,8 @@ function flipCard(event) {
     checkForMatch();
   }
 }
+
 function checkForMatch() {
-  // Extract the base filename by removing the '.jpg' and '-1' parts
   let baseName1 = flippedCard1
     .querySelector(".card__face--back img")
     .src.split("/")
@@ -135,19 +146,20 @@ function checkForMatch() {
     .pop()
     .replace(".jpg", "")
     .replace("-1", "");
-  // Check if the base filenames are the same
+
   const isMatch = baseName1 === baseName2;
 
   if (isMatch) {
     disableCards();
-    const speedBonus = calculateSpeedBonus(); // Calculate the bonus
+    const speedBonus = calculateSpeedBonus();
     incrementScore(speedBonus);
-    matchedPairsCount++; // Increment the count of matched pairs
-    checkEndOfRound(); // New function to check if the game should end
+    matchedPairsCount++;
+    checkEndOfRound();
   } else {
     unflipCards();
   }
 }
+
 function unflipCards() {
   setTimeout(() => {
     flippedCard1.classList.remove("is-flipped");
@@ -157,8 +169,8 @@ function unflipCards() {
     resetTurn();
   }, 1500);
 }
+
 function disableCards() {
-  // Add the matched class to both cards
   flippedCard1.classList.add("matched");
   flippedCard2.classList.add("matched");
 
@@ -167,49 +179,54 @@ function disableCards() {
   resetTurn();
   soundEffects.win.play();
 }
+
 function checkEndOfRound() {
   const anyCardArray = levelOne;
-  const totalPairs = anyCardArray.length / 2; // Total number of pairs to be matched for a round
+  const totalPairs = anyCardArray.length / 2;
+  console.log("Matched pairs:", matchedPairsCount, "Total pairs:", totalPairs);
+
   if (matchedPairsCount === totalPairs) {
+    console.log("All pairs matched. Proceeding to reset game...");
     if (gameLevel < 3) {
-      // If it's round 1 or 2, congratulate and proceed to reset for the next round
       setTimeout(() => {
         alert("Congratulations! You have found all matches in this round!");
-        resetGame(); // Prepares the game for the next round
+        // gameLevel++; // Ensure level is incremented before reset
+        resetGame();
       }, 1000);
     } else {
-      // If it's the end of round 3, show final results instead
       setTimeout(() => {
-        displayFinalResults(); // Show final results and potentially reset the game
+        console.log("Transitioning to scoreboard...");
+        window.location.href = "../HTML/scoreboard.html";
+        // displayFinalResults();
       }, 1000);
     }
+    console.log("End of round reached."); // Add this line
+
   }
 }
+
 function resetTurn() {
   [hasFlippedCard, gameBoardLocked] = [false, false];
   [flippedCard1, flippedCard2] = [null, null];
 }
+
 function incrementScore(speedBonus = 0) {
   scoreCount += pointsPerMatch + speedBonus;
   scoreDisplay.textContent = `Puntos: ${scoreCount}`;
-  //  setTimeout(() => {
-  //   alert(`Mortal! Lograste hacer un match. Tu score ahora es ${scoreCount}`);
-  // }, 1000);
 }
+
 function incrementError() {
   errorCount++;
-  // errorDisplay.textContent = `Errors: ${errorCount}`;
-
-  // Deduct points for error with lower limit check
-  scoreCount = Math.max(0, scoreCount - 2); // Ensure score does not go below 0
-  scoreDisplay.textContent = `Puntos: ${scoreCount}`; // Update score display
+  scoreCount = Math.max(0, scoreCount - 2);
+  scoreDisplay.textContent = `Puntos: ${scoreCount}`;
 }
+
 function stopTimer() {
   clearInterval(timer);
   secondsElapsed = 0;
-  // timerDisplay.textContent = "Time: 00:00";
   updateTimerDisplay(secondsElapsed);
 }
+
 function formatTime(seconds) {
   if (isNaN(seconds)) {
     console.error("Invalid time value passed to formatTime:", seconds);
@@ -222,6 +239,7 @@ function formatTime(seconds) {
     .toString()
     .padStart(2, "0")}`;
 }
+
 function setPointsPerMatch() {
   if (gameLevel === 1) {
     pointsPerMatch = 10;
@@ -231,24 +249,18 @@ function setPointsPerMatch() {
     pointsPerMatch = 20;
   }
 }
+
 function calculateSpeedBonus() {
   if (secondsElapsed < 60) {
-    // less than 1 minute
     return 30;
   } else if (secondsElapsed < 120) {
-    // less than 2 minutes
     return 20;
   } else if (secondsElapsed < 180) {
-    // less than 3 minutes
     return 10;
   } else {
-    return 0; // No bonus
+    return 0;
   }
 }
-
-
-
-// < ---------------------------------------------- UTILITY FUNCTIONS ---------------------------------------------- >
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -257,6 +269,7 @@ function shuffleArray(array) {
   }
   return array;
 }
+
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
   shuffleArray(imagesArray);
@@ -297,7 +310,6 @@ let scoreSubmitted = false;
 let totalTime = 0;
 
 const timerDisplay = document.getElementById("timer");
-// const errorDisplay = document.getElementById("errors");
 const scoreDisplay = document.getElementById("score");
 
 var continueButton = document.getElementById("continue");
@@ -308,16 +320,13 @@ const nickname = document.getElementById("nickname");
 
 var emailInput = document.getElementById("email");
 
-// Add click event listener to the button
-
 continueButton.addEventListener("click", function (event) {
   if (nickname.checkValidity() && emailInput.checkValidity()) {
-    console.log("Name:", nickname.value, "Email:", emailInput.value); 
+    console.log("Name:", nickname.value, "Email:", emailInput.value);
     try {
       startTimer();
     } catch (error) {
-      console.error("Error starting timer:", error); // Log the error for debugging
-      // Display a user-friendly message (e.g., an alert box)
+      console.error("Error starting timer:", error);
       alert("Oops! Something went wrong starting the game. Please try again.");
     }
   } else {
@@ -325,16 +334,14 @@ continueButton.addEventListener("click", function (event) {
   }
 });
 
-const resetButton = document.querySelector(".reset"); // Using querySelector to select the first match
+const resetButton = document.querySelector(".reset");
 resetButton.addEventListener("click", function () {
-  resetGame(); // Call your reset function
+  resetGame();
   startGame();
 });
 
-// Select the next button and attach a function to show an alert
-const nextButton = document.querySelector(".next-button"); // Using querySelector to select the first match
+const nextButton = document.querySelector(".next-button");
 nextButton.addEventListener("click", function () {
-  // alert("Siguiente Paso"); // Show your desired alert
   window.location.href = "./HTML/scoreboard.html";
 });
 
@@ -343,7 +350,6 @@ const soundEffects = {
   error: new Audio("../sounds/fail.wav"),
   win: new Audio("../sounds/cheer.wav"),
 };
-
 
 // < ---------------------------------------------- ARRAYS ---------------------------------------------- >
 
@@ -391,17 +397,7 @@ const levelThree = [
   // "../images/levelThree/f-1.jpg",
 ];
 
-
-
-
-
-
-
-
-
-
 // OLD
-
 
 // no instructions for now
 //   function displayInstructionModal() {

@@ -1,3 +1,6 @@
+<!-- //scoreboard.html -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,43 +12,62 @@
   <link rel="preload" href="../CSS/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 
-<header class="game-header">
-  <div class="gray-top"></div>
-  <h1><img src="../images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
-</header>
-
 <body>
+  <header class="game-header">
+    <div class="gray-top"></div>
+    <h1><img src="../images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
+  </header>
+
   <h2><img src="../images/Menu/logo-green-choice.jpg" alt="logo-green-choice"></h2>
   <h2><img src="../images/Menu/Yei.png" alt="logo-green-choice"></h2>
+
   <div class="results-class">
-    <div id="result-final"><img src="../images/Menu/clock.jpg" alt="resultado-final">
-    </div>
-    <div class="results-class">
-      Tu Nombre: <span id="player-info"></span> </div>
-      <script src="../JS/flip-script.js"></script>
-    <script>
+    <div id="result-final"><img src="../images/Menu/clock.jpg" alt="resultado-final"> Total Time: <span
+        id="total-time"></span></div>
+    <div class="results-class">Your Name: <span id="player-name"></span><br>
+      Your Email: <span id="player-email"></span></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      displayPlayerInfo();
+      displayTotalTime();
+    });
+
+    function displayPlayerInfo() {
       const userNickname = localStorage.getItem('userNickname');
       const playerEmail = localStorage.getItem('userEmail');
-      // const totalTime = localStorage.getItem('totalTime'); 
-      // const formattedTime = formatTime(totalTime); // Pass in the totalTime
-      const playerInfoElement = document.getElementById('player-info');
-      playerInfoElement.textContent = `${userNickname}, y tu correo es: ${playerEmail}.`;
-    </script>
- 
+      const playerNameElement = document.getElementById('player-name');
+      const playerEmailElement = document.getElementById('player-email');
+      playerNameElement.textContent = userNickname;
+      playerEmailElement.textContent = playerEmail;
+    }
 
-    </ol>
-  </div>
- 
+    function displayTotalTime() {
+      const totalTime = localStorage.getItem('totalTime');
+      const formattedTime = formatTime(totalTime);
+      const totalTimeElement = document.getElementById('total-time');
+      totalTimeElement.textContent = formattedTime;
+      console.log("Retrieved Total Time:", totalTime);
+    }
 
-
+    function formatTime(seconds) {
+      if (isNaN(seconds)) {
+        console.error("Invalid time value passed to formatTime:", seconds);
+        return "00:00";
+      }
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    }
+  </script>
 </body>
-
 
 </html>
 
 
 
- <!-- Final Results Modal
+<!-- Final Results Modal
   <div id="finalResultsModal" class="modal">
     <div class="modal-content">
       <span class="close-button">×</span>
