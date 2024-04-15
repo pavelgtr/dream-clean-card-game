@@ -444,77 +444,44 @@ h2 {
   font-size: small;
 }
 
-/* Scoreboard Styles */
-.scoreboard {
-  /* max-width: 620px;  */
-  margin: 20px auto; /* Center the scoreboard */
-  padding: 20px;
-  background: var(--light); /* Use a light background for the scoreboard */
-  box-shadow: 0px 3px 18px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
-  border-radius: 10px; /* Rounded corners */
-}
-
-.scoreboard-title {
-  text-align: center;
-  color: var(--dream-clean-green); /* Theme color for the title */
-  margin-bottom: 10px;
-}
-
-.scoreboard-list {
-  list-style: none; /* Remove default list styling */
-  padding: 0;
-  margin: 0;
-}
-
-.scoreboard-list li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #ddd; /* A subtle line between entries */
-}
-
-.scoreboard-list li:last-child {
-  border-bottom: none; /* No border for the last item */
-}
-
-.scoreboard-list .player-icon {
-  /* Adjust the styling as needed */
-}
-
-.scoreboard-list .player-name {
-  flex-grow: 1; /* Allow the name to fill the space */
-  padding-left: 10px; /* Spacing between icon and name */
-}
-
-.scoreboard-list .player-time {
-  /* Adjust the styling as needed */
-}
-
-
-
 
 
 /* RESULTS PAGE */
 
-#result-final {
-
-padding-right: 5px;
-}
-
 .results-class {
+display: flex;
 background-color: #FFFFFF;
 border: 1px solid #DDE3E8;
 border-radius: 3px;
 font-family: Helvetica;
-font-size: 18px;
-height: 46px;
-text-align: left;
-/* width: 285px; */
-width: 585px;
 color: #9A9A9A;
-display: flex;
-justify-content: center;
+text-align: left;
+width: 285px;
+height: 46px;
 align-items: center;
+justify-content: center;
 margin: 0 auto;
 }
+
+.results-class p {
+  font-family: Helvetica;
+  font-size: 17px;
+  color: #9A9A9A;
+  padding-right: 10px;
+  /* border: 3px solid red; */
+}
+
+#total-time {
+  color: var(--dream-clean-green);
+  display: flex;
+  align-items: center;
+  
+}
+
+.results-class img {
+  width: 29px;
+  height: 29px;
+  padding: 10px;
+}
+
+
