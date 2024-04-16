@@ -1,5 +1,6 @@
 <!-- //scoreboard.html -->
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +27,7 @@
       <p>Tu Resultado:</p>
       <div id="total-time"></div>
   </div>
-  
+  <div id="player-name"></div>
       <div id="player-email"></div>
 
   </div>
@@ -63,22 +64,10 @@
           <td>00:48</td>
         </tr>
         <tr>
-          <td>5</td>
-          <td>Maria Piña</td>
-          <td>00:51</td>
+          <td>I FUCKED THIS UP</td>
+          <td>Jose Perez</td>
+          <td>00:48</td>
         </tr>
-        <tr>
-          <td>5</td>
-          <td>Luisa Rivas</td>
-          <td>00:59</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td><div id="player-name"></div></td>
-          <td><div id="table-total-time"></div></td>   <!-- GPT, how can I get the total time to also display here? -->
-        </tr>
-        
-        
       </tbody>
     </table>
   </div>
@@ -104,11 +93,7 @@
 
       const formattedTime = formatTime(totalTime);
       const totalTimeElement = document.getElementById('total-time');
-      const tableTotalTimeElement = document.getElementById('table-total-time'); // New line to get the new element
-
       totalTimeElement.textContent = formattedTime;
-      tableTotalTimeElement.textContent = formattedTime; // Update the time in the table
-
     }
 
     function formatTime(seconds) {
