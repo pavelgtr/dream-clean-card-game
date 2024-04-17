@@ -1,5 +1,3 @@
-// flip-script.js
-
 // -------------------------------------- VARIABLES  --------------------------------------
 
 let hasFlippedCard = false;
@@ -14,7 +12,9 @@ let gameLevel = 1;
 let finalResultsDisplayed = false;
 let scoreSubmitted = false;
 let totalTime = 0;
-
+let elapsedTime;
+let startTime;
+let currentTime;
 const soundEffects = {
   click: new Audio("../sounds/flip.wav"),
   error: new Audio("../sounds/fail.wav"),
@@ -24,8 +24,6 @@ const soundEffects = {
 const timerDisplay = document.getElementById("timer");
 const scoreDisplay = document.getElementById("score");
 
-// var continueButton = document.getElementById("continue");
-
 let form = document.getElementById("signinForm");
 
 const nickname = document.getElementById("nickname");
@@ -33,12 +31,13 @@ const nickname = document.getElementById("nickname");
 var emailInput = document.getElementById("email");
 
 const resetButton = document.querySelector(".reset");
+
 resetButton.addEventListener("click", function () {
   resetGame();
-  startGame();
 });
 
 const nextButton = document.querySelector(".next-button");
+
 nextButton.addEventListener("click", function () {
   window.location.href = "./HTML/scoreboard.html";
 });
@@ -60,27 +59,12 @@ function showSignInModal() {
 
   document.getElementById("signinForm").onsubmit = function (event) {
     event.preventDefault();
-
-    //store user name and email in localStorage
     const nickname = document.getElementById("nickname").value;
     const email = document.getElementById("email").value;
     localStorage.setItem("userNickname", nickname);
     localStorage.setItem("userEmail", email);
-    // localStorage ends here in case needs to be adjusted
-
     signinModal.style.display = "none";
-
-    // Check if both nickname and email are set in localStorage
-    if (
-      localStorage.getItem("userNickname") &&
-      localStorage.getItem("userEmail")
-    ) {
-      startGame(); // Call startGame() only if nickname and email are set
-    } else {
-      console.log(
-        "Nickname and email not yet submitted. Waiting for submission..."
-      );
-    }
+    startGame();
   };
 }
 
@@ -88,46 +72,57 @@ function showSignInModal() {
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
   totalTime = 0;
-  localStorage.setItem("startTime", new Date().getTime()); // Set start time
-  console.log(
-    "Game started - startTime set:",
-    localStorage.getItem("startTime")
-  ); // Log the start time
-
+  localStorage.setItem("startTime", startTime);
   errorCount = 0; // Reset errors if starting a new game
   scoreCount = 0; // Reset score if starting a new game
   matchedPairsCount = 0; // Reset matched pairs count
   setPointsPerMatch(); // Set initial points per match
   resetTurn();
-  startTimer(); // Start the game timer
+  startTimer(); 
+}
+
+function resetTurn() {
+  // Set hasFlippedCard and gameBoardLocked to false
+  hasFlippedCard = false;
+  gameBoardLocked = false;
+
+  // Set flippedCard1 and flippedCard2 to null
+  flippedCard1 = null;
+  flippedCard2 = null;
 }
 
 function resetGame() {
-  stopTimer(); // Always stop the timer when resetting the game
-
-  console.log("Current Game Level before increment:", gameLevel); // Log current level before increment for debugging
+  console.log("Current time:", formatTime(currentTime / 1000));
+  console.log("Start time:", formatTime(startTime / 1000));
+  console.log(
+    "Elapsed time for the round (in seconds):",
+    (currentTime - startTime) / 1000
+  );
+  console.log("Current Game Level before increment:", gameLevel);
 
   if (gameLevel === 3) {
     // Handle the end of the last level
     console.log("Final level reached. Calculating totalTime...");
-    const currentTime = new Date().getTime();
-    const startTime = localStorage.getItem("startTime");
-    const elapsedTime = (currentTime - startTime) / 1000; // Convert milliseconds to seconds
+    console.log(`Elapsed time for the final round: ${elapsedTime} seconds`);
+
     totalTime += elapsedTime;
     console.log("Final Total Time calculated:", totalTime);
 
-    localStorage.setItem("totalTime", totalTime); // Store total time
+    localStorage.setItem("totalTime", totalTime);
     console.log("Total Time stored. Preparing to redirect...");
 
     // Delay before redirection
     setTimeout(function () {
       console.log("Redirecting to scoreboard...");
       window.location.href = "../HTML/scoreboard.html";
-    }, 5000); // Delay for 5000 milliseconds (5 seconds)
+    }, 5000);
   } else {
-    gameLevel++; // Increment level here
-    console.log("Resetting game... Current Level after increment:", gameLevel); // Log current level after increment
+    gameLevel++;
+    console.log("Resetting game... Current Level after increment:", gameLevel);
+    console.log(`Elapsed time for the round: ${elapsedTime} seconds`);
 
+    totalTime += elapsedTime;
+    console.log("Total Time calculated:", totalTime);
     // Determine the correct card set based on the current game level
     let cardSet =
       gameLevel === 1 ? levelOne : gameLevel === 2 ? levelTwo : levelThree;
@@ -137,7 +132,7 @@ function resetGame() {
     matchedPairsCount = 0;
     setPointsPerMatch();
     resetTurn();
-    startTimer(); // Restart the timer for the new game level
+    startTimer();
   }
 }
 
@@ -174,18 +169,19 @@ function createCards(imagesArray) {
 
 // -------------------------------------- TIMER FUNCTIONS --------------------------------------
 
-function updateTimerDisplay(seconds) {
-  totalTime = seconds; // Update totalTime
-  timerDisplay.innerHTML = `<img src="./images/Menu/clock.jpg" alt="Clock" style="width:20px; height:20px; vertical-align:middle;"> ${formatTime(
-    seconds
-  )}`;
-}
-
 function startTimer() {
+  startTime = new Date().getTime(); // Store the start time
   timer = setInterval(() => {
     secondsElapsed++;
     updateTimerDisplay(secondsElapsed);
   }, 1000);
+}
+
+function updateTimerDisplay(seconds) {
+  // totalTime += seconds; // Update totalTime
+  timerDisplay.innerHTML = `<img src="./images/Menu/clock.jpg" alt="Clock" style="width:20px; height:20px; vertical-align:middle;"> ${formatTime(
+    seconds
+  )}`;
 }
 
 function stopTimer() {
@@ -261,7 +257,7 @@ function checkForMatch() {
     disableCards();
     const speedBonus = calculateSpeedBonus();
     incrementScore(speedBonus);
-    matchedPairsCount++;
+    matchedPairsCount++; // Increment matched pairs count
     checkEndOfRound();
   } else {
     unflipCards();
@@ -288,35 +284,6 @@ function disableCards() {
   soundEffects.win.play();
 }
 
-function checkEndOfRound() {
-  const anyCardArray = levelOne;
-  const totalPairs = anyCardArray.length / 2;
-  console.log("Matched pairs:", matchedPairsCount, "Total pairs:", totalPairs);
-
-  if (matchedPairsCount === totalPairs) {
-    console.log("All pairs matched. Proceeding to reset game...");
-    if (gameLevel < 3) {
-      setTimeout(() => {
-        alert("Congratulations! You have found all matches in this round!");
-        // gameLevel++; // Ensure level is incremented before reset
-        resetGame();
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        console.log("Transitioning to scoreboard...");
-        // window.location.href = "../HTML/scoreboard.html";
-        resetGame();
-      }, 1000);
-    }
-    console.log("End of round reached."); // Add this line
-  }
-}
-
-function resetTurn() {
-  [hasFlippedCard, gameBoardLocked] = [false, false];
-  [flippedCard1, flippedCard2] = [null, null];
-}
-
 // -------------------------------------- SCORE FUNCTIONS --------------------------------------
 
 function incrementScore(speedBonus = 0) {
@@ -337,6 +304,37 @@ function setPointsPerMatch() {
     pointsPerMatch = 15;
   } else if (gameLevel === 3) {
     pointsPerMatch = 20;
+  }
+}
+
+function checkEndOfRound() {
+  const anyCardArray = levelOne;
+  const totalPairs = anyCardArray.length / 2;
+  console.log("Matched pairs:", matchedPairsCount, "Total pairs:", totalPairs);
+
+  
+
+  currentTime = new Date().getTime();
+  elapsedTime = (currentTime - startTime) / 1000;
+  console.log("Elapsed time for the round:", elapsedTime, "seconds");
+  if (matchedPairsCount === totalPairs) {
+    console.log("All pairs matched. Proceeding to reset game...");
+    if (gameLevel < 3) {
+      setTimeout(() => {
+        stopTimer(); // always stop the timer when a match is found
+        alert("Congratulations! You have found all matches in this round!");
+        resetGame();
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        console.log("Transitioning to scoreboard...");
+        // window.location.href = "../HTML/scoreboard.html";
+        resetGame();
+      }, 1000);
+    }
+    console.log("End of round reached."); // Add this line
+    console.log("Elapsed time for the round:", elapsedTime, "seconds");
+    console.log("Current Game Level before increment:", gameLevel);
   }
 }
 
@@ -385,4 +383,3 @@ const levelThree = [
   // "../images/levelThree/f.jpg",
   // "../images/levelThree/f-1.jpg",
 ];
-

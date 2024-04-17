@@ -27,12 +27,19 @@
       <p>Tu Resultado:</p>
       <div id="total-time"></div>
   </div>
-  <div id="player-name"></div>
-      <div id="player-email"></div>
 
-  </div>
-
-
+<table>
+  <tr>
+    <th>Player Name</th>
+    <th>Player Email</th>
+    <th>Total Time</th>
+  </tr>
+  <tr>
+    <td id="player-name"></td>
+    <td id="player-email"></td>
+    <td id="table-total-time"></td>
+  </tr>
+</table>
   </div>
 
   <script>
@@ -51,12 +58,15 @@
     }
 
     function displayTotalTime() {
-      const totalTime = localStorage.getItem('totalTime');
+      const totalTime = parseFloat(localStorage.getItem('totalTime')); // Convert the string to a number
       console.log("Scoreboard - Retrieved Total Time:", totalTime); // Log the retrieved time
 
       const formattedTime = formatTime(totalTime);
       const totalTimeElement = document.getElementById('total-time');
       totalTimeElement.textContent = formattedTime;
+
+      const tableTotalTimeElement = document.getElementById('table-total-time');
+      tableTotalTimeElement.textContent = formattedTime;
     }
 
     function formatTime(seconds) {
@@ -65,7 +75,7 @@
         return "00:00";
       }
       const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
+      const secs = Math.floor(seconds % 60); // Round down the seconds
       return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     }
   </script>
@@ -77,13 +87,3 @@
 
 
 
-<!-- Final Results Modal
-  <div id="finalResultsModal" class="modal">
-    <div class="modal-content">
-      <span class="close-button">×</span>
-      <h2>Game Over</h2>
-      <p id="finalScore">Final Score: 0</p>
-      <p id="totalErrors">Total Errors: 0</p>
-      <p id="totalTime">Total Time: 00:00</p>
-    </div>
-  </div> -->
