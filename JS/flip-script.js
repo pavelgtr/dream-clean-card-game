@@ -316,12 +316,13 @@ function checkEndOfRound() {
 
   currentTime = new Date().getTime();
   elapsedTime = (currentTime - startTime) / 1000;
-  console.log("Elapsed time for the round:", elapsedTime, "seconds");
   if (matchedPairsCount === totalPairs) {
+    console.log("Elapsed time for the round:", elapsedTime, "seconds");
+    stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
     if (gameLevel < 3) {
       setTimeout(() => {
-        stopTimer(); // always stop the timer when a match is found
+        
         alert("Congratulations! You have found all matches in this round!");
         resetGame();
       }, 1000);
@@ -333,7 +334,6 @@ function checkEndOfRound() {
       }, 1000);
     }
     console.log("End of round reached."); // Add this line
-    console.log("Elapsed time for the round:", elapsedTime, "seconds");
     console.log("Current Game Level before increment:", gameLevel);
   }
 }
