@@ -1,108 +1,129 @@
 /* ---------------------------------Header Styles --------------------------------- */
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .game-header {
-    background-color: #ffffff; 
-    text-align: center; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-   
-  }
-  .gray-top {
-    width: 100%;
-    height: 50px;
-    background-color: #707174;
-  }
-  .game-header h1 {
-    margin: 0;
-    padding: 0;
-    font-family: "Open Sans", sans-serif; /* This should match your branding font */
-    font-size: 2em; /* Adjust the size as needed */
-    text-transform: uppercase; /* Optional: Makes all the letters uppercase */
-    letter-spacing: 2px; /* Optional: Increases spacing between letters */
-    /* padding: 100px; */
-  }
-  
-  /* .logo {
-    height: 50px;
-    vertical-align: middle; 
-  } */
+  background-color: #ffffff;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.gray-top {
+  width: 100%;
+  height: 50px;
+  background-color: #707174;
+}
+.game-header h1 {
+  margin: 10px;
+  padding: 10px;
+  font-family: "Open Sans", sans-serif; /* This should match your branding font */
+  font-size: 2em; /* Adjust the size as needed */
+  text-transform: uppercase; /* Optional: Makes all the letters uppercase */
+  letter-spacing: 2px; /* Optional: Increases spacing between letters */
+  /* border: 2px solid red; */
+}
 
- .body-top {
-    display: flex;
-    flex-direction: column;
- }
-  
- .results-container-board {
-    display: flex;
-    flex-direction: column;
- }
+#image-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adjust this value as needed */
+}
 
-/* RESULTS PAGE */
+#image-group img {
+  margin: 10px; /* Adjust this value as needed */
+}
 
-.congrats-results {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    
-  }
-  
-  .results-class {
-    display: flex;
-    background-color: #ffffff;
-    border: 1px solid #dde3e8;
-    border-radius: 3px;
-    font-family: Helvetica;
-    color: #9a9a9a;
-    text-align: left;
-    width: 285px;
-    height: 46px;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    position: relative; 
-    z-index: 1; 
-    
-  }
-  
-  .results-class p {
-    font-family: Helvetica;
-    font-size: 17px;
-    color: #9a9a9a;
-    padding-right: 10px;
-    /* border: 3px solid red; */
-  }
-  
-  .congrats-message {
-    position: absolute;
-   
-    /* left: 50%;   */
-    transform: translateY(10%); 
-    /* margin: 0 auto; */
-    padding-top: 50px;
-    background-color: #91d8dc;
-    text-align: center;
-    width: 348px;
-    height: 178px;
-    color: #ffffff;
-    font-size: 12px;
-    font-family: "GothamBlack", sans-serif;
-    
-  }
-  
-  
-  #total-time {
-    color: var(--dream-clean-green);
-    display: flex;
-    align-items: center;
-  }
-  
-  .results-class img {
-    width: 29px;
-    height: 29px;
-    padding: 10px;
-  }
-  
+.body-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.results-container-board {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background-color: rgba(95, 207, 213, 0.09);
+}
+
+.container-overlay {
+  position: relative;
+}
+
+/* .results-score-block-display{
+  display: block;
+  border: 3px solid red ;
+ } */
+#result-final {
+  z-index: 1;
+  width: 324px; /* Set the width of the box */
+  height: 46px; /* Set the height of the box */
+  margin: auto; /* Center the box */
+  display: flex; /* Use flexbox to align the content */
+  align-items: center; /* Center the content horizontally */
+  justify-content: center; /* Center the content vertically */
+  border: 1px solid #dde3e8;
+  border-radius: 3px;
+  font-family: Helvetica;
+  font-size: 18px;
+  color: #9a9a9a;
+  background-color: white;
+  text-align: left;
+}
+
+#message-container {
+  position: absolute;
+  z-index: -1;
+  top: 25px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 503px; /* Set the width of the box */
+  height: 183px; /* Set the height of the box */
+  padding: 10px; /* Optional: Add some padding inside the box */
+  display: flex; /* Use flexbox to align the content */
+  align-items: center; /* Center the content horizontally */
+  justify-content: center; /* Center the content vertically */
+  background-color: #91d8dc;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.congrats-text {
+  width: 325px;
+  height: 92px;
+}
+#congratulations-heading {
+  font-family: "GothamBlack";
+  font-size: 18px; /* Adjust the size as needed */
+  color: white; /* Set the color of the text */
+  text-align: center; /* Center the text */
+  margin-bottom: 10px; /* Optional: Add some space below the text */
+}
+
+#message-text {
+  font-family: "GothamBlack";
+  font-size: 18px; /* Adjust the size as needed */
+  color: white; /* Set the color of the text */
+  text-align: center; /* Center the text */
+}
+
+table {
+  width: 503px;
+  /* border-collapse: collapse; */
+  margin: 0 auto;
+  margin-top: 200px;
+}
+
+tr th {
+  background-color: #f2f2f2;
+  color: #9a9a9a;
+  font-family: "GothamBlack";
+  font-size: 18px;
+  text-align: left;
+  padding: 10px;
+}

@@ -104,18 +104,25 @@ function resetGame() {
     // Handle the end of the last level
     console.log("Final level reached. Calculating totalTime...");
     console.log(`Elapsed time for the final round: ${elapsedTime} seconds`);
-
     totalTime += elapsedTime;
     console.log("Final Total Time calculated:", totalTime);
 
-    localStorage.setItem("totalTime", totalTime);
-    console.log("Total Time stored. Preparing to redirect...");
+   
+    let players = JSON.parse(localStorage.getItem('playersData')) || [];
+    players.push({
+      nickname: localStorage.getItem("userNickname"),
+      email: localStorage.getItem("userEmail"),
+      totalTime: totalTime
+    });
+    localStorage.setItem('playersData', JSON.stringify(players));
+  
+
 
     // Delay before redirection
     setTimeout(function () {
       console.log("Redirecting to scoreboard...");
       window.location.href = "../HTML/scoreboard.html";
-    }, 5000);
+    }, 2000);
   } else {
     gameLevel++;
     console.log("Resetting game... Current Level after increment:", gameLevel);

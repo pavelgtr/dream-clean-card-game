@@ -8,8 +8,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scoreboard</title>
+  <link rel="stylesheet" href="../CSS/score.css">
   <!-- <link rel="stylesheet" href="../CSS/main.css"> -->
-  <link rel="preload" href="../CSS/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- <link rel="preload" href="../CSS/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
 </head>
 
 <body>
@@ -18,56 +19,76 @@
     <h1><img src="../images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
   </header>
 
-  <h2><img src="../images/Menu/logo-green-choice.jpg" alt="logo-green-choice"></h2>
-  <h2><img src="../images/Menu/Yei.png" alt="logo-green-choice"></h2>
-
-  <div class="results-class" id="result-final">
-    <img src="../images/Menu/clock.jpg" alt="resultado-final" /> 
-    
-      <p>Tu Resultado:</p>
-      <div id="total-time"></div>
+  <div id="image-group">
+    <h2><img id="logo-green" src="../images/Menu/logo-green-choice.jpg" alt="logo-green-choice"></h2>
+    <h2><img id="logo-yei" src="../images/Menu/Yei.png" alt="logo-green-choice"></h2>
   </div>
 
-<table>
-  <tr>
-    <th>Player Name</th>
-    <th>Player Email</th>
-    <th>Total Time</th>
-  </tr>
-  <tr>
-    <td id="player-name"></td>
-    <td id="player-email"></td>
-    <td id="table-total-time"></td>
-  </tr>
-</table>
+  <div class="results-score-block-display">
+    <div class="container-overlay">
+      <div class="results-class" id="result-final">
+        <img src="../images/Menu/clock.jpg" alt="resultado-final" />
+        <p>Tu Resultado:</p>
+        <div id="total-time"></div>
+      </div>
+      <div id="message-container">
+        <div class="congrats-text">
+          <h3 id="congratulations-heading">FELICIDADES</h3>
+          <p id="message-text">Estas participando para ganar uno de nuestros premios semanales, sigue jugando e invita a
+            mas personas a jugar.</p>
+        </div>
+      </div>
+    </div>
+    <table>
+      <caption>Mejor Puntuacion</caption>
+
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <!-- Player rows will be inserted here -->
+      </tbody>
+    </table>
   </div>
+
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      displayPlayerInfo();  
-      displayTotalTime();
+
+      displayLeaderboard();
+      displayCurrentPlayerTotalTime();
     });
 
-    function displayPlayerInfo() {
-      const userNickname = localStorage.getItem('userNickname');
-      const playerEmail = localStorage.getItem('userEmail');
-      const playerNameElement = document.getElementById('player-name');
-      const playerEmailElement = document.getElementById('player-email');
-      playerNameElement.textContent = userNickname;
-      playerEmailElement.textContent = playerEmail;
+    function displayLeaderboard() {
+      const players = JSON.parse(localStorage.getItem('playersData')) || [];
+      const leaderboardBody = document.getElementById('leaderboard-body');
+      leaderboardBody.innerHTML = ''; // Clear existing rows
+      players.forEach(player => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td>
+    <div id="${player.id}">
+      <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${player.nickname}
+    </div>
+  </td>
+  <td>${formatTime(player.totalTime)}</td>
+`;
+        leaderboardBody.appendChild(row);
+      });
     }
 
-    function displayTotalTime() {
-      const totalTime = parseFloat(localStorage.getItem('totalTime')); // Convert the string to a number
-      console.log("Scoreboard - Retrieved Total Time:", totalTime); // Log the retrieved time
-
-      const formattedTime = formatTime(totalTime);
+    function displayCurrentPlayerTotalTime() {
+      const players = JSON.parse(localStorage.getItem('playersData')) || [];
+      const lastPlayer = players[players.length - 1]; // Get the most recent player
       const totalTimeElement = document.getElementById('total-time');
-      totalTimeElement.textContent = formattedTime;
-
-      const tableTotalTimeElement = document.getElementById('table-total-time');
-      tableTotalTimeElement.textContent = formattedTime;
+      if (lastPlayer && totalTimeElement) {
+        totalTimeElement.textContent = formatTime(lastPlayer.totalTime);
+      } else {
+        console.log("No player data available or element missing.");
+      }
     }
+
 
     function formatTime(seconds) {
       if (isNaN(seconds)) {
@@ -87,3 +108,10 @@
 
 
 
+
+
+
+
+<!-- OLD CODE  -->
+
+<!--  insert into displayLeaderboard() if needed  <td>${player.email}</td> -->
