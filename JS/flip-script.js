@@ -78,7 +78,7 @@ function startGame() {
   matchedPairsCount = 0; // Reset matched pairs count
   setPointsPerMatch(); // Set initial points per match
   resetTurn();
-  startTimer(); 
+  startTimer();
 }
 
 function resetTurn() {
@@ -107,16 +107,13 @@ function resetGame() {
     totalTime += elapsedTime;
     console.log("Final Total Time calculated:", totalTime);
 
-   
-    let players = JSON.parse(localStorage.getItem('playersData')) || [];
+    let players = JSON.parse(localStorage.getItem("playersData")) || [];
     players.push({
       nickname: localStorage.getItem("userNickname"),
       email: localStorage.getItem("userEmail"),
-      totalTime: totalTime
+      totalTime: totalTime,
     });
-    localStorage.setItem('playersData', JSON.stringify(players));
-  
-
+    localStorage.setItem("playersData", JSON.stringify(players));
 
     // Delay before redirection
     setTimeout(function () {
@@ -319,8 +316,6 @@ function checkEndOfRound() {
   const totalPairs = anyCardArray.length / 2;
   console.log("Matched pairs:", matchedPairsCount, "Total pairs:", totalPairs);
 
-  
-
   currentTime = new Date().getTime();
   elapsedTime = (currentTime - startTime) / 1000;
   if (matchedPairsCount === totalPairs) {
@@ -329,7 +324,6 @@ function checkEndOfRound() {
     console.log("All pairs matched. Proceeding to reset game...");
     if (gameLevel < 3) {
       setTimeout(() => {
-        
         alert("Congratulations! You have found all matches in this round!");
         resetGame();
       }, 1000);

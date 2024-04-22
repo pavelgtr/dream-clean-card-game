@@ -9,8 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scoreboard</title>
   <link rel="stylesheet" href="../CSS/score.css">
-  <!-- <link rel="stylesheet" href="../CSS/main.css"> -->
-  <!-- <link rel="preload" href="../CSS/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
 </head>
 
 <body>
@@ -39,17 +37,33 @@
         </div>
       </div>
     </div>
-    <table>
-      <caption>Mejor Puntuacion</caption>
-
-      <thead>
-        <tr>
-        </tr>
-      </thead>
-      <tbody id="leaderboard-body">
-        <!-- Player rows will be inserted here -->
-      </tbody>
-    </table>
+    <div class="bottom-buttons">
+      <button type="reset" class="reset">
+        <img src="../images/Menu/reload.png" alt="Arrow" class="arrow-icon">
+        Reiniciar</button>
+      <!-- below is my view score button  -->
+      <button type="button" class="next-button">
+        <img src="../images/Menu/fwd-arrow.png" alt="Arrow" class="arrow-icon">
+        Siguiente</button>
+    </div>
+    <div class="scoreboard-white-container">
+      <table>
+        <caption>Mejor Puntuacion</caption>
+        <thead>
+          <tr class="table-row">
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+          <!-- Player rows will be inserted here -->
+        </tbody>
+      </table>
+      <div class="your-results">
+        <div class="gray-border-bottom">
+          <caption>Tu Resultado</caption>
+        </div>
+        <div id="your-total-time"></div>
+      </div>
+    </div>
   </div>
 
 
@@ -62,33 +76,43 @@
 
     function displayLeaderboard() {
       const players = JSON.parse(localStorage.getItem('playersData')) || [];
+      players.sort((a, b) => a.totalTime - b.totalTime);
       const leaderboardBody = document.getElementById('leaderboard-body');
       leaderboardBody.innerHTML = ''; // Clear existing rows
-      players.forEach(player => {
+
+      players.forEach((player, index) => { // Include 'index' to track position
         const row = document.createElement('tr');
         row.innerHTML = `
-        <td>
-    <div id="${player.id}">
-      <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${player.nickname}
-    </div>
-  </td>
-  <td>${formatTime(player.totalTime)}</td>
-`;
+      <td>${index + 1}</td>   <td>
+        <div id="${player.id}">
+          <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${player.nickname}
+        </div>
+      </td>
+      <td>${formatTime(player.totalTime)}</td>
+    `;
         leaderboardBody.appendChild(row);
       });
     }
 
+
     function displayCurrentPlayerTotalTime() {
       const players = JSON.parse(localStorage.getItem('playersData')) || [];
+
       const lastPlayer = players[players.length - 1]; // Get the most recent player
       const totalTimeElement = document.getElementById('total-time');
-      if (lastPlayer && totalTimeElement) {
+      const yourTotalTimeElement = document.getElementById('your-total-time');
+      if (lastPlayer && totalTimeElement && yourTotalTimeElement) {
         totalTimeElement.textContent = formatTime(lastPlayer.totalTime);
+        yourTotalTimeElement.innerHTML = `
+      <div id="current-player-info">
+        <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${lastPlayer.nickname}
+        <span> - ${formatTime(lastPlayer.totalTime)}</span>
+      </div>
+    `;
       } else {
         console.log("No player data available or element missing.");
       }
     }
-
 
     function formatTime(seconds) {
       if (isNaN(seconds)) {
@@ -99,19 +123,8 @@
       const secs = Math.floor(seconds % 60); // Round down the seconds
       return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     }
+
   </script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-<!-- OLD CODE  -->
-
-<!--  insert into displayLeaderboard() if needed  <td>${player.email}</td> -->

@@ -11,17 +11,17 @@
 }
 .gray-top {
   width: 100%;
-  height: 50px;
+  height: 40px;
   background-color: #707174;
 }
 .game-header h1 {
-  margin: 10px;
+  margin: 50px;
   padding: 10px;
   font-family: "Open Sans", sans-serif; /* This should match your branding font */
   font-size: 2em; /* Adjust the size as needed */
   text-transform: uppercase; /* Optional: Makes all the letters uppercase */
   letter-spacing: 2px; /* Optional: Increases spacing between letters */
-  /* border: 2px solid red; */
+  height: 100px;
 }
 
 #image-group {
@@ -29,18 +29,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Adjust this value as needed */
+  gap: 20px;
+  /* margin: 10px; */
 }
 
 #image-group img {
   margin: 10px; /* Adjust this value as needed */
+  width: 196px;
 }
+
+/* ---------------------------------Congratulations Msg Styles --------------------------------- */
 
 .body-top {
   display: flex;
   flex-direction: column;
 }
-
 .results-container-board {
   display: flex;
   flex-direction: column;
@@ -54,10 +57,6 @@ body {
   position: relative;
 }
 
-/* .results-score-block-display{
-  display: block;
-  border: 3px solid red ;
- } */
 #result-final {
   z-index: 1;
   width: 324px; /* Set the width of the box */
@@ -112,18 +111,107 @@ body {
   text-align: center; /* Center the text */
 }
 
-table {
-  width: 503px;
-  /* border-collapse: collapse; */
-  margin: 0 auto;
-  margin-top: 200px;
+/* ---------------------------------Button Styles --------------------------------- */
+.bottom-buttons {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  margin: 250px auto 20px;
 }
 
-tr th {
-  background-color: #f2f2f2;
-  color: #9a9a9a;
-  font-family: "GothamBlack";
+.bottom-buttons button {
+  background-color: rgba(0, 170, 184, 0.8);
+  border-radius: 2px;
+  font-family: "OpenSansRoman-CondensedSemiBold";
+  font-size: 16px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 16px;
+  width: 140px;
+  height: 42px;
+  border: none;
+}
+
+.reset,
+.next-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-icon {
+  margin-right: 5px;
+}
+
+/* ---------------------------------Leaderboard Styles --------------------------------- */
+table {
+  width: 503px;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+/* Add the caption element */
+table caption,
+.gray-border-bottom {
+  font-family: Helvetica-Bold;
   font-size: 18px;
+  color: #9a9a9a;
   text-align: left;
+  padding: 10px 0;
+  width: 80%;
+  padding: 5px;
+  border-bottom: 3px solid #ddd;
+  margin: 10px auto;
+}
+
+tr td {
+  font-family: Helvetica-Bold;
+  font-size: 18px;
+  color: #9a9a9a;
+  text-align: left;
+  padding: 10px 0;
+}
+
+#total-time {
+  color: #3ac3cd;
+}
+
+#result-final {
+  display: flex;
+  gap: 10px;
+}
+
+.scoreboard-white-container {
+  width: 503px;
+  height: auto;
+  margin: 0 auto;
+  padding: 0;
+  background-color: white;
+  margin-bottom: 20px; /* Add some margin for spacing */
+}
+
+.your-results {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  font-family: Helvetica-Bold;
+  font-size: 18px;
+  color: #9a9a9a;
+}
+
+#leaderboard-body img {
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+/* .gray-border-bottom {
+  border: 3px solid #ddd;
+} */
+
+#current-player-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
 }
+
