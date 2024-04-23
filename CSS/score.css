@@ -130,6 +130,12 @@ body {
   width: 140px;
   height: 42px;
   border: none;
+  cursor: pointer; /* Indicate that the button is clickable */
+}
+
+.bottom-buttons button:hover {
+  background-color: rgba(140, 209, 215, 0.939); /* Darker green on hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a slight shadow */
 }
 
 .reset,
@@ -146,8 +152,6 @@ body {
 /* ---------------------------------Leaderboard Styles --------------------------------- */
 table {
   width: 503px;
-  border-collapse: collapse;
-  margin: 0 auto;
 }
 
 /* Add the caption element */
@@ -176,42 +180,37 @@ tr td {
   color: #3ac3cd;
 }
 
-#result-final {
-  display: flex;
-  gap: 10px;
-}
-
 .scoreboard-white-container {
   width: 503px;
   height: auto;
   margin: 0 auto;
   padding: 0;
   background-color: white;
-  margin-bottom: 20px; /* Add some margin for spacing */
+  margin-bottom: 20px;
 }
 
-.your-results {
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  font-family: Helvetica-Bold;
-  font-size: 18px;
-  color: #9a9a9a;
-}
-
-#leaderboard-body img {
+#leaderboard-body img,
+#current-player-body img {
   vertical-align: middle;
   margin-right: 20px;
 }
 
-/* .gray-border-bottom {
-  border: 3px solid #ddd;
-} */
-
-#current-player-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+#current-player-table {
+  width: 503px;
+  border-collapse: collapse;
+  background-color: white;
+  margin: 0 auto;
 }
 
+#current-player-table tr td {
+  font-family: Helvetica-Bold;
+  font-size: 18px;
+  color: #9a9a9a;
+  text-align: left;
+  padding: 10px 0;
+}
+
+#current-player-table img {
+  vertical-align: middle;
+  margin-right: 20px;
+}

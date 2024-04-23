@@ -1,6 +1,3 @@
-<!-- //scoreboard.html -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +20,7 @@
   </div>
 
   <div class="results-score-block-display">
+
     <div class="container-overlay">
       <div class="results-class" id="result-final">
         <img src="../images/Menu/clock.jpg" alt="resultado-final" />
@@ -37,15 +35,18 @@
         </div>
       </div>
     </div>
+
     <div class="bottom-buttons">
-      <button type="reset" class="reset">
-        <img src="../images/Menu/reload.png" alt="Arrow" class="arrow-icon">
-        Reiniciar</button>
+      <button type="button" class="reset" onclick="window.location.href='../index.html'">
+        <img src=" ../images/Menu/reload.png" alt="Arrow" class="arrow-icon">
+        Reiniciar
+      </button>
       <!-- below is my view score button  -->
       <button type="button" class="next-button">
         <img src="../images/Menu/fwd-arrow.png" alt="Arrow" class="arrow-icon">
         Siguiente</button>
     </div>
+
     <div class="scoreboard-white-container">
       <table>
         <caption>Mejor Puntuacion</caption>
@@ -55,17 +56,28 @@
         </thead>
         <tbody id="leaderboard-body">
           <!-- Player rows will be inserted here -->
+
         </tbody>
       </table>
-      <div class="your-results">
-        <div class="gray-border-bottom">
-          <caption>Tu Resultado</caption>
-        </div>
-        <div id="your-total-time"></div>
-      </div>
-    </div>
-  </div>
 
+
+      <table id="current-player-table">
+        <caption>Tu Resultado</caption>
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody id="current-player-body">
+          <!-- <tr>
+            <td>2</td>
+            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Pedro Lopez</td>
+            <td>00:32</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -78,7 +90,7 @@
       const players = JSON.parse(localStorage.getItem('playersData')) || [];
       players.sort((a, b) => a.totalTime - b.totalTime);
       const leaderboardBody = document.getElementById('leaderboard-body');
-      leaderboardBody.innerHTML = ''; // Clear existing rows
+      // leaderboardBody.innerHTML = ''; // Clear existing rows
 
       players.forEach((player, index) => { // Include 'index' to track position
         const row = document.createElement('tr');
@@ -98,21 +110,49 @@
     function displayCurrentPlayerTotalTime() {
       const players = JSON.parse(localStorage.getItem('playersData')) || [];
 
-      const lastPlayer = players[players.length - 1]; // Get the most recent player
-      const totalTimeElement = document.getElementById('total-time');
-      const yourTotalTimeElement = document.getElementById('your-total-time');
-      if (lastPlayer && totalTimeElement && yourTotalTimeElement) {
-        totalTimeElement.textContent = formatTime(lastPlayer.totalTime);
-        yourTotalTimeElement.innerHTML = `
-      <div id="current-player-info">
-        <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${lastPlayer.nickname}
-        <span> - ${formatTime(lastPlayer.totalTime)}</span>
-      </div>
-    `;
-      } else {
-        console.log("No player data available or element missing.");
+      const lastPlayer = players[players.length - 1];
+      if (!lastPlayer) {
+        console.log("No player data available.");
+        return;
       }
+
+      const playerRank = players.findIndex(player => player.id === lastPlayer.id) + 1;
+
+      // Find the row in the leaderboard that matches the current player's nickname
+      const leaderboardRows = document.querySelectorAll('#leaderboard-body tr');
+      let matchingRow = null;
+      for (let i = 0; i < leaderboardRows.length; i++) {
+        if (leaderboardRows[i].textContent.includes(lastPlayer.nickname)) {
+          matchingRow = leaderboardRows[i];
+          break;
+        }
+      }
+
+      // Extract the rank from the matching row
+      let playerRankInLeaderboard = null;
+      if (matchingRow) {
+        playerRankInLeaderboard = matchingRow.firstElementChild.textContent;
+      }
+
+      // Construct the current player row content (using `lastPlayer.id` directly)
+      const currentPlayerRow = document.createElement('tr');
+      currentPlayerRow.innerHTML = `
+    <td>${playerRankInLeaderboard || playerRank}</td>  
+    <td class="player-row" id="${lastPlayer.id}">  
+        <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${lastPlayer.nickname}
+    </td>
+    <td>${formatTime(lastPlayer.totalTime)}</td> 
+  `;
+
+      // Update both leaderboard and current player displays
+      const currentPlayerBody = document.getElementById('current-player-body');
+      currentPlayerBody.innerHTML = ''; // Clear existing rows
+      currentPlayerBody.appendChild(currentPlayerRow);
+
+      const totalTimeElement = document.getElementById('total-time');
+      totalTimeElement.textContent = formatTime(lastPlayer.totalTime);
     }
+
 
     function formatTime(seconds) {
       if (isNaN(seconds)) {
@@ -128,3 +168,34 @@
 </body>
 
 </html>
+
+
+
+
+
+<!-- placeholder players -->
+<!-- <tr>
+            <td>1</td>
+            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Julia Marte</td>
+            <td>00:24</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Pedro Lopez</td>
+            <td>00:32</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />José Pérez</td>
+            <td>00:48</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Maria Piña</td>
+            <td>00:51</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Luisa Rivas</td>
+            <td>00:59</td>
+          </tr> -->

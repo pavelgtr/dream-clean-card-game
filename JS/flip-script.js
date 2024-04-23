@@ -109,6 +109,7 @@ function resetGame() {
 
     let players = JSON.parse(localStorage.getItem("playersData")) || [];
     players.push({
+      id: Date.now(), // Unique timestamp as the ID
       nickname: localStorage.getItem("userNickname"),
       email: localStorage.getItem("userEmail"),
       totalTime: totalTime,
