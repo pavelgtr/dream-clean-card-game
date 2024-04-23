@@ -233,10 +233,16 @@
 }
 
 /* ---------------------------------Header Styles --------------------------------- */
+
+h1 {
+  width: 1440px;
+  height: 100px;
+}
+
 .game-header {
-  background-color: #ffffff; /* A nice green color, you can change it to whatever you like */
-  text-align: center; /* Center the text */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow to lift the header */
+  background-color: #ffffff;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .gray-top {
   width: 100%;
@@ -244,18 +250,27 @@
   background-color: #707174;
 }
 .game-header h1 {
-  margin: 0;
-  padding: 0;
+  margin: 50px;
+  /* padding: 10px; */
   font-family: "Open Sans", sans-serif; /* This should match your branding font */
   font-size: 2em; /* Adjust the size as needed */
   text-transform: uppercase; /* Optional: Makes all the letters uppercase */
   letter-spacing: 2px; /* Optional: Increases spacing between letters */
-  /* padding: 100px; */
+  height: 100px;
 }
 
-.logo {
-  height: 50px; /* Adjust size as needed */
-  vertical-align: middle; /* Aligns the image vertically in the header */
+#image-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  /* margin: 10px; */
+}
+
+#image-group img {
+  margin: 10px; /* Adjust this value as needed */
+  width: 196px;
 }
 
 /* ---------------------------------Game --------------------------------- */
@@ -277,7 +292,7 @@ body {
   background-color: #ffffff;
   display: flex;
   border: 1px solid #dde3e8;
-  width: 540px;
+  width: 514px;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
@@ -304,16 +319,17 @@ body {
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 550px;
+  grid-template-columns: repeat(4, 1fr);
+  width: 514px;
   margin: 0 auto;
   gap: 5px;
 }
 
 .bottom-buttons {
   display: flex;
-  width: 550px;
-  justify-content: space-between;
+  width: 514px;
+  justify-content: center;
+  gap: 130px;
 }
 
 .bottom-buttons button {
@@ -337,7 +353,6 @@ body {
 }
 
 .card {
-  /* border: 2px solid red; */
 }
 
 h3 {
@@ -356,9 +371,14 @@ h2 {
   padding: 10px 0; /* Less padding than h1 for a less dominant appearance */
 }
 
-.card {
+/* .card {
   width: 180px;
   height: 180px;
+} */
+
+.created-card {
+  width: 126px;
+  height: 125px;
 }
 
 .card__inner {
@@ -445,4 +465,3 @@ h2 {
   font-weight: 100;
   font-size: small;
 }
-

@@ -68,6 +68,35 @@ function showSignInModal() {
   };
 }
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function createCards(imagesArray) {
+  const container = document.querySelector(".cards-container");
+  shuffleArray(imagesArray);
+  container.innerHTML = imagesArray
+    .map(
+      (imageSrc, index) => `
+   <div class="card created-card">
+     <div class="card__inner" onclick="flipCard(event, ${index})">
+       <div class="card__face card__face--front"><img src="./images/Menu/Game-Match-GC.png" alt="card-back-design"></div>
+       <div class="card__face card__face--back">
+             <img src="${imageSrc}" alt="Card image ${index}" class="pp">
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ `
+    )
+    .join("");
+}
+
 // -------------------------------------- GAME FLOW --------------------------------------
 function startGame() {
   gameLevel = 1; // Ensure the game starts at level one
@@ -139,37 +168,6 @@ function resetGame() {
     resetTurn();
     startTimer();
   }
-}
-
-// -------------------------------------- CARD FUNCTIONS --------------------------------------
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function createCards(imagesArray) {
-  const container = document.querySelector(".cards-container");
-  shuffleArray(imagesArray);
-  container.innerHTML = imagesArray
-    .map(
-      (imageSrc, index) => `
-   <div class="card">
-     <div class="card__inner" onclick="flipCard(event, ${index})">
-       <div class="card__face card__face--front"><img src="./images/Menu/Game-Match-GC.png" alt="card-back-design"></div>
-       <div class="card__face card__face--back">
-             <img src="${imageSrc}" alt="Card image ${index}" class="pp">
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- `
-    )
-    .join("");
 }
 
 // -------------------------------------- TIMER FUNCTIONS --------------------------------------
@@ -347,14 +345,14 @@ const levelOne = [
   "../images/levelOne/a-1.jpg",
   "../images/levelOne/b.jpg",
   "../images/levelOne/b-1.jpg",
-  // "../images/levelOne/c.jpg",
-  // "../images/levelOne/c-1.jpg",
-  // "../images/levelOne/d.jpg",
-  // "../images/levelOne/d-1.jpg",
-  // "../images/levelOne/e.jpg",
-  // "../images/levelOne/e-1.jpg",
-  // "../images/levelOne/f.jpg",
-  // "../images/levelOne/f-1.jpg",
+  "../images/levelOne/c.jpg",
+  "../images/levelOne/c-1.jpg",
+  "../images/levelOne/d.jpg",
+  "../images/levelOne/d-1.jpg",
+  "../images/levelOne/e.jpg",
+  "../images/levelOne/e-1.jpg",
+  "../images/levelOne/f.jpg",
+  "../images/levelOne/f-1.jpg",
 ];
 
 const levelTwo = [
@@ -362,26 +360,26 @@ const levelTwo = [
   "../images/levelTwo/a-1.jpg",
   "../images/levelTwo/b.jpg",
   "../images/levelTwo/b-1.jpg",
-  // "../images/levelTwo/c.jpg",
-  // "../images/levelTwo/c-1.jpg",
-  // "../images/levelTwo/d.jpg",
-  // "../images/levelTwo/d-1.jpg",
-  // "../images/levelTwo/e.jpg",
-  // "../images/levelTwo/e-1.jpg",
-  // "../images/levelTwo/f.jpg",
-  // "../images/levelTwo/f-1.jpg",
+  "../images/levelTwo/c.jpg",
+  "../images/levelTwo/c-1.jpg",
+  "../images/levelTwo/d.jpg",
+  "../images/levelTwo/d-1.jpg",
+  "../images/levelTwo/e.jpg",
+  "../images/levelTwo/e-1.jpg",
+  "../images/levelTwo/f.jpg",
+  "../images/levelTwo/f-1.jpg",
 ];
 const levelThree = [
   "../images/levelThree/a.jpg",
   "../images/levelThree/a-1.jpg",
   "../images/levelThree/b.jpg",
   "../images/levelThree/b-1.jpg",
-  // "../images/levelThree/c.jpg",
-  // "../images/levelThree/c-1.jpg",
-  // "../images/levelThree/d.jpg",
-  // "../images/levelThree/d-1.jpg",
-  // "../images/levelThree/e.jpg",
-  // "../images/levelThree/e-1.jpg",
-  // "../images/levelThree/f.jpg",
-  // "../images/levelThree/f-1.jpg",
+  "../images/levelThree/c.jpg",
+  "../images/levelThree/c-1.jpg",
+  "../images/levelThree/d.jpg",
+  "../images/levelThree/d-1.jpg",
+  "../images/levelThree/e.jpg",
+  "../images/levelThree/e-1.jpg",
+  "../images/levelThree/f.jpg",
+  "../images/levelThree/f-1.jpg",
 ];
