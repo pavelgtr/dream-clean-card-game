@@ -16,9 +16,9 @@ let elapsedTime;
 let startTime;
 let currentTime;
 const soundEffects = {
-  click: new Audio("../sounds/flip.wav"),
-  error: new Audio("../sounds/fail.wav"),
-  win: new Audio("../sounds/cheer.wav"),
+  click: new Audio("./sounds/flip.wav"),
+  error: new Audio("./sounds/fail.wav"),
+  win: new Audio("./sounds/cheer.wav"),
 };
 
 const timerDisplay = document.getElementById("timer");
@@ -158,7 +158,7 @@ function resetGame() {
     // Delay before redirection
     setTimeout(function () {
       console.log("Redirecting to scoreboard...");
-      window.location.href = "../HTML/scoreboard.html";
+      window.location.href = "./HTML/scoreboard.html";
     }, 500);
   } else {
     gameLevel++;
@@ -339,7 +339,7 @@ function checkEndOfRound() {
     } else {
       setTimeout(() => {
         console.log("Transitioning to scoreboard...");
-        // window.location.href = "../HTML/scoreboard.html";
+        // window.location.href = "./HTML/scoreboard.html";
         resetGame();
       }, 1000);
     }
