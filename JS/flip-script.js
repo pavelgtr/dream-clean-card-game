@@ -33,7 +33,12 @@ var emailInput = document.getElementById("email");
 const resetButton = document.querySelector(".reset");
 
 resetButton.addEventListener("click", function () {
+  alert("El juego se reiniciará");
+  stopTimer();
   resetGame();
+  nickname.value = "";
+  emailInput.value = "";
+  showSignInModal();
 });
 
 const nextButton = document.querySelector(".next-button");
@@ -73,14 +78,6 @@ function showSignInModal() {
   };
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
   shuffleArray(imagesArray);
@@ -100,6 +97,14 @@ function createCards(imagesArray) {
  `
     )
     .join("");
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 // -------------------------------------- GAME FLOW --------------------------------------
