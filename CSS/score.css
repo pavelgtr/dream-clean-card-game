@@ -3,7 +3,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 .game-header {
   background-color: #ffffff;
@@ -163,14 +163,14 @@ table caption,
   color: #9a9a9a;
   text-align: left;
   padding: 10px 0;
-  width: 80%;
+  width: 95%;
   padding: 5px;
   border-bottom: 3px solid #ddd;
   margin: 10px auto;
 }
 
 tr td {
-  font-family: Helvetica-Bold;
+  font-family: Helvetica;
   font-size: 18px;
   color: #9a9a9a;
   text-align: left;
@@ -185,15 +185,16 @@ tr td {
   width: 503px;
   height: auto;
   margin: 0 auto;
-  padding: 0;
+  padding: 10px;
   background-color: white;
-  margin-bottom: 20px;
 }
 
 #leaderboard-body img,
 #current-player-body img {
   vertical-align: middle;
   margin-right: 20px;
+  width: 45px;
+  height: 45px;
 }
 
 #current-player-table {
@@ -204,14 +205,142 @@ tr td {
 }
 
 #current-player-table tr td {
-  font-family: Helvetica-Bold;
+  font-family: Helvetica;
   font-size: 18px;
   color: #9a9a9a;
   text-align: left;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
-#current-player-table img {
-  vertical-align: middle;
-  margin-right: 20px;
+.results-score-block-display {
+  margin: 0 auto 70px;
+}
+
+.player-row {
+}
+
+/* <------------------------------------------ FOOTER ------------------------------------------> */
+
+.footer-banner {
+  background-color: #00adb5;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1025px;
+  min-width: 815px;
+  padding: 2% 0;
+  padding-bottom: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: flex-start;
+}
+
+.footer-list {
+  color: #00adbb;
+  display: flex;
+  list-style: none;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  font-size: clamp();
+  padding-top: 2%;
+  font-family: "Lato-Regular";
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 0.02px;
+}
+
+.footer-list .links {
+  color: var(--doncella-white-color);
+  display: flex;
+  align-items: flex-end;
+  white-space: nowrap;
+  font-family: "Lato-Regular";
+  font-size: clamp(12px, 2vw, 13px);
+}
+
+.footer-list a {
+  color: #ffffff;
+  padding: 0 10px;
+}
+
+.footer-social-media {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding-top: 2%;
+  width: 100%;
+}
+
+.hidden-copyright {
+  display: none;
+}
+
+@media screen and (width <= 1180px) {
+  .footer-content {
+    min-width: 800px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .footer-list .links {
+    font-size: 12px;
+  }
+}
+
+/* For larger screens, only the large logo is visible */
+.footer-list #footer-logo-large {
+  display: block; /* Show the large logo */
+}
+
+/* HIDE secondary LOGO LARGE SCREEN  */
+.footer-list #footer-logo {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  body,
+  html {
+    overflow-x: hidden;
+  }
+
+  /* Show the mobile logo */
+  .footer-list #footer-logo {
+    display: block;
+  }
+
+  .footer-list #footer-logo-large {
+    display: none;
+  }
+  .footer-social-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 20px;
+    padding: 20px 0 20px 10px;
+  }
+
+  .mobile-bottom {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 100%;
+  }
+
+  .hidden-copyright {
+    display: flex;
+  }
+  .footer-list .links {
+    display: none;
+  }
+
+  .footer-social-media {
+    width: 60vw;
+    gap: 20px;
+  }
 }

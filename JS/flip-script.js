@@ -39,7 +39,12 @@ resetButton.addEventListener("click", function () {
 const nextButton = document.querySelector(".next-button");
 
 nextButton.addEventListener("click", function () {
-  window.location.href = "./HTML/scoreboard.html";
+  if (gameLevel === 3) {
+    window.location.href = "./HTML/scoreboard.html";
+  } else {
+    alert("favor completar el juego antes de pasar al siguiente nivel");
+    return;
+  }
 });
 
 // -------------------------------------- LOAD PAGE  --------------------------------------
@@ -149,7 +154,7 @@ function resetGame() {
     setTimeout(function () {
       console.log("Redirecting to scoreboard...");
       window.location.href = "../HTML/scoreboard.html";
-    }, 2000);
+    }, 500);
   } else {
     gameLevel++;
     console.log("Resetting game... Current Level after increment:", gameLevel);
@@ -325,7 +330,7 @@ function checkEndOfRound() {
       setTimeout(() => {
         alert("Congratulations! You have found all matches in this round!");
         resetGame();
-      }, 1000);
+      }, 200);
     } else {
       setTimeout(() => {
         console.log("Transitioning to scoreboard...");
