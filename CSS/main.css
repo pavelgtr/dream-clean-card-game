@@ -1,4 +1,5 @@
 :root {
+  line-height: 1.5;
   --primary: #5fcfd5;
   --complementary-to-primary: #cf5f77; /* A soft red-pink */
   --secondary: #5ed1d6;
@@ -9,6 +10,16 @@
   --complementary-to-green: #af024f; /* A deep magenta */
   --light: #f3f3f3;
   --font-body: "OpenSans", "sans-serif";
+  --red-border: 2px solid red;
+}
+
+/* CSS RESET MODERN-NORMALIZE */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* --------------------------------- FONTS DONCELLA --------------------------------- */
@@ -243,6 +254,10 @@ h1 {
   background-color: #ffffff;
   text-align: left;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 950px) {
+    overflow-x: hidden;
+  }
 }
 .gray-top {
   width: 100%;
@@ -251,12 +266,15 @@ h1 {
 }
 .game-header h1 {
   margin: 50px;
-  /* padding: 10px; */
   font-family: "Open Sans", sans-serif; /* This should match your branding font */
   font-size: 2em; /* Adjust the size as needed */
   text-transform: uppercase; /* Optional: Makes all the letters uppercase */
   letter-spacing: 2px; /* Optional: Increases spacing between letters */
   height: 100px;
+
+  @media screen and (max-width: 950px) {
+    margin: 0 auto;
+  }
 }
 
 #image-group {
@@ -265,12 +283,16 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  /* margin: 10px; */
 }
 
 #image-group img {
   margin: 10px; /* Adjust this value as needed */
   width: 196px;
+
+  @media screen and (max-width: 950px) {
+    width: 146px;
+    height: 86px;
+  }
 }
 
 /* ---------------------------------Game --------------------------------- */
@@ -281,11 +303,16 @@ body {
 }
 
 .game-wrapper {
-  width: 580px;
+  max-width: 580px;
   margin: 0 auto 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 950px) {
+    max-width: 308px;
+    margin: 0 auto 40px;
+  }
 }
 
 .game-status-bar {
@@ -302,6 +329,13 @@ body {
   text-align: left;
   height: 37px;
   margin: 20px 0;
+
+  @media screen and (max-width: 950px) {
+    width: 308px;
+    height: 37px;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
 }
 
 #timer {
@@ -311,10 +345,18 @@ body {
   justify-content: end;
   gap: 5px;
   width: 400px;
+
+  @media screen and (max-width: 950px) {
+    width: 200px;
+  }
 }
 
 #score {
+  display: flex;
+  font-family: Helvetica;
+  font-size: 18px;
   color: #9a9a9a;
+  text-align: left;
 }
 
 .cards-container {
@@ -323,6 +365,14 @@ body {
   width: 514px;
   margin: 0 auto;
   gap: 5px;
+
+  @media screen and (max-width: 950px) {
+    width: 308px;
+    height: 411px;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+    gap: 2px;
+  }
 }
 
 .bottom-buttons {
@@ -330,6 +380,11 @@ body {
   width: 514px;
   justify-content: center;
   gap: 130px;
+  margin-bottom: 0;
+  @media screen and (max-width: 950px) {
+    width: 308px;
+    gap: 50px;
+  }
 }
 
 .bottom-buttons button {
@@ -379,6 +434,11 @@ h2 {
 .created-card {
   width: 126px;
   height: 125px;
+
+  @media screen and (max-width: 950px) {
+    width: 101px;
+    height: 100px;
+  }
 }
 
 .card__inner {
@@ -471,18 +531,18 @@ h2 {
 .footer-banner {
   background-color: #00adb5;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 .footer-content {
-  display: flex;
-  flex-direction: column;
-  max-width: 1025px;
-  min-width: 815px;
-  padding: 2% 0;
+  display: block;
+  width: 100%;
+  padding: 2% 6%;
   padding-bottom: 4rem;
   margin-left: auto;
   margin-right: auto;
-  justify-content: flex-start;
 }
 
 .footer-list {
@@ -530,7 +590,7 @@ h2 {
   display: none;
 }
 
-@media screen and (width <= 1180px) {
+@media screen and (width <= 950px) {
   .footer-content {
     min-width: 800px;
     margin-left: 50px;
@@ -552,7 +612,7 @@ h2 {
   display: none;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 950px) {
   body,
   html {
     overflow-x: hidden;
@@ -573,8 +633,6 @@ h2 {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    gap: 20px;
-    padding: 20px 0 20px 10px;
   }
 
   .mobile-bottom {
@@ -589,10 +647,5 @@ h2 {
   }
   .footer-list .links {
     display: none;
-  }
-
-  .footer-social-media {
-    width: 60vw;
-    gap: 20px;
   }
 }

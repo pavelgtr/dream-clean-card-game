@@ -1,5 +1,50 @@
 /* ---------------------------------Header Styles --------------------------------- */
+@import "modern-normalize/modern-normalize.css";
+:root {
+  line-height: 1.5;
+  --primary: #5fcfd5;
+  --complementary-to-primary: #cf5f77; /* A soft red-pink */
+  --secondary: #5ed1d6;
+  --complementary-to-secondary: #d65e7a; /* A variation of red-pink */
+  --doncella-grey: #505961;
+  --complementary-to-grey: #9f5059; /* A warm reddish-grey */
+  --dream-clean-green: #02afab;
+  --complementary-to-green: #af024f; /* A deep magenta */
+  --light: #f3f3f3;
+  --font-body: "OpenSans", "sans-serif";
+}
 
+h1,
+h2,
+h3,
+h4,
+h5,
+figure,
+p,
+ol,
+ul {
+  margin: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding-inline: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+img {
+  display: block;
+  max-inline-size: 100%;
+}
 * {
   margin: 0;
   padding: 0;
