@@ -536,7 +536,6 @@ h2 {
   width: 100%;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
 }
 
 .footer-content {
@@ -593,7 +592,7 @@ h2 {
   display: none;
 }
 
-@media screen and (width <= 950px) {
+@media screen and (max-width: 950px) {
   .footer-content {
     min-width: 800px;
     margin-left: 50px;
@@ -619,6 +618,7 @@ h2 {
   body,
   html {
     overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* Show the mobile logo */
