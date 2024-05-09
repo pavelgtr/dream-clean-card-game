@@ -1,5 +1,5 @@
 /* ---------------------------------Header Styles --------------------------------- */
-@import "modern-normalize/modern-normalize.css";
+/* @import "modern-normalize/modern-normalize.css"; */
 :root {
   line-height: 1.5;
   --primary: #5fcfd5;
@@ -32,14 +32,14 @@ ul {
   padding-inline: 0;
 }
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
 h5 {
   font-size: inherit;
   font-weight: inherit;
-}
+} */
 
 img {
   display: block;

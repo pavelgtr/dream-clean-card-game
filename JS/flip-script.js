@@ -55,17 +55,13 @@ nextButton.addEventListener("click", function () {
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  showSignInModal();
+  showWelcomeMessage();
 });
 
 function showSignInModal() {
   createCards(levelOne); // Start with level one cards
   const signinModal = document.getElementById("signinModal");
   signinModal.style.display = "block";
-
-  document.querySelector("#signinModal .close").onclick = function () {
-    signinModal.style.display = "none";
-  };
 
   document.getElementById("signinForm").onsubmit = function (event) {
     event.preventDefault();
@@ -74,13 +70,23 @@ function showSignInModal() {
     localStorage.setItem("userNickname", nickname);
     localStorage.setItem("userEmail", email);
     signinModal.style.display = "none";
-    startGame();
+    displayGameInstructionsModal();
   };
+}
+
+function showWelcomeMessage() {
+  const welcomeModal = document.getElementById("welcomeModal");
+  welcomeModal.style.display = "block";
+  const welcomeContinueButton = document.getElementById("welcomeContinue");
+  welcomeContinueButton.addEventListener("click", function () {
+    welcomeModal.style.display = "none";
+    showSignInModal();
+  });
 }
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
-  shuffleArray(imagesArray);
+  // shuffleArray(imagesArray);
   container.innerHTML = imagesArray
     .map(
       (imageSrc, index) => `
@@ -131,6 +137,7 @@ function resetTurn() {
 }
 
 function resetGame() {
+  stopTimer();
   console.log("Current time:", formatTime(currentTime / 1000));
   console.log("Start time:", formatTime(startTime / 1000));
   console.log(
@@ -158,7 +165,8 @@ function resetGame() {
     // Delay before redirection
     setTimeout(function () {
       console.log("Redirecting to scoreboard...");
-      window.location.href = "./HTML/scoreboard.html";
+      // window.location.href = "./HTML/scoreboard.html";
+      displayRound3CompletionModal();
     }, 500);
   } else {
     gameLevel++;
@@ -176,13 +184,18 @@ function resetGame() {
     matchedPairsCount = 0;
     setPointsPerMatch();
     resetTurn();
-    startTimer();
+    // will put this in score modal
+    // startTimer();
   }
 }
 
 // -------------------------------------- TIMER FUNCTIONS --------------------------------------
 
 function startTimer() {
+  if (timer !== null) {
+    clearInterval(timer);
+  }
+
   startTime = new Date().getTime(); // Store the start time
   timer = setInterval(() => {
     secondsElapsed++;
@@ -333,7 +346,8 @@ function checkEndOfRound() {
     console.log("All pairs matched. Proceeding to reset game...");
     if (gameLevel < 3) {
       setTimeout(() => {
-        alert("Congratulations! You have found all matches in this round!");
+        // alert("Congratulations! You have found all matches in this round!");
+        displayRoundScoreModal();
         resetGame();
       }, 200);
     } else {
@@ -348,6 +362,80 @@ function checkEndOfRound() {
   }
 }
 
+function displayRoundScoreModal() {
+  const roundScoreModal = document.getElementById("roundScoreModal");
+  const gameLevelElement = document.getElementById("gameLevel");
+  const roundOneScoreElement = document.getElementById("roundOneScore");
+  const nextRoundButton = document.getElementById("nextRoundButton");
+
+  gameLevelElement.textContent = `NIVEL ${gameLevel} COMPLETADO`;
+  roundOneScoreElement.textContent = scoreCount;
+
+  roundScoreModal.style.display = "block";
+
+  document.getElementById("next-level").textContent = gameLevel + 1;
+  nextRoundButton.addEventListener("click", function () {
+    roundScoreModal.style.display = "none";
+    if (gameLevel == 2) {
+      displayRound2InstructionsModal();
+    } else if (gameLevel == 3) {
+      displayRound3InstructionsModal();
+    }
+    // startTimer();
+  });
+}
+
+function displayRound3CompletionModal() {
+  const round3CompletionModal = document.getElementById(
+    "Round3CompletionModal"
+  );
+  round3CompletionModal.style.display = "block";
+  const round3CompletionPoints = document.getElementById(
+    "round3CompletionPoints"
+  );
+  round3CompletionPoints.textContent = `${scoreCount}`;
+  const viewLeaderboardBtn = document.getElementById("viewLeaderboardBtn");
+  viewLeaderboardBtn.addEventListener("click", function () {
+    round3CompletionModal.style.display = "none";
+    window.location.href = "./HTML/scoreboard.html";
+  });
+}
+
+function displayGameInstructionsModal() {
+  const gameInstructionsModal = document.getElementById(
+    "gameInstructionsModal"
+  );
+  gameInstructionsModal.style.display = "block";
+  const startGameButton = document.getElementById("startGameButton");
+  startGameButton.addEventListener("click", function () {
+    gameInstructionsModal.style.display = "none";
+    startGame();
+  });
+}
+
+function displayRound2InstructionsModal() {
+  const round2InstructionsModal = document.getElementById(
+    "Round2InstructionsModal"
+  );
+  round2InstructionsModal.style.display = "block";
+  const round2ContinueBtn = document.getElementById("round2ContinueBtn");
+  round2ContinueBtn.addEventListener("click", function () {
+    round2InstructionsModal.style.display = "none";
+    startTimer();
+  });
+}
+
+function displayRound3InstructionsModal() {
+  const round3InstructionsModal = document.getElementById(
+    "Round3InstructionsModal"
+  );
+  round3InstructionsModal.style.display = "block";
+  const round3ContinueBtn = document.getElementById("round3ContinueBtn");
+  round3ContinueBtn.addEventListener("click", function () {
+    round3InstructionsModal.style.display = "none";
+    startTimer();
+  });
+}
 // < ---------------------------------------------- ARRAYS ---------------------------------------------- >
 
 const levelOne = [
@@ -355,14 +443,14 @@ const levelOne = [
   "./images/levelOne/a-1.jpg",
   "./images/levelOne/b.jpg",
   "./images/levelOne/b-1.jpg",
-  "./images/levelOne/c.jpg",
-  "./images/levelOne/c-1.jpg",
-  "./images/levelOne/d.jpg",
-  "./images/levelOne/d-1.jpg",
-  "./images/levelOne/e.jpg",
-  "./images/levelOne/e-1.jpg",
-  "./images/levelOne/f.jpg",
-  "./images/levelOne/f-1.jpg",
+  // "./images/levelOne/c.jpg",
+  // "./images/levelOne/c-1.jpg",
+  // "./images/levelOne/d.jpg",
+  // "./images/levelOne/d-1.jpg",
+  // "./images/levelOne/e.jpg",
+  // "./images/levelOne/e-1.jpg",
+  // "./images/levelOne/f.jpg",
+  // "./images/levelOne/f-1.jpg",
 ];
 
 const levelTwo = [
@@ -370,26 +458,26 @@ const levelTwo = [
   "./images/levelTwo/a-1.jpg",
   "./images/levelTwo/b.jpg",
   "./images/levelTwo/b-1.jpg",
-  "./images/levelTwo/c.jpg",
-  "./images/levelTwo/c-1.jpg",
-  "./images/levelTwo/d.jpg",
-  "./images/levelTwo/d-1.jpg",
-  "./images/levelTwo/e.jpg",
-  "./images/levelTwo/e-1.jpg",
-  "./images/levelTwo/f.jpg",
-  "./images/levelTwo/f-1.jpg",
+  // "./images/levelTwo/c.jpg",
+  // "./images/levelTwo/c-1.jpg",
+  // "./images/levelTwo/d.jpg",
+  // "./images/levelTwo/d-1.jpg",
+  // "./images/levelTwo/e.jpg",
+  // "./images/levelTwo/e-1.jpg",
+  // "./images/levelTwo/f.jpg",
+  // "./images/levelTwo/f-1.jpg",
 ];
 const levelThree = [
   "./images/levelThree/a.jpg",
   "./images/levelThree/a-1.jpg",
   "./images/levelThree/b.jpg",
   "./images/levelThree/b-1.jpg",
-  "./images/levelThree/c.jpg",
-  "./images/levelThree/c-1.jpg",
-  "./images/levelThree/d.jpg",
-  "./images/levelThree/d-1.jpg",
-  "./images/levelThree/e.jpg",
-  "./images/levelThree/e-1.jpg",
-  "./images/levelThree/f.jpg",
-  "./images/levelThree/f-1.jpg",
+  // "./images/levelThree/c.jpg",
+  // "./images/levelThree/c-1.jpg",
+  // "./images/levelThree/d.jpg",
+  // "./images/levelThree/d-1.jpg",
+  // "./images/levelThree/e.jpg",
+  // "./images/levelThree/e-1.jpg",
+  // "./images/levelThree/f.jpg",
+  // "./images/levelThree/f-1.jpg",
 ];

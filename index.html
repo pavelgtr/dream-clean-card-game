@@ -24,36 +24,117 @@
 
 <body>
 
+  <!-- Welcome Message Modal -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal" id="welcome-content">
+        <img src="./images/Menu/logo-juego.png" alt="">
+        <p>¡Hola! 👋 ¿Estás listo para poner a prueba <br>
+          tu memoria con Green Choice y ganar premios? Demuestra que eres rápido y sabes cómo se
+          limpia de forma sostenible. ¡Vamo' arriba! </p>
+        <button id="welcomeContinue">Jugar</button>
+      </div>
+    </div>
+
+
+  </div>
 
   <!-- Sign-in  Modal -->
   <div id="signinModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <div id="another-color"><span class="close">&times;</span></div>
-      <div id="modal-text-form-button">
-        <p>Quiero Jugar!</p>
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h4>INICIA EL JUEGO</h4>
         <form id="signinForm">
           <div class="input-wrapper">
-            <label for="nickname" class="input-label">Tu Nombre</label>
-            <input type="text" id="nickname" name="nickname" required>
+            <!-- <label for="nickname" class="input-label">Tu Nombre</label>
+          <input type="text" id="nickname" name="nickname" required> -->
+            <input type="text" id="nickname" name="nickname" placeholder="Tu nombre" required>
           </div>
           <div class="input-wrapper">
-            <label for="email" class="input-label">Email</label>
-            <input type="email" id="email" name="email" required>
+            <!-- <label for="email" class="input-label">Email</label>
+          <input type="email" id="email" name="email" required> -->
+            <input type="email" id="email" name="email" placeholder=" Tu e-mail" required>
           </div>
           <div class="modal-flow">
-            <button type="button" class="back-arrow">
-              <img src="images/Menu/arrow.png" alt="Arrow" class="arrow-icon">
-              Volver Atrás
-            </button>
-            <button type="submit" class="form-button" id="continue">Continuar</button>
+            <button type="submit" class="form-button" id="continue">Jugar</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
+
+  <!-- Game Instructions Modal (Round 1) -->
+  <div id="gameInstructionsModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h2>¿Cómo Jugar?</h2>
+        <p>Nivel 1: Conoce Nuestros Productos</p>
+        <p>Encuentra los pares de cartas con el mismo producto Green Choice. Mientras más rápido los encuentras y con
+          menos errores más puntos ganas. 😊</p>
+        <button id="startGameButton">Jugar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Round 2 Instructions Modal -->
+  <div id="Round2InstructionsModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h2>¿Cómo Jugar?</h2>
+        <p>Nivel 2: ¿Cómo se usan</p>
+        <p>"Encuentra el producto de limpieza Green Choice y combínalo con su área o uso específico de limpieza.
+          Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑";</p>
+        <button id="round2ContinueBtn">Jugar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Round 3 Instructions Modal -->
+  <div id="Round3InstructionsModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h2>¿Cómo Jugar?</h2>
+        <p>Nivel 3: Otros Usos Sorprendentes</p>
+        <p>Encuentra el producto de limpieza Green Choice y combínalo con otros usos sorprendentes y eco-friendly.
+          Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑</p>
+        <button id="round3ContinueBtn">Jugar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Round 1 & 2 Score Modal -->
+  <div id="roundScoreModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <img src="./images/Menu/yay.png" alt="">
+        <!-- <span class="close">&times;</span> -->
+        <h4> <span id="gameLevel"></span> </h4>
+        <p>Tus Puntos: <span id="roundOneScore"></span></p>
+        <p>
+          Ya estás participando para ganar uno de nuestros
+          premios semanales. ¡Continúa jugando!
+        </p>
+
+        <button id="nextRoundButton">Iniciar Nivel <span id="next-level"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Round 3 Completion Modal -->
+  <div id="Round3CompletionModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h2>YAY</h2>
+        <h3>NIVEL 3 COMPLETADO</h3>
+        <p>Tus Puntos: <span id="round3CompletionPoints"></span></p>
+        <p>¡Felicidades! 👏 Completaste todos los niveles.</p>
+        <p>Revisa en qué lugar quedaste entre los expertos de limpieza sostenible.</p>
+        <button id="viewLeaderboardBtn">Ver Leaderboard</button>
+      </div>
+    </div>
+  </div>
   <!-- Game window -->
 
   <div class="game-wrapper">

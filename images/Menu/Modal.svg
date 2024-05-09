@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="571px" height="498px" viewBox="0 0 571 498" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Modal</title>
+    <defs>
+        <path d="M125.350542,23.1924546 L477.705122,3.48431936 C510.239071,1.66460845 538.088215,26.5634182 539.907926,59.0973676 C539.969297,60.1945884 540,61.2933098 540,62.3922456 L540,426 C540,448.09139 522.09139,466 500,466 L43.7200943,466 C21.6287043,466 3.7200943,448.09139 3.7200943,426 C3.7200943,424.815654 3.77269465,423.631891 3.87773988,422.452213 L31.3291952,114.166929 C35.7336983,64.7034873 75.7688832,25.9656896 125.350542,23.1924546 Z" id="path-1"></path>
+        <filter x="-4.9%" y="-5.7%" width="110.4%" height="112.1%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.112772041   0 0 0 0 0.0662216032   0 0 0 0 0.338541667  0 0 0 0.115517437 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Memory-Game-Web-May-1st" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Welcome-" transform="translate(-437.000000, -200.000000)">
+            <g id="bg" transform="translate(450.000000, 214.000000)">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

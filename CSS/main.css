@@ -21,6 +21,18 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -98,46 +110,69 @@ body {
   font-weight: normal;
   font-style: normal;
 }
-/* --------------------------------- END FONTS DONCELLA --------------------------------- */
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+/* --------------------------------- MODAL --------------------------------- */
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
-  position: relative;
+.modal-svg-container {
+  width: 720px;
+  height: 533px;
+  background-image: url("../images/Menu/Modal.svg");
+  background-size: 100% 100%;
+  padding-top: 100px;
+  box-sizing: border-box;
+  margin: 200px auto;
+}
+
+.content-inside-modal {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
-  width: 297px;
-  height: 400px;
-  margin: 400px auto;
-  letter-spacing: 0;
-  line-height: 24px;
+
+  align-items: center;
 }
 
-.modal-content p {
-  font-family: "OpenSansRoman-CondensedSemiBold";
-  font-weight: 500; /* Apply the Semi-Bold weight */
-  font-size: 24px;
-  color: #33bbc6;
-  letter-spacing: 0;
-  line-height: 24px;
-  padding-top: 80px;
+.modal-svg-container p {
+  font-family: "Gotham-Book";
+  font-size: 18px;
+  color: #4a4a4a;
+  letter-spacing: 0.26px;
+  text-align: center;
+  line-height: 30px;
+
+  width: 466px;
+  margin-top: 10px;
+}
+
+.modal-svg-container button {
+  background: #f1636e;
+  border-radius: 24px;
+  font-size: 22px;
+  color: #ffffff;
+  letter-spacing: 0.69px;
+  text-align: center;
+  width: 221px;
+  height: 54px;
+  border: none;
+  font-family: "Montserrat-Regular", "Arial", sans-serif;
+  margin: 35px auto 0;
+}
+
+.modal-svg-container img {
+  width: 223px;
+  height: 127px;
+  margin: 10px auto 0;
 }
 
 #modal-text-form-button {
@@ -147,7 +182,6 @@ body {
   width: 233px;
   gap: 20px;
 }
-
 .modal-flow {
   display: flex;
   justify-content: space-between;
@@ -162,7 +196,7 @@ body {
   background-color: #33bbc6;
 }
 
-/* The Close Button */
+/* The Close Button DEPRECATED?  */
 .close {
   font-family: "OpenSansRoman-CondensedSemiBold";
   position: absolute;
@@ -177,49 +211,43 @@ body {
   line-height: 32px;
 }
 
-.input-wrapper label {
-  /* font-family: "OpenSans", sans-serif; */
-  font-size: 14px;
-  color: #788995;
-  font-family: "OpenSansRoman-CondensedSemiBold";
-  font-size: 14px;
-  color: #788995;
+.modal h4 {
+  font-family: "Gotham-Book";
+  font-size: 26px;
+  color: #00adbb;
+  letter-spacing: 4px;
+  text-align: center;
+  line-height: 30px;
+  /* margin-bottom: 20px; */
+}
+.input-wrapper {
+  border: 1px solid rgb(63, 76, 92, 0.2);
+  width: 331px;
+  height: 60px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 15px;
+  border-radius: 4px;
 }
 
 .input-wrapper input {
-  background: #ffffff;
-  border: 1px solid #dde3e8;
-  border-radius: 3px;
-  width: 233px;
-  height: 46px;
-}
-
-.modal-content #continue {
-  width: 120px;
-  height: 42px;
-  background-color: #33bbc6;
+  color: #4a4a4a;
   border: none;
-  color: #ffffff;
-  font-family: OpenSans-Regular;
-  font-size: 12px;
+  font-size: 16px;
+  letter-spacing: 0.57px;
+  font-family: "OpenSans-Regular";
 }
 
 #signinForm {
-  /* border: 2px solid red; */
-  gap: 20px;
+  margin-top: 50px;
+  gap: 5px;
 }
 
 #signinForm,
 .input-wrapper {
   display: flex;
   flex-direction: column;
-}
-
-.input-wrapper {
-}
-
-.x-container {
-  border: 2px solid red;
 }
 
 .close:hover,
@@ -247,6 +275,17 @@ body {
 }
 
 /* ---------------------------------Header Styles --------------------------------- */
+
+.navigation-elements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  gap: 10px;
+  height: 100px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 h1 {
   width: 1440px;
@@ -432,7 +471,7 @@ h2 {
 /* .card {
   width: 180px;
   height: 180px;
-} */
+ } */
 
 .created-card {
   width: 126px;
