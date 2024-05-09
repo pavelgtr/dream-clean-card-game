@@ -21,8 +21,8 @@ const soundEffects = {
   win: new Audio("./sounds/cheer.wav"),
 };
 
-const timerDisplay = document.getElementById("timer");
-const scoreDisplay = document.getElementById("score");
+const timerDisplay = document.querySelector("#timer span");
+const scoreDisplay = document.querySelector("#score span");
 
 let form = document.getElementById("signinForm");
 
@@ -30,32 +30,11 @@ const nickname = document.getElementById("nickname");
 
 var emailInput = document.getElementById("email");
 
-const resetButton = document.querySelector(".reset");
-
-resetButton.addEventListener("click", function () {
-  alert("El juego se reiniciará");
-  stopTimer();
-  resetGame();
-  nickname.value = "";
-  emailInput.value = "";
-  showSignInModal();
-});
-
-const nextButton = document.querySelector(".next-button");
-
-nextButton.addEventListener("click", function () {
-  if (gameLevel === 3) {
-    window.location.href = "./HTML/scoreboard.html";
-  } else {
-    alert("favor completar el juego antes de pasar al siguiente nivel");
-    return;
-  }
-});
-
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
   showWelcomeMessage();
+  // createCards(levelOne);
 });
 
 function showSignInModal() {
@@ -92,7 +71,7 @@ function createCards(imagesArray) {
       (imageSrc, index) => `
    <div class="card created-card">
      <div class="card__inner" onclick="flipCard(event, ${index})">
-       <div class="card__face card__face--front"><img src="./images/Menu/Game-Match-GC.png" alt="card-back-design"></div>
+       <div class="card__face card__face--front"><img src="./images/Menu/Back.png" alt="card-back-design"></div>
        <div class="card__face card__face--back">
              <img src="${imageSrc}" alt="Card image ${index}" class="pp">
            </div>
@@ -204,10 +183,9 @@ function startTimer() {
 }
 
 function updateTimerDisplay(seconds) {
-  // totalTime += seconds; // Update totalTime
-  timerDisplay.innerHTML = `<img src="./images/Menu/clock.jpg" alt="Clock" style="width:20px; height:20px; vertical-align:middle;"> ${formatTime(
-    seconds
-  )}`;
+  // Ensure the timerDisplay variable targets the span where the time should be displayed
+  const timerDisplay = document.querySelector("#timer span");
+  timerDisplay.textContent = formatTime(seconds);
 }
 
 function stopTimer() {
@@ -314,7 +292,9 @@ function disableCards() {
 
 function incrementScore(speedBonus = 0) {
   scoreCount += pointsPerMatch + speedBonus;
-  scoreDisplay.textContent = `Puntos: ${scoreCount}`;
+  // Update scoreDisplay to target the span for text content
+  const scoreDisplay = document.querySelector("#score span");
+  scoreDisplay.textContent = scoreCount;
 }
 
 function incrementError() {

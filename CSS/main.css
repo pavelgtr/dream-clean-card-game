@@ -33,10 +33,6 @@ h5 {
   line-height: inherit;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 /* --------------------------------- FONTS DONCELLA --------------------------------- */
 @font-face {
   font-family: SourceSansPro-Regular;
@@ -301,11 +297,7 @@ h1 {
     overflow-x: hidden;
   }
 }
-.gray-top {
-  width: 100%;
-  height: 40px;
-  background-color: #707174;
-}
+
 .game-header h1 {
   margin: 50px;
   font-family: "Open Sans", sans-serif; /* This should match your branding font */
@@ -319,34 +311,20 @@ h1 {
   }
 }
 
-#image-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-#image-group img {
-  margin: 10px; /* Adjust this value as needed */
-  width: 196px;
-
-  @media screen and (max-width: 950px) {
-    width: 146px;
-    height: 86px;
-  }
-}
-
 /* ---------------------------------Game --------------------------------- */
 
 body {
-  /* min-height: 100vh; */
-  background: rgba(95, 207, 213, 0.09);
+  display: flex;
+  flex-direction: column;
+  background-image: url(../images/Menu/game-clouds-background.png);
+  background-position: center center; /* Move the background image to the top */
+  background-size: auto 50%; /* Adjust the background size */
+  overflow-x: hidden;
 }
 
 .game-wrapper {
-  max-width: 580px;
-  margin: 0 auto 120px;
+  max-width: 720px;
+  margin: 0 auto 533px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -357,55 +335,11 @@ body {
   }
 }
 
-.game-status-bar {
-  background-color: #ffffff;
-  display: flex;
-  border: 1px solid #dde3e8;
-  width: 514px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-  font-family: Helvetica;
-  font-size: 18px;
-  color: #9a9a9a;
-  text-align: left;
-  height: 37px;
-  margin: 20px 0;
-
-  @media screen and (max-width: 950px) {
-    width: 308px;
-    height: 37px;
-    margin: 20px auto;
-    padding: 0 10px;
-  }
-}
-
-#timer {
-  display: flex;
-  align-items: center;
-
-  justify-content: end;
-  gap: 5px;
-  width: 400px;
-
-  @media screen and (max-width: 950px) {
-    width: 200px;
-  }
-}
-
-#score {
-  display: flex;
-  font-family: Helvetica;
-  font-size: 18px;
-  color: #9a9a9a;
-  text-align: left;
-}
-
 .cards-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  width: 514px;
-  margin: 0 auto;
+  width: 720px;
+  margin: 100px auto;
   gap: 5px;
 
   @media screen and (max-width: 950px) {
@@ -415,41 +349,6 @@ body {
     margin: 0 auto;
     gap: 2px;
   }
-}
-
-.bottom-buttons {
-  display: flex;
-  width: 514px;
-  justify-content: center;
-  gap: 130px;
-  margin-bottom: 0;
-  @media screen and (max-width: 950px) {
-    width: 308px;
-    gap: 50px;
-  }
-}
-
-.bottom-buttons button {
-  background-color: rgba(0, 170, 184, 0.8);
-  border-radius: 2px;
-  font-family: "OpenSansRoman-CondensedSemiBold";
-  font-size: 16px;
-  color: #ffffff;
-  text-align: center;
-  line-height: 16px;
-  width: 140px;
-  height: 42px;
-  border: none;
-}
-
-.reset,
-.next-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card {
 }
 
 h3 {
@@ -468,14 +367,9 @@ h2 {
   padding: 10px 0; /* Less padding than h1 for a less dominant appearance */
 }
 
-/* .card {
-  width: 180px;
-  height: 180px;
- } */
-
 .created-card {
-  width: 126px;
-  height: 125px;
+  width: 160px;
+  height: 160px;
 
   @media screen and (max-width: 950px) {
     width: 101px;
@@ -486,7 +380,7 @@ h2 {
 .card__inner {
   width: 100%;
   height: 100%;
-  transition: transform 1.2s;
+  transition: transform 1.6s;
   transform-style: preserve-3d;
   cursor: pointer;
   position: relative;
@@ -508,22 +402,25 @@ h2 {
   box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
 }
 
+.card__face--front,
+.card__face--back {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
 .card__face--front {
-  background-color: #5fc6cc;
+  /* background-color: #5fc6cc; */
   color: #5fc6cc;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* border: 2px solid red; */
 }
 
 .card__face--back {
-  background-color: #5fc6cc;
+  /* background-color: #5fc6cc; */
   transform: rotateY(180deg);
-}
-
-.card__face--front img {
-  width: 100%;
-  height: 100%;
 }
 
 .card__content {
@@ -554,8 +451,8 @@ h2 {
 
 .pp {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 160px;
+  height: 160px;
   margin: 0 auto 30px;
   object-fit: cover;
 }
@@ -568,13 +465,58 @@ h2 {
   font-size: small;
 }
 
+/* --------------------------------- STATUS BAR  --------------------------------- */
+
+.game-status-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 730px;
+  height: 61px;
+}
+.status-item {
+  width: 178px;
+  height: 52px;
+  box-shadow: 0 0 15px 0 rgba(29, 17, 86, 0.12);
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 20px;
+  color: white;
+  font-size: 32px;
+  font-family: "Montserrat-Regular", "Open Sans", sans-serif;
+}
+
+#timer {
+  background-color: #5fc6cc;
+}
+
+#score {
+  background: #fcd779;
+  border-radius: 24px;
+
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.status-item img {
+  width: 72px;
+  height: 61px;
+}
+
 /* <------------------------------------------ FOOTER ------------------------------------------> */
+
+footer {
+  margin-top: auto;
+}
 
 .footer-banner {
   background-color: #00adb5;
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  /* border: 2px solid red; */
 }
 
 .footer-content {
@@ -691,3 +633,49 @@ h2 {
     display: none;
   }
 }
+
+/* ---------------------------------OLD ---------------------------------  */
+
+/* .game-status-bar {
+  background-color: #ffffff;
+  display: flex;
+  border: 1px solid #dde3e8;
+  width: 514px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  font-family: Helvetica;
+  font-size: 18px;
+  color: #9a9a9a;
+  text-align: left;
+  height: 37px;
+  margin: 20px 0;
+
+  @media screen and (max-width: 950px) {
+    width: 308px;
+    height: 37px;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+} */
+
+/* #timer {
+  display: flex;
+  align-items: center;
+
+  justify-content: end;
+  gap: 5px;
+  width: 400px;
+
+  @media screen and (max-width: 950px) {
+    width: 200px;
+  }
+} */
+
+/* #score {
+  display: flex;
+  font-family: Helvetica;
+  font-size: 18px;
+  color: #9a9a9a;
+  text-align: left;
+} */
