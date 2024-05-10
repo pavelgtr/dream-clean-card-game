@@ -1,24 +1,27 @@
 // -------------------------------------- VARIABLES  --------------------------------------
 
-let hasFlippedCard = false;
-let flippedCard1, flippedCard2;
-let gameBoardLocked = false;
-let timer = null;
-let secondsElapsed = 0;
-let errorCount = 0;
-let scoreCount = 0;
-let matchedPairsCount = 0;
-let gameLevel = 1;
-let finalResultsDisplayed = false;
-let scoreSubmitted = false;
-let totalTime = 0;
-let elapsedTime;
-let startTime;
-let currentTime;
-const soundEffects = {
-  click: new Audio("./sounds/flip.wav"),
-  error: new Audio("./sounds/fail.wav"),
-  win: new Audio("./sounds/cheer.wav"),
+const gameState = {
+  hasFlippedCard: false,
+  flippedCard1: null,
+  flippedCard2: null,
+  gameBoardLocked: false,
+  timer: null,
+  secondsElapsed: 0,
+  errorCount: 0,
+  scoreCount: 0,
+  matchedPairsCount: 0,
+  gameLevel: 1,
+  finalResultsDisplayed: false,
+  scoreSubmitted: false,
+  totalTime: 0,
+  elapsedTime: 0,
+  startTime: null,
+  currentTime: null,
+  soundEffects: {
+    click: new Audio("./sounds/flip.wav"),
+    error: new Audio("./sounds/fail.wav"),
+    win: new Audio("./sounds/cheer.wav"),
+  },
 };
 
 const timerDisplay = document.querySelector("#timer span");
@@ -94,12 +97,12 @@ function shuffleArray(array) {
 
 // -------------------------------------- GAME FLOW --------------------------------------
 function startGame() {
-  gameLevel = 1; // Ensure the game starts at level one
-  totalTime = 0;
-  localStorage.setItem("startTime", startTime);
-  errorCount = 0; // Reset errors if starting a new game
-  scoreCount = 0; // Reset score if starting a new game
-  matchedPairsCount = 0; // Reset matched pairs count
+  gameState.gameLevel = 1; // Ensure the game starts at level one
+  gameState.totalTime = 0;
+  localStorage.setItem("startTime", gameState.startTime);
+  gameState.errorCount = 0; // Reset errors if starting a new game
+  gameState.scoreCount = 0; // Reset score if starting a new game
+  gameState.matchedPairsCount = 0; // Reset matched pairs count
   setPointsPerMatch(); // Set initial points per match
   resetTurn();
   startTimer();
@@ -107,30 +110,30 @@ function startGame() {
 
 function resetTurn() {
   // Set hasFlippedCard and gameBoardLocked to false
-  hasFlippedCard = false;
-  gameBoardLocked = false;
+  gameState.hasFlippedCard = false;
+  gameState.gameBoardLocked = false;
 
   // Set flippedCard1 and flippedCard2 to null
-  flippedCard1 = null;
-  flippedCard2 = null;
+  gameState.flippedCard1 = null;
+  gameState.flippedCard2 = null;
 }
 
 function resetGame() {
   stopTimer();
-  console.log("Current time:", formatTime(currentTime / 1000));
-  console.log("Start time:", formatTime(startTime / 1000));
+  console.log("Current time:", formatTime(gameState.currentTime / 1000));
+  console.log("Start time:", formatTime(gameState.startTime / 1000));
   console.log(
     "Elapsed time for the round (in seconds):",
-    (currentTime - startTime) / 1000
+    (gameState.currentTime - gameState.startTime) / 1000
   );
-  console.log("Current Game Level before increment:", gameLevel);
+  console.log("Current Game Level before increment:", gameState.gameLevel);
 
-  if (gameLevel === 3) {
+  if (gameState.gameLevel === 3) {
     // Handle the end of the last level
     console.log("Final level reached. Calculating totalTime...");
     console.log(`Elapsed time for the final round: ${elapsedTime} seconds`);
-    totalTime += elapsedTime;
-    console.log("Final Total Time calculated:", totalTime);
+    gameState.totalTime += gameState.elapsedTime;
+    console.log("Final Total Time calculated:", gameState.totalTime);
 
     // store the nickname and total score in the local storage
 
@@ -141,19 +144,26 @@ function resetGame() {
       displayRound3CompletionModal();
     }, 500);
   } else {
-    gameLevel++;
-    console.log("Resetting game... Current Level after increment:", gameLevel);
-    console.log(`Elapsed time for the round: ${elapsedTime} seconds`);
+    gameState.gameLevel++;
+    console.log(
+      "Resetting game... Current Level after increment:",
+      gameState.gameLevel
+    );
+    console.log(`Elapsed time for the round: ${gameState.elapsedTime} seconds`);
 
-    totalTime += elapsedTime;
-    console.log("Total Time calculated:", totalTime);
+    gameState.totalTime += gameState.elapsedTime;
+    console.log("Total Time calculated:", gameState.totalTime);
     // Determine the correct card set based on the current game level
     let cardSet =
-      gameLevel === 1 ? levelOne : gameLevel === 2 ? levelTwo : levelThree;
+      gameState.gameLevel === 1
+        ? levelOne
+        : gameState.gameLevel === 2
+        ? levelTwo
+        : levelThree;
     createCards(cardSet);
 
     // Reset game state for a new round
-    matchedPairsCount = 0;
+    gameState.matchedPairsCount = 0;
     setPointsPerMatch();
     resetTurn();
     // will put this in score modal
@@ -168,10 +178,10 @@ function startTimer() {
     clearInterval(timer);
   }
 
-  startTime = new Date().getTime(); // Store the start time
+  gameState.startTime = new Date().getTime(); // Store the start time
   timer = setInterval(() => {
-    secondsElapsed++;
-    updateTimerDisplay(secondsElapsed);
+    gameState.secondsElapsed++;
+    updateTimerDisplay(gameState.secondsElapsed);
   }, 1000);
 }
 
@@ -183,8 +193,8 @@ function updateTimerDisplay(seconds) {
 
 function stopTimer() {
   clearInterval(timer);
-  secondsElapsed = 0;
-  updateTimerDisplay(secondsElapsed);
+  gameState.secondsElapsed = 0;
+  updateTimerDisplay(gameState.secondsElapsed);
 }
 
 function formatTime(seconds) {
@@ -201,11 +211,11 @@ function formatTime(seconds) {
 }
 
 function calculateSpeedBonus() {
-  if (secondsElapsed < 60) {
+  if (gameState.secondsElapsed < 60) {
     return 30;
-  } else if (secondsElapsed < 120) {
+  } else if (gameState.secondsElapsed < 120) {
     return 20;
-  } else if (secondsElapsed < 180) {
+  } else if (gameState.secondsElapsed < 180) {
     return 10;
   } else {
     return 0;
@@ -214,33 +224,33 @@ function calculateSpeedBonus() {
 
 // -------------------------------------- CARD FLIP FUNCTIONS --------------------------------------
 function flipCard(event) {
-  if (gameBoardLocked) return;
+  if (gameState.gameBoardLocked) return;
   const card = event.currentTarget;
-  if (card === flippedCard1) return;
+  if (card === gameState.flippedCard1) return;
 
   if (card.classList.contains("matched")) return;
 
-  soundEffects.click.play();
+  gameState.soundEffects.click.play();
   card.classList.add("is-flipped");
 
-  if (!hasFlippedCard) {
-    hasFlippedCard = true;
-    flippedCard1 = card;
+  if (!gameState.hasFlippedCard) {
+    gameState.hasFlippedCard = true;
+    gameState.flippedCard1 = card;
   } else {
-    flippedCard2 = card;
-    gameBoardLocked = true;
+    gameState.flippedCard2 = card;
+    gameState.gameBoardLocked = true;
     checkForMatch();
   }
 }
 
 function checkForMatch() {
-  let baseName1 = flippedCard1
+  let baseName1 = gameState.flippedCard1
     .querySelector(".card__face--back img")
     .src.split("/")
     .pop()
     .replace(".jpg", "")
     .replace("-1", "");
-  let baseName2 = flippedCard2
+  let baseName2 = gameState.flippedCard2
     .querySelector(".card__face--back img")
 
     .src.split("/")
@@ -254,7 +264,7 @@ function checkForMatch() {
     disableCards();
     const speedBonus = calculateSpeedBonus();
     incrementScore(speedBonus);
-    matchedPairsCount++; // Increment matched pairs count
+    gameState.matchedPairsCount++; // Increment matched pairs count
     checkEndOfRound();
   } else {
     unflipCards();
@@ -263,57 +273,62 @@ function checkForMatch() {
 
 function unflipCards() {
   setTimeout(() => {
-    flippedCard1.classList.remove("is-flipped");
-    flippedCard2.classList.remove("is-flipped");
-    soundEffects.error.play();
+    gameState.flippedCard1.classList.remove("is-flipped");
+    gameState.flippedCard2.classList.remove("is-flipped");
+    gameState.soundEffects.error.play();
     incrementError();
     resetTurn();
   }, 1500);
 }
 
 function disableCards() {
-  flippedCard1.classList.add("matched");
-  flippedCard2.classList.add("matched");
+  gameState.flippedCard1.classList.add("matched");
+  gameState.flippedCard2.classList.add("matched");
 
-  flippedCard1.removeEventListener("click", flipCard);
-  flippedCard2.removeEventListener("click", flipCard);
+  gameState.flippedCard1.removeEventListener("click", flipCard);
+  gameState.flippedCard2.removeEventListener("click", flipCard);
   resetTurn();
-  soundEffects.win.play();
+  gameState.soundEffects.win.play();
 }
 
 // -------------------------------------- SCORE FUNCTIONS --------------------------------------
 
 function incrementScore(speedBonus = 0) {
-  scoreCount += pointsPerMatch + speedBonus;
+  gameState.scoreCount += gameState.pointsPerMatch + speedBonus;
   // Update scoreDisplay to target the span for text content
   const scoreDisplay = document.querySelector("#score span");
-  scoreDisplay.textContent = scoreCount;
+  scoreDisplay.textContent = gameState.scoreCount;
 }
 
 function incrementError() {
-  errorCount++;
-  scoreCount = Math.max(0, scoreCount - 2);
-  scoreDisplay.textContent = `Puntos: ${scoreCount}`;
+  gameState.errorCount++;
+  gameState.scoreCount = Math.max(0, gameState.scoreCount - 2);
+  scoreDisplay.textContent = `Puntos: ${gameState.scoreCount}`;
 }
 
 function setPointsPerMatch() {
-  if (gameLevel === 1) {
-    pointsPerMatch = 10;
-  } else if (gameLevel === 2) {
-    pointsPerMatch = 15;
-  } else if (gameLevel === 3) {
-    pointsPerMatch = 20;
+  if (gameState.gameLevel === 1) {
+    gameState.pointsPerMatch = 10;
+  } else if (gameState.gameLevel === 2) {
+    gameState.pointsPerMatch = 15;
+  } else if (gameState.gameLevel === 3) {
+    gameState.pointsPerMatch = 20;
   }
 }
 
 function checkEndOfRound() {
   const anyCardArray = levelOne;
   const totalPairs = anyCardArray.length / 2;
-  console.log("Matched pairs:", matchedPairsCount, "Total pairs:", totalPairs);
+  console.log(
+    "Matched pairs:",
+    gameState.matchedPairsCount,
+    "Total pairs:",
+    totalPairs
+  );
 
   currentTime = new Date().getTime();
-  elapsedTime = (currentTime - startTime) / 1000;
-  if (matchedPairsCount === totalPairs) {
+  elapsedTime = (currentTime - gameState.startTime) / 1000;
+  if (gameState.matchedPairsCount === totalPairs) {
     console.log("Elapsed time for the round:", elapsedTime, "seconds");
     stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
@@ -348,12 +363,12 @@ function displayRoundScoreModal() {
 
   roundScoreModal.style.display = "block";
 
-  document.getElementById("next-level").textContent = gameLevel + 1;
+  document.getElementById("next-level").textContent = gameState.gameLevel + 1;
   nextRoundButton.addEventListener("click", function () {
     roundScoreModal.style.display = "none";
-    if (gameLevel == 2) {
+    if (gameState.gameLevel == 2) {
       displayRound2InstructionsModal();
-    } else if (gameLevel == 3) {
+    } else if (gameState.gameLevel == 3) {
       displayRound3InstructionsModal();
     }
     // startTimer();
@@ -368,7 +383,7 @@ function displayRound3CompletionModal() {
   const round3CompletionPoints = document.getElementById(
     "round3CompletionPoints"
   );
-  round3CompletionPoints.textContent = `${scoreCount}`;
+  round3CompletionPoints.textContent = `${gameState.scoreCount}`;
   const viewLeaderboardBtn = document.getElementById("viewLeaderboardBtn");
   viewLeaderboardBtn.addEventListener("click", function () {
     round3CompletionModal.style.display = "none";
@@ -381,7 +396,7 @@ function displayRound3CompletionModal() {
 function endGame() {
   // Assume we get the nickname from local storage or a global variable
   const nickname = localStorage.getItem("userNickname");
-  const finalScore = scoreCount; // scoreCount should be your game's scoring variable
+  const finalScore = gameState.scoreCount; // scoreCount should be your game's scoring variable
 
   // Update the leaderboard with the final score
   updateLeaderboard(nickname, finalScore);
@@ -433,7 +448,7 @@ function displayScoreBoardModal() {
 
   // Retrieve current player's nickname and score
   const currentNickname = localStorage.getItem("userNickname");
-  const currentScore = scoreCount; // Assuming scoreCount holds the current score
+  const currentScore = gameState.scoreCount; // Assuming scoreCount holds the current score
 
   // Display current player's nickname and score
   playerNicknameDisplay.textContent = currentNickname;
