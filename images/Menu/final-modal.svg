@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="572px" height="773px" viewBox="0 0 572 773" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bg</title>
+    <defs>
+        <path d="M125.139334,36.9973631 L475.759167,5.72901129 C508.215159,2.8345789 536.872341,26.7989585 539.766773,59.2549513 C539.922181,60.9975738 540,62.7462464 540,64.4957848 L540,703 C540,725.09139 522.09139,743 500,743 L42.2962626,743 C20.2048726,743 2.29626259,725.09139 2.29626259,703 C2.29626259,702.256081 2.31701568,701.512307 2.35849762,700.769545 L34.17769,131.025927 C36.9466482,81.4459059 75.6783474,41.4083044 125.139334,36.9973631 Z" id="path-1"></path>
+        <filter x="-5.1%" y="-3.3%" width="110.7%" height="107.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.112772041   0 0 0 0 0.0662216032   0 0 0 0 0.338541667  0 0 0 0.115517437 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Memory-Game-Web-May-1st" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Leaderboard" transform="translate(-414.000000, -106.000000)">
+            <g id="bg" transform="translate(429.000000, 118.000000)">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

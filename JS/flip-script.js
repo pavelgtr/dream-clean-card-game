@@ -34,7 +34,7 @@ var emailInput = document.getElementById("email");
 
 document.addEventListener("DOMContentLoaded", function () {
   showWelcomeMessage();
-  // createCards(levelOne);
+  // displayScoreBoardModal();
 });
 
 function showSignInModal() {
@@ -132,14 +132,7 @@ function resetGame() {
     totalTime += elapsedTime;
     console.log("Final Total Time calculated:", totalTime);
 
-    let players = JSON.parse(localStorage.getItem("playersData")) || [];
-    players.push({
-      id: Date.now(), // Unique timestamp as the ID
-      nickname: localStorage.getItem("userNickname"),
-      email: localStorage.getItem("userEmail"),
-      totalTime: totalTime,
-    });
-    localStorage.setItem("playersData", JSON.stringify(players));
+    // store the nickname and total score in the local storage
 
     // Delay before redirection
     setTimeout(function () {
@@ -342,6 +335,8 @@ function checkEndOfRound() {
   }
 }
 
+// ---------------------------------------------MODALS ---------------------------------------------
+
 function displayRoundScoreModal() {
   const roundScoreModal = document.getElementById("roundScoreModal");
   const gameLevelElement = document.getElementById("gameLevel");
@@ -377,8 +372,22 @@ function displayRound3CompletionModal() {
   const viewLeaderboardBtn = document.getElementById("viewLeaderboardBtn");
   viewLeaderboardBtn.addEventListener("click", function () {
     round3CompletionModal.style.display = "none";
-    window.location.href = "./HTML/scoreboard.html";
+    // window.location.href = "./HTML/scoreboard.html";
+    // displayScoreBoardModal();
+    endGame();
   });
+}
+
+function endGame() {
+  // Assume we get the nickname from local storage or a global variable
+  const nickname = localStorage.getItem("userNickname");
+  const finalScore = scoreCount; // scoreCount should be your game's scoring variable
+
+  // Update the leaderboard with the final score
+  updateLeaderboard(nickname, finalScore);
+
+  // Now display the scoreboard modal
+  displayScoreBoardModal();
 }
 
 function displayGameInstructionsModal() {
@@ -416,6 +425,50 @@ function displayRound3InstructionsModal() {
     startTimer();
   });
 }
+
+function displayScoreBoardModal() {
+  const scoreboardModal = document.getElementById("ScoreBoardModal");
+  const playerNicknameDisplay = document.getElementById("player-nickname");
+  const playerScoreDisplay = document.getElementById("player-score");
+
+  // Retrieve current player's nickname and score
+  const currentNickname = localStorage.getItem("userNickname");
+  const currentScore = scoreCount; // Assuming scoreCount holds the current score
+
+  // Display current player's nickname and score
+  playerNicknameDisplay.textContent = currentNickname;
+  playerScoreDisplay.textContent = `Puntos: ${currentScore}`;
+
+  // Show the modal
+  if (scoreboardModal) {
+    scoreboardModal.style.display = "block";
+  } else {
+    console.error("ScoreBoardModal not found!");
+  }
+}
+
+// -------------------------------------- LOCAL STORAGE --------------------------------------
+
+function updateLeaderboard(nickname, score) {
+  // Retrieve the existing leaderboard from local storage or initialize it as an empty array if not found
+  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+  // Create an object for the current player's nickname and score
+  let playerData = { nickname: nickname, score: score };
+
+  // Add the current player's data to the leaderboard array
+  leaderboard.push(playerData);
+
+  // Sort the leaderboard array by score in descending order to ensure the highest scores are first
+  leaderboard.sort((a, b) => b.score - a.score);
+
+  // Trim the leaderboard to only the top 5 scores to save space and maintain focus on the highest scores
+  leaderboard = leaderboard.slice(0, 5);
+
+  // Save the updated leaderboard array back to local storage as a JSON string
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+}
+
 // < ---------------------------------------------- ARRAYS ---------------------------------------------- >
 
 const levelOne = [

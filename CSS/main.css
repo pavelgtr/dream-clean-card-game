@@ -164,6 +164,35 @@ h5 {
   font-family: "Montserrat-Regular", "Arial", sans-serif;
   margin: 35px auto 0;
 }
+.score-svg-container {
+  width: 1439px;
+  height: 883px;
+  background-image: url("../images/Menu/final-modal.svg");
+  background-size: 100% 100%;
+  padding-top: 100px;
+  box-sizing: border-box;
+  margin: 200px auto;
+}
+
+#leaderboard-title {
+  font-family: "Gotham-Book";
+  font-size: 26px;
+  color: #00adbb;
+  letter-spacing: 4px;
+  text-align: center;
+  line-height: 30px;
+}
+
+#ScoreBoardModal p {
+  font-family: "Gotham-Book";
+  font-size: 18px;
+  color: #4a4a4a;
+  letter-spacing: 0.26px;
+  text-align: center;
+  line-height: 30px;
+  width: 458px;
+  margin-top: 20px;
+}
 
 .modal-svg-container img {
   width: 223px;
@@ -190,21 +219,6 @@ h5 {
   width: 297px;
   height: 51px;
   background-color: #33bbc6;
-}
-
-/* The Close Button DEPRECATED?  */
-.close {
-  font-family: "OpenSansRoman-CondensedSemiBold";
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #ffffff;
-  line-height: 32px;
 }
 
 .modal h4 {
@@ -274,7 +288,8 @@ h5 {
 
 .navigation-elements {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Distribute space between items */
+  width: 100%; /* Full width of its container */
   align-items: center;
   padding: 0 20px;
   gap: 10px;
@@ -286,6 +301,50 @@ h5 {
 h1 {
   width: 1440px;
   height: 100px;
+}
+
+.navigation-elements a {
+  color: #333; /* Dark grey color for text */
+  font-family: "Open Sans", sans-serif; /* Simple and clean font */
+  font-size: 20px; /* Larger, readable font size */
+  text-decoration: none; /* No underlines */
+  margin-right: 20px; /* Space between links */
+  position: relative; /* For positioning the underline */
+  padding: 5px 0; /* Padding to increase clickable area */
+}
+
+.navigation-elements a:last-child {
+  margin-right: 0; /* No margin for the last item */
+}
+
+.navigation-elements a:hover,
+.navigation-elements a:focus {
+  color: #005f5f; /* A darker shade for hover state */
+}
+
+.navigation-elements a:hover::after,
+.navigation-elements a:focus::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background-color: #00adb5; /* Teal color for active/hover underline */
+  border-radius: 1px;
+}
+
+/* Specifically for 'Juego' to have the underline by default */
+.navigation-elements a[href="index.html"]:hover::after,
+.navigation-elements a[href="index.html"]:focus::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background-color: #00adb5;
+  border-radius: 1px;
 }
 
 .game-header {
