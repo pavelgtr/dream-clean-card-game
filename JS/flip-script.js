@@ -400,7 +400,7 @@ function endGame() {
 
   // Update the leaderboard with the final score
   updateLeaderboard(nickname, finalScore);
-
+  submitScore();
   // Now display the scoreboard modal
   displayScoreBoardModal();
 }
@@ -462,7 +462,7 @@ function displayScoreBoardModal() {
   }
 }
 
-// -------------------------------------- LOCAL STORAGE --------------------------------------
+// -------------------------------------- CRUD --------------------------------------
 
 function updateLeaderboard(nickname, email, score) {
   let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
@@ -489,6 +489,35 @@ function updateLeaderboard(nickname, email, score) {
 
   // Save the updated leaderboard
   localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+}
+
+function submitScore() {
+  // Retrieve player data
+  const nickname = localStorage.getItem("userNickname");
+  const email = localStorage.getItem("userEmail");
+  const score = gameState.scoreCount;
+  const gameLevel = gameState.gameLevel;
+  const totalTime = gameState.totalTime;
+
+  $.ajax({
+    url: "PHP/submit_score.php", // Path relative to your index.html
+    method: "POST",
+    data: {
+      nickname: nickname,
+      email: email,
+      score: score,
+      game_level: gameLevel,
+      total_time: totalTime,
+    },
+    success: function (response) {
+      console.log(response); // Log success message from PHP
+      // Optionally, update the UI or display a confirmation to the user
+    },
+    error: function (xhr, status, error) {
+      console.error("Error submitting score:", error);
+      // Handle errors appropriately (e.g., display an error message)
+    },
+  });
 }
 
 // < ---------------------------------------------- ARRAYS ---------------------------------------------- >
