@@ -464,23 +464,30 @@ function displayScoreBoardModal() {
 
 // -------------------------------------- LOCAL STORAGE --------------------------------------
 
-function updateLeaderboard(nickname, score) {
-  // Retrieve the existing leaderboard from local storage or initialize it as an empty array if not found
+function updateLeaderboard(nickname, email, score) {
   let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
 
-  // Create an object for the current player's nickname and score
-  let playerData = { nickname: nickname, score: score };
+  // Check if the player already exists in the leaderboard by email
+  let existingPlayer = leaderboard.find((player) => player.email === email);
 
-  // Add the current player's data to the leaderboard array
-  leaderboard.push(playerData);
+  if (existingPlayer) {
+    // Update the player's nickname and score if the new score is higher
+    existingPlayer.nickname = nickname;
+    if (existingPlayer.score < score) {
+      existingPlayer.score = score;
+    }
+  } else {
+    // Add new player to the leaderboard
+    leaderboard.push({ nickname: nickname, email: email, score: score });
+  }
 
-  // Sort the leaderboard array by score in descending order to ensure the highest scores are first
+  // Sort the leaderboard by score in descending order
   leaderboard.sort((a, b) => b.score - a.score);
 
-  // Trim the leaderboard to only the top 5 scores to save space and maintain focus on the highest scores
+  // Optionally trim the leaderboard to only keep the top N entries
   leaderboard = leaderboard.slice(0, 5);
 
-  // Save the updated leaderboard array back to local storage as a JSON string
+  // Save the updated leaderboard
   localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
 }
 
