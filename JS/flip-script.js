@@ -332,9 +332,9 @@ function checkEndOfRound() {
     console.log("Elapsed time for the round:", elapsedTime, "seconds");
     stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
-    if (gameLevel < 3) {
+    if (gameState.gameLevel < 3) {
       setTimeout(() => {
-        // alert("Congratulations! You have found all matches in this round!");
+        console.log("About to display round score modal");
         displayRoundScoreModal();
         resetGame();
       }, 200);
@@ -358,8 +358,8 @@ function displayRoundScoreModal() {
   const roundOneScoreElement = document.getElementById("roundOneScore");
   const nextRoundButton = document.getElementById("nextRoundButton");
 
-  gameLevelElement.textContent = `NIVEL ${gameLevel} COMPLETADO`;
-  roundOneScoreElement.textContent = scoreCount;
+  gameLevelElement.textContent = `NIVEL ${gameState.gameLevel} COMPLETADO`;
+  roundOneScoreElement.textContent = gameState.scoreCount;
 
   roundScoreModal.style.display = "block";
 
