@@ -49,10 +49,11 @@ function showSignInModal() {
     event.preventDefault();
     const nickname = document.getElementById("nickname").value;
     const email = document.getElementById("email").value;
-    localStorage.setItem("userNickname", nickname);
-    localStorage.setItem("userEmail", email);
+    // localStorage.setItem("userNickname", nickname);
+    // localStorage.setItem("userEmail", email);
     signinModal.style.display = "none";
     displayGameInstructionsModal();
+    startGame(nickname, email);
   };
 }
 
@@ -97,15 +98,20 @@ function shuffleArray(array) {
 
 // -------------------------------------- GAME FLOW --------------------------------------
 function startGame() {
+  gameState.startTime = Date.now(); //Store the start time in milliseconds since the epoch
   gameState.gameLevel = 1; // Ensure the game starts at level one
   gameState.totalTime = 0;
-  localStorage.setItem("startTime", gameState.startTime);
+  // localStorage.setItem("startTime", gameState.startTime);
   gameState.errorCount = 0; // Reset errors if starting a new game
   gameState.scoreCount = 0; // Reset score if starting a new game
   gameState.matchedPairsCount = 0; // Reset matched pairs count
   setPointsPerMatch(); // Set initial points per match
   resetTurn();
   startTimer();
+
+  // Store nickname and email in gameState
+  gameState.playerNickname = nickname;
+  gameState.playerEmail = email;
 }
 
 function resetTurn() {
@@ -120,6 +126,9 @@ function resetTurn() {
 
 function resetGame() {
   stopTimer();
+  gameState.currentTime = Date.now();
+  const elapsedTime = (gameState.currentTime - gameState.startTime) / 1000; // time in seconds
+
   console.log("Current time:", formatTime(gameState.currentTime / 1000));
   console.log("Start time:", formatTime(gameState.startTime / 1000));
   console.log(
@@ -129,10 +138,12 @@ function resetGame() {
   console.log("Current Game Level before increment:", gameState.gameLevel);
 
   if (gameState.gameLevel === 3) {
+    displayRound3CompletionModal();
+
     // Handle the end of the last level
     console.log("Final level reached. Calculating totalTime...");
     console.log(`Elapsed time for the final round: ${elapsedTime} seconds`);
-    gameState.totalTime += gameState.elapsedTime;
+    gameState.totalTime += elapsedTime;
     console.log("Final Total Time calculated:", gameState.totalTime);
 
     // store the nickname and total score in the local storage
@@ -140,8 +151,8 @@ function resetGame() {
     // Delay before redirection
     setTimeout(function () {
       console.log("Redirecting to scoreboard...");
+
       // window.location.href = "./HTML/scoreboard.html";
-      displayRound3CompletionModal();
     }, 500);
   } else {
     gameState.gameLevel++;
@@ -151,7 +162,7 @@ function resetGame() {
     );
     console.log(`Elapsed time for the round: ${gameState.elapsedTime} seconds`);
 
-    gameState.totalTime += gameState.elapsedTime;
+    gameState.totalTime += elapsedTime;
     console.log("Total Time calculated:", gameState.totalTime);
     // Determine the correct card set based on the current game level
     let cardSet =
@@ -192,7 +203,7 @@ function updateTimerDisplay(seconds) {
 }
 
 function stopTimer() {
-  clearInterval(timer);
+  clearInterval(gameState.timer);
   gameState.secondsElapsed = 0;
   updateTimerDisplay(gameState.secondsElapsed);
 }
@@ -326,8 +337,8 @@ function checkEndOfRound() {
     totalPairs
   );
 
-  currentTime = new Date().getTime();
-  elapsedTime = (currentTime - gameState.startTime) / 1000;
+  gameState.currentTime = new Date().getTime();
+  elapsedTime = (gameState.currentTime - gameState.startTime) / 1000;
   if (gameState.matchedPairsCount === totalPairs) {
     console.log("Elapsed time for the round:", elapsedTime, "seconds");
     stopTimer();
@@ -346,7 +357,7 @@ function checkEndOfRound() {
       }, 1000);
     }
     console.log("End of round reached."); // Add this line
-    console.log("Current Game Level before increment:", gameLevel);
+    console.log("Current Game Level before increment:", gameState.gameLevel);
   }
 }
 
@@ -395,14 +406,18 @@ function displayRound3CompletionModal() {
 
 function endGame() {
   // Assume we get the nickname from local storage or a global variable
-  const nickname = localStorage.getItem("userNickname");
-  const finalScore = gameState.scoreCount; // scoreCount should be your game's scoring variable
+  const nickname = gameState.playerNickname;
+  const email = gameState.playerEmail;
+  const finalScore = gameState.scoreCount;
 
-  // Update the leaderboard with the final score
-  updateLeaderboard(nickname, finalScore);
-  submitScore();
+  // updateLeaderboard(nickname, email, finalScore); // Pass email here for updates/inserts
+  submitScore(nickname, email, finalScore); // Pass data directly
   // Now display the scoreboard modal
-  displayScoreBoardModal();
+  // Condition to check if scoreboard modal should be displayed
+  if (!gameState.finalResultsDisplayed) {
+    gameState.finalResultsDisplayed = true; // Set a flag to prevent re-display
+    displayScoreBoardModal();
+  }
 }
 
 function displayGameInstructionsModal() {
@@ -441,73 +456,63 @@ function displayRound3InstructionsModal() {
   });
 }
 
+// THERES A PROBLEM WITH THIS FUNCTION
 function displayScoreBoardModal() {
   const scoreboardModal = document.getElementById("ScoreBoardModal");
+  const leaderboardTable = document.getElementById("leaderboardTable");
   const playerNicknameDisplay = document.getElementById("player-nickname");
   const playerScoreDisplay = document.getElementById("player-score");
 
-  // Retrieve current player's nickname and score
-  const currentNickname = localStorage.getItem("userNickname");
-  const currentScore = gameState.scoreCount; // Assuming scoreCount holds the current score
+  // Clear any existing leaderboard data
+  leaderboardTable.querySelector("tbody").innerHTML = ""; // Clear only the body, not the header
 
-  // Display current player's nickname and score
-  playerNicknameDisplay.textContent = currentNickname;
-  playerScoreDisplay.textContent = `Puntos: ${currentScore}`;
+  // Fetch leaderboard data via AJAX
+  $.ajax({
+    url: "PHP/get_leaderboard.php",
+    method: "GET",
+    success: function (response) {
+      const leaderboardData = JSON.parse(response);
 
-  // Show the modal
-  if (scoreboardModal) {
-    scoreboardModal.style.display = "block";
-  } else {
-    console.error("ScoreBoardModal not found!");
-  }
+      // Populate table with leaderboard data (Top 5)
+      leaderboardData.slice(0, 5).forEach((player, index) => {
+        const row = leaderboardTable.insertRow();
+        const rankCell = row.insertCell();
+        const nicknameCell = row.insertCell();
+        const scoreCell = row.insertCell();
+
+        rankCell.textContent = index + 1; // Rank starts from 1
+        nicknameCell.textContent = player.nickname;
+        scoreCell.textContent = player.score;
+      });
+
+      // Display current player's nickname and score
+      const currentNickname = gameState.playerNickname;
+      const currentScore = gameState.scoreCount;
+      playerNicknameDisplay.textContent = currentNickname;
+      playerScoreDisplay.textContent = `Puntos: ${currentScore}`;
+
+      // Show the modal
+      scoreboardModal.style.display = "block";
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching leaderboard:", error);
+      // Optionally, display an error message to the user
+    },
+  });
 }
 
 // -------------------------------------- CRUD --------------------------------------
 
-function updateLeaderboard(nickname, email, score) {
-  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-
-  // Check if the player already exists in the leaderboard by email
-  let existingPlayer = leaderboard.find((player) => player.email === email);
-
-  if (existingPlayer) {
-    // Update the player's nickname and score if the new score is higher
-    existingPlayer.nickname = nickname;
-    if (existingPlayer.score < score) {
-      existingPlayer.score = score;
-    }
-  } else {
-    // Add new player to the leaderboard
-    leaderboard.push({ nickname: nickname, email: email, score: score });
-  }
-
-  // Sort the leaderboard by score in descending order
-  leaderboard.sort((a, b) => b.score - a.score);
-
-  // Optionally trim the leaderboard to only keep the top N entries
-  leaderboard = leaderboard.slice(0, 5);
-
-  // Save the updated leaderboard
-  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-}
-
-function submitScore() {
-  // Retrieve player data
-  const nickname = localStorage.getItem("userNickname");
-  const email = localStorage.getItem("userEmail");
-  const score = gameState.scoreCount;
-  const gameLevel = gameState.gameLevel;
-  const totalTime = gameState.totalTime;
-
+function submitScore(nickname, email, finalScore) {
   $.ajax({
-    url: "PHP/submit_score.php", // Path relative to your index.html
+    url: "PHP/submit_score.php",
     method: "POST",
     data: {
       nickname: nickname,
       email: email,
-      score: score,
-      game_level: gameLevel,
-      total_time: totalTime,
+      score: finalScore,
+      game_level: gameState.gameLevel,
+      total_time: gameState.totalTime,
     },
     success: function (response) {
       console.log(response); // Log success message from PHP
@@ -565,3 +570,30 @@ const levelThree = [
   // "./images/levelThree/f.jpg",
   // "./images/levelThree/f-1.jpg",
 ];
+
+// function updateLeaderboard(nickname, email, score) {
+//   let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+//   // Check if the player already exists in the leaderboard by email
+//   let existingPlayer = leaderboard.find((player) => player.email === email);
+
+//   if (existingPlayer) {
+//     // Update the player's nickname and score if the new score is higher
+//     existingPlayer.nickname = nickname;
+//     if (existingPlayer.score < score) {
+//       existingPlayer.score = score;
+//     }
+//   } else {
+//     // Add new player to the leaderboard
+//     leaderboard.push({ nickname: nickname, email: email, score: score });
+//   }
+
+//   // Sort the leaderboard by score in descending order
+//   leaderboard.sort((a, b) => b.score - a.score);
+
+//   // Optionally trim the leaderboard to only keep the top N entries
+//   leaderboard = leaderboard.slice(0, 5);
+
+//   // Save the updated leaderboard
+//   localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+// }
