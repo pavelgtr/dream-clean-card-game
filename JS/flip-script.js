@@ -350,7 +350,7 @@ function checkEndOfRound() {
   if (gameState.matchedPairsCount === totalPairs) {
     stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
-    if (gameState.gameLevel < 3) {
+    if (gameState.gameLevel < 2) {
       console.log("stopTimer Called");
 
       setTimeout(() => {
@@ -389,29 +389,29 @@ function displayRoundScoreModal() {
     if (gameState.gameLevel == 2) {
       displayRound2InstructionsModal();
     } else if (gameState.gameLevel == 3) {
-      displayRound3InstructionsModal();
+      endGame();
     }
     // startTimer();
   });
 }
 
-function displayRound3CompletionModal() {
-  const round3CompletionModal = document.getElementById(
-    "Round3CompletionModal"
-  );
-  round3CompletionModal.style.display = "block";
-  const round3CompletionPoints = document.getElementById(
-    "round3CompletionPoints"
-  );
-  round3CompletionPoints.textContent = `${gameState.scoreCount}`;
-  const viewLeaderboardBtn = document.getElementById("viewLeaderboardBtn");
-  viewLeaderboardBtn.addEventListener("click", function () {
-    round3CompletionModal.style.display = "none";
-    // window.location.href = "./HTML/scoreboard.html";
-    // displayScoreBoardModal();
-    endGame();
-  });
-}
+// function displayRound3CompletionModal() {
+//   const round3CompletionModal = document.getElementById(
+//     "Round3CompletionModal"
+//   );
+//   round3CompletionModal.style.display = "block";
+//   const round3CompletionPoints = document.getElementById(
+//     "round3CompletionPoints"
+//   );
+//   round3CompletionPoints.textContent = `${gameState.scoreCount}`;
+//   const viewLeaderboardBtn = document.getElementById("viewLeaderboardBtn");
+//   viewLeaderboardBtn.addEventListener("click", function () {
+//     round3CompletionModal.style.display = "none";
+//     // window.location.href = "./HTML/scoreboard.html";
+//     // displayScoreBoardModal();
+//     endGame();
+//   });
+// }
 
 function endGame() {
   // Assume we get the nickname from local storage or a global variable
@@ -450,20 +450,21 @@ function displayRound2InstructionsModal() {
   round2ContinueBtn.addEventListener("click", function () {
     round2InstructionsModal.style.display = "none";
     startTimer();
+    // endGame();
   });
 }
 
-function displayRound3InstructionsModal() {
-  const round3InstructionsModal = document.getElementById(
-    "Round3InstructionsModal"
-  );
-  round3InstructionsModal.style.display = "block";
-  const round3ContinueBtn = document.getElementById("round3ContinueBtn");
-  round3ContinueBtn.addEventListener("click", function () {
-    round3InstructionsModal.style.display = "none";
-    startTimer();
-  });
-}
+// function displayRound3InstructionsModal() {
+//   const round3InstructionsModal = document.getElementById(
+//     "Round3InstructionsModal"
+//   );
+//   round3InstructionsModal.style.display = "block";
+//   const round3ContinueBtn = document.getElementById("round3ContinueBtn");
+//   round3ContinueBtn.addEventListener("click", function () {
+//     round3InstructionsModal.style.display = "none";
+//     startTimer();
+//   });
+// }
 
 // THERES A PROBLEM WITH THIS FUNCTION
 function displayScoreBoardModal() {
