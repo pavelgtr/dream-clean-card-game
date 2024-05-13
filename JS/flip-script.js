@@ -119,13 +119,12 @@ function resetTurn() {
 }
 
 function resetGame() {
-  stopTimer();
-  console.log("Current time:", formatTime(gameState.currentTime / 1000));
-  console.log("Start time:", formatTime(gameState.startTime / 1000));
-  console.log(
-    "Elapsed time for the round (in seconds):",
-    (gameState.currentTime - gameState.startTime) / 1000
-  );
+  // console.log("Current time:", formatTime(gameState.currentTime / 1000));
+  // console.log("Start time:", formatTime(gameState.startTime / 1000));
+  // console.log(
+  //   "Elapsed time for the round (in seconds):",
+  //   (gameState.currentTime - gameState.startTime) / 1000
+  // );
   console.log("Current Game Level before increment:", gameState.gameLevel);
 
   if (gameState.gameLevel === 3) {
@@ -151,7 +150,7 @@ function resetGame() {
     );
     console.log(`Elapsed time for the round: ${gameState.elapsedTime} seconds`);
 
-    gameState.totalTime += gameState.elapsedTime;
+    // gameState.totalTime += gameState.elapsedTime;
     console.log("Total Time calculated:", gameState.totalTime);
     // Determine the correct card set based on the current game level
     let cardSet =
@@ -174,26 +173,37 @@ function resetGame() {
 // -------------------------------------- TIMER FUNCTIONS --------------------------------------
 
 function startTimer() {
-  if (timer !== null) {
-    clearInterval(timer);
+  gameState.startTime = Date.now(); // Store the start time in milliseconds
+  if (gameState.timer) {
+    clearInterval(gameState.timer); // Clear existing timer if it exists
   }
-
-  gameState.startTime = new Date().getTime(); // Store the start time
-  timer = setInterval(() => {
+  gameState.timer = setInterval(() => {
     gameState.secondsElapsed++;
     updateTimerDisplay(gameState.secondsElapsed);
   }, 1000);
 }
 
+// Function to update the timer display
 function updateTimerDisplay(seconds) {
-  // Ensure the timerDisplay variable targets the span where the time should be displayed
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  const formattedTime = `${mins.toString().padStart(2, "0")}:${secs
+    .toString()
+    .padStart(2, "0")}`;
   const timerDisplay = document.querySelector("#timer span");
-  timerDisplay.textContent = formatTime(seconds);
+  timerDisplay.textContent = formattedTime;
 }
 
+// Function to stop the timer
 function stopTimer() {
-  clearInterval(timer);
-  gameState.secondsElapsed = 0;
+  clearInterval(gameState.timer);
+  gameState.currentTime = Date.now();
+  gameState.elapsedTime = (gameState.currentTime - gameState.startTime) / 1000;
+  gameState.totalTime += gameState.elapsedTime; // Add elapsed time to total time
+  console.log(
+    `Total Time after stopping timer: ${gameState.totalTime} seconds`
+  );
+  gameState.secondsElapsed = 0; // Reset seconds elapsed
   updateTimerDisplay(gameState.secondsElapsed);
 }
 
@@ -326,27 +336,29 @@ function checkEndOfRound() {
     totalPairs
   );
 
-  currentTime = new Date().getTime();
-  elapsedTime = (currentTime - gameState.startTime) / 1000;
+  gameState.currentTime = new Date().getTime();
+  elapsedTime = (gameState.currentTime - gameState.startTime) / 1000;
+  console.log("Elapsed time as this point:", elapsedTime, "seconds");
   if (gameState.matchedPairsCount === totalPairs) {
-    console.log("Elapsed time for the round:", elapsedTime, "seconds");
     stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
     if (gameState.gameLevel < 3) {
+      console.log("stopTimer Called");
+
       setTimeout(() => {
         console.log("About to display round score modal");
-        displayRoundScoreModal();
         resetGame();
-      }, 200);
+        displayRoundScoreModal();
+      }, 1000);
     } else {
       setTimeout(() => {
         console.log("Transitioning to scoreboard...");
         // window.location.href = "./HTML/scoreboard.html";
-        resetGame();
+        // resetGame();
       }, 1000);
     }
     console.log("End of round reached."); // Add this line
-    console.log("Current Game Level before increment:", gameLevel);
+    console.log("Current Game Level before increment:", gameState.gameLevel);
   }
 }
 
@@ -358,12 +370,12 @@ function displayRoundScoreModal() {
   const roundOneScoreElement = document.getElementById("roundOneScore");
   const nextRoundButton = document.getElementById("nextRoundButton");
 
-  gameLevelElement.textContent = `NIVEL ${gameState.gameLevel} COMPLETADO`;
+  gameLevelElement.textContent = `NIVEL ${gameState.gameLevel - 1} COMPLETADO`;
   roundOneScoreElement.textContent = gameState.scoreCount;
 
   roundScoreModal.style.display = "block";
 
-  document.getElementById("next-level").textContent = gameState.gameLevel + 1;
+  document.getElementById("next-level").textContent = gameState.gameLevel;
   nextRoundButton.addEventListener("click", function () {
     roundScoreModal.style.display = "none";
     if (gameState.gameLevel == 2) {
@@ -500,9 +512,11 @@ function submitScore() {
   const totalTime = gameState.totalTime;
 
   $.ajax({
+    // Use jQuery to make an AJAX request
     url: "PHP/submit_score.php", // Path relative to your index.html
-    method: "POST",
+    method: "POST", // Use POST method
     data: {
+      // Pass the player data to the server
       nickname: nickname,
       email: email,
       score: score,
@@ -510,6 +524,7 @@ function submitScore() {
       total_time: totalTime,
     },
     success: function (response) {
+      // Handle the success response from the server
       console.log(response); // Log success message from PHP
       // Optionally, update the UI or display a confirmation to the user
     },
