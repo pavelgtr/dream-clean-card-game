@@ -1,5 +1,10 @@
 
 <?php
+
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $servername = "localhost";
 $username = "mrP_cardGame_test"; // replace with your MySQL username, usually 'root' if using XAMPP without setting a password
 $password = "mrP_298108!?"; // replace with your MySQL password, usually empty in XAMPP
@@ -12,11 +17,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
+// echo "Connected successfully";
 ?>
 
 
 
-<!-- database user mrP_cardGame_test  -->
-
-<!-- database pass mrP_298108!? -->

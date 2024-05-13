@@ -1,5 +1,3 @@
-<!-- //index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,11 +125,11 @@
   </div>
 
   <!-- Round 3 Completion Modal -->
-  <div id="Round3CompletionModal" class="modal">
+  <div id="FinalRoundCompletionModal" class="modal">
     <div class="modal-svg-container">
       <div class="content-inside-modal">
         <h2>YAY</h2>
-        <h3>NIVEL 3 COMPLETADO</h3>
+        <h3>NIVEL 2 COMPLETADO</h3>
         <p>Tus Puntos: <span id="round3CompletionPoints"></span></p>
         <p>¡Felicidades! 👏 Completaste todos los niveles.</p>
         <p>Revisa en qué lugar quedaste entre los expertos de limpieza sostenible.</p>
@@ -157,12 +155,13 @@
               <th>Score</th>
             </tr>
           </thead>
-          <tbody>
-          </tbody>
-        </table>
 
-        <!-- <p id="player-nickname"></p>
-        <p id="player-score"></p> -->
+          <tbody>
+            <!-- Dynamic data from the server will be inserted here -->
+          </tbody>
+
+        </table>
+        <button id="restartGameButton" class="restart-button">Restart Game</button>
       </div>
     </div>
   </div>

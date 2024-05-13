@@ -1,4 +1,10 @@
 <?php
+
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1); 
+
+
 include 'connect.php'; // Include your connection script
 
 // Get the top scores (e.g., top 10)
