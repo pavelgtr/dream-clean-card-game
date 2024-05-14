@@ -513,9 +513,9 @@ function displayScoreBoardModal() {
 
   // Fetch leaderboard data via AJAX
   $.ajax({
-    url: "PHP/get_leaderboard.php",
+    url: "PHP/get_leaderboard.php", // Path relative to your index.html
     method: "GET",
-    success: function (response) {
+    success: function (response) { // Handle the success response from the server
       const leaderboardData = JSON.parse(response);
 
       // Populate table with leaderboard data
@@ -524,14 +524,32 @@ function displayScoreBoardModal() {
         const rankCell = row.insertCell(0); // Insert a new cell for the rank
         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
         const scoreCell = row.insertCell(2); // Insert a new cell for the score
+        row.classList.add("leaderboard-row");
+
+    
+        rankCell.id = "first-cell";
+        nicknameCell.id = "second-cell";
+        scoreCell.id = "third-cell";
 
         rankCell.innerHTML = index + 1; // Rank starts from 1
-        // nicknameCell.innerHTML = player.nickname;
         nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon" ">${player.nickname}`;
         scoreCell.innerHTML = player.score;
       });
 
-      // style="width:45px; height:45px; vertical-align:middle; margin-right:5px;
+      // Example current player data (use your dynamic data here)
+      const currentPlayer = {
+        rank: 15,
+        nickname: gameState.nickname,
+        score: gameState.scoreCount,
+      };
+
+      // Populate current player result
+      currentPlayerResult.innerHTML = `
+    <div class="rank">${currentPlayer.rank}</div>
+    <img src="./images/Menu/user-icon-blue-circle.png" alt="User Icon">
+    <div class="nickname">${currentPlayer.nickname}</div>
+    <div class="score">${currentPlayer.score}</div>
+  `;
 
       // Display the modal
       scoreboardModal.style.display = "block";

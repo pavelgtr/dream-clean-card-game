@@ -181,7 +181,6 @@ h5 {
   letter-spacing: 4px;
   text-align: center;
   line-height: 30px;
-  border: 2px solid red;
 }
 
 #ScoreBoardModal p {
@@ -195,6 +194,81 @@ h5 {
   margin-top: 20px;
 }
 
+#leaderboardTable,
+#currentPlayerResult {
+  width: 540px;
+  padding: 20px;
+  display: flex;
+  justify-content: left;
+}
+
+#leaderboardTable {
+  border-top: 3px solid #e5e4e4;
+}
+
+#leaderboardTable img,
+#currentPlayerResult img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+#footerTitle {
+  font-family: Helvetica;
+  font-size: 18px;
+  color: #9a9a9a;
+  margin-top: 10px;
+}
+
+#currentPlayerResult {
+  border-top: 3px solid #e5e4e4;
+}
+
+#currentPlayerResult .nickname,
+#leaderboardTable .nickname {
+  font-family: Helvetica;
+  font-size: 18px;
+  color: #9a9a9a;
+  text-align: left;
+}
+
+#currentPlayerResult .rank,
+#currentPlayerResult .score {
+  font-family: Helvetica-Bold;
+  font-size: 18px;
+  color: #9a9a9a;
+}
+
+#leaderboardTable td {
+  font-family: "Helvetica";
+  font-size: 18px;
+  color: #9a9a9a;
+  text-align: left;
+}
+
+#leaderboardTable tbody {
+  width: 100%;
+  border: 2px solid red;
+}
+
+.leaderboard-row {
+}
+
+/* #second-cell {
+  grid-column: span 5;
+} */
+
+#third-cell {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+#first-cell,
+#currentPlayerResult .rank {
+  padding-left: 30px;
+}
 .modal-svg-container img {
   width: 223px;
   height: 127px;
