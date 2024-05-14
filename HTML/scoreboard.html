@@ -4,237 +4,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scoreboard</title>
-  <link rel="stylesheet" href="../CSS/score.css">
+  <link rel="stylesheet" href="../CSS/main.css">
+  <title>Scoreboard Styling</title>
 </head>
 
 <body>
-  <header class="game-header">
-    <div class="gray-top"></div>
-    <h1><img src="../images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
-  </header>
 
-  <div id="image-group">
-    <h2><img id="logo-green" src="../images/Menu/green-choice-logo-transparent.png" alt="logo-green-choice"></h2>
-    <h2><img id="logo-yei" src="../images/Menu/Yei.png" alt="logo-green-choice"></h2>
+
+<!-- placeholder -->
+  <div id="ScoreBoardModal" class="modal">
+    <div class="score-svg-container">
+      <div class="content-inside-modal">
+        <h3 id="leaderboard-title">LEADERBOARD: TOP 5</h3>
+        <p>Cada semana, el jugador que tenga más puntos se lleva el título de "Campeón del Green Choice Memory" y podrá
+          ganar fabulosos premios.
+        </p>
+        <table id="leaderboardTable">
+          <tbody>
+            <tr class="leaderboard-row">
+              <td class="first-cell">1</td>
+              <td class="second-cell"><img src="../images/Menu/user-icon-blue-circle.png" alt="User Icon"> Julia Marte
+              </td>
+              <td class="third-cell">180</td>
+            </tr>
+            <tr class="leaderboard-row">
+              <td class="first-cell">2</td>
+              <td class="second-cell"><img src="../images/Menu/user-icon-blue-circle.png" alt="User Icon"> Pedro Lopez
+              </td>
+              <td class="third-cell">178</td>
+            </tr>
+            <tr class="leaderboard-row">
+              <td class="first-cell">3</td>
+              <td class="second-cell"><img src="../images/Menu/user-icon-blue-circle.png" alt="User Icon"> Jose Perez
+              </td>
+              <td class="third-cell">170</td>
+            </tr>
+            <tr class="leaderboard-row">
+              <td class="first-cell">4</td>
+              <td class="second-cell"><img src="../images/Menu/user-icon-blue-circle.png" alt="User Icon"> Maria Pina
+              </td>
+              <td class="third-cell">160</td>
+            </tr>
+            <tr class="leaderboard-row">
+              <td class="first-cell">5</td>
+              <td class="second-cell"><img src="../images/Menu/user-icon-blue-circle.png" alt="User Icon"> Luisa Rivas
+              </td>
+              <td class="third-cell">150</td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="footerTitle">Tu Resultado</div>
+        <table id="currentPlayerResultTable">
+          <tbody>
+            <tr class="leaderboard-row">
+              <td class="first-cell">15</td>
+              <td class="second-cell"><img src="../images/Menu/user-icon-blue-circle.png" alt="User Icon"> Ana Matos
+              </td>
+              <td class="third-cell">120</td>
+            </tr>
+          </tbody>
+        </table>
+        <button id="restartGameButton" class="restart-button">Jugar</button>
+      </div>
+    </div>
   </div>
 
-  <div class="results-score-block-display">
-
-    <div class="container-overlay">
-      <div class="results-class" id="result-final">
-        <img src="../images/Menu/clock.jpg" alt="resultado-final" />
-        <p>Tu Resultado:</p>
-        <div id="total-time"></div>
-      </div>
-      <div id="message-container">
-        <div class="congrats-text">
-          <h3 id="congratulations-heading">FELICIDADES</h3>
-          <p id="message-text">Estas participando para ganar uno de nuestros premios semanales, sigue jugando e invita a
-            mas personas a jugar.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-buttons">
-      <button type="button" class="reset" onclick="window.location.href='../index.html'">
-        <img src=" ../images/Menu/reload.png" alt="Arrow" class="arrow-icon">
-        Reiniciar
-      </button>
-      <!-- below is my view score button  -->
-      <button type="button" class="next-button">
-        <img src="../images/Menu/fwd-arrow.png" alt="Arrow" class="arrow-icon">
-        Siguiente</button>
-    </div>
-
-    <div class="scoreboard-white-container">
-      <table>
-        <caption>Mejor Puntuacion</caption>
-        <thead>
-          <tr class="table-row">
-          </tr>
-        </thead>
-        <tbody id="leaderboard-body">
-          <!-- Player rows will be inserted here -->
-
-        </tbody>
-      </table>
-
-
-      <table id="current-player-table">
-        <caption>Tu Resultado</caption>
-        <thead>
-          <tr>
-          </tr>
-        </thead>
-        <tbody id="current-player-body">
-      
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-
-
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-      displayLeaderboard();
-      displayCurrentPlayerTotalTime();
-    });
-
-    function displayLeaderboard() {
-      const players = JSON.parse(localStorage.getItem('playersData')) || [];
-      players.sort((a, b) => a.totalTime - b.totalTime);
-      const leaderboardBody = document.getElementById('leaderboard-body');
-      // leaderboardBody.innerHTML = ''; // Clear existing rows
-
-      players.forEach((player, index) => { // Include 'index' to track position
-        const row = document.createElement('tr');
-        row.innerHTML = `
-      <td class="player-row">${index + 1}</td>   <td>
-        <div id="${player.id}">
-          <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${player.nickname}
-        </div>
-      </td>
-      <td>${formatTime(player.totalTime)}</td>
-    `;
-        leaderboardBody.appendChild(row);
-      });
-    }
-
-
-    function displayCurrentPlayerTotalTime() {
-      const players = JSON.parse(localStorage.getItem('playersData')) || [];
-
-      const lastPlayer = players[players.length - 1];
-      if (!lastPlayer) {
-        console.log("No player data available.");
-        return;
-      }
-
-      const playerRank = players.findIndex(player => player.id === lastPlayer.id) + 1;
-
-      // Find the row in the leaderboard that matches the current player's nickname
-      const leaderboardRows = document.querySelectorAll('#leaderboard-body tr');
-      let matchingRow = null;
-      for (let i = 0; i < leaderboardRows.length; i++) {
-        if (leaderboardRows[i].textContent.includes(lastPlayer.nickname)) {
-          matchingRow = leaderboardRows[i];
-          break;
-        }
-      }
-
-      // Extract the rank from the matching row
-      let playerRankInLeaderboard = null;
-      if (matchingRow) {
-        playerRankInLeaderboard = matchingRow.firstElementChild.textContent;
-      }
-
-      // Construct the current player row content (using `lastPlayer.id` directly)
-      const currentPlayerRow = document.createElement('tr');
-      currentPlayerRow.innerHTML = `
-    <td class="player-row">${playerRankInLeaderboard || playerRank}</td>  
-    <td id="${lastPlayer.id}">  
-        <img src="../images/Menu/user-Icon.png" alt="User Icon" /> ${lastPlayer.nickname}
-    </td>
-    <td>${formatTime(lastPlayer.totalTime)}</td> 
-  `;
-
-      // Update both leaderboard and current player displays
-      const currentPlayerBody = document.getElementById('current-player-body');
-      currentPlayerBody.innerHTML = ''; // Clear existing rows
-      currentPlayerBody.appendChild(currentPlayerRow);
-
-      const totalTimeElement = document.getElementById('total-time');
-      totalTimeElement.textContent = formatTime(lastPlayer.totalTime);
-    }
-
-
-    function formatTime(seconds) {
-      if (isNaN(seconds)) {
-        console.error("Invalid time value passed to formatTime:", seconds);
-        return "00:00";
-      }
-      const mins = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60); // Round down the seconds
-      return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-    }
-
-  </script>
 </body>
 
 </html>
-
-
-
-
-
-<!-- placeholder players -->
-<!-- <tr>
-            <td>1</td>
-            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Julia Marte</td>
-            <td>00:24</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Pedro Lopez</td>
-            <td>00:32</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />José Pérez</td>
-            <td>00:48</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Maria Piña</td>
-            <td>00:51</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td><img src="../images/Menu/user-Icon.png" alt="User Icon" />Luisa Rivas</td>
-            <td>00:59</td>
-          </tr> -->
-
-
-
-            <!-- FOOTER -->
-
-  <!-- <footer>
-    <div class="footer-banner">
-
-      <div class="footer-content">
-        <div class="footer-social-media">
-          <a href="https://www.youtube.com/channel/UCLu8H0Y9CTkDJwB9FVwXPTw"><img
-              src="../images/Footer-images/Phone-logo.png" alt="Phone"></a>
-          <a href="https://www.facebook.com/doncella.do"><img src="../images/Footer-images/facebook-logo.png"
-              alt="Facebook"></a>
-          <a href="https://twitter.com/DoncellaRD"><img src="../images/Footer-images/twitter-logo.png"
-              alt="Twitter"></a>
-          <a href="https://www.pinterest.com/doncellard/"><img src="../images/Footer-images/pinterest-logo.png"
-              alt="Pinterest"></a>
-          <a href="https://www.instagram.com/doncellard/"><img src="../images/Footer-images/instagram-logo.png"
-              alt="Instagram"></a>
-        </div>
-        <div>
-          <ul class="footer-list">
-            <li class="mobile-bottom">
-              <img src="../images/Footer-images/bottom-logo -copy.png" alt="Logo" id="footer-logo">
-              <img src="../images/Footer-images/Doncella-logo-bottom.png" alt="Logo" id="footer-logo-large">
-            </li>
-            <li class="links">
-              <a href="#">&copy; Doncella SRL 2024</a> |
-              <a href="https://doncella.com.do/">Santo Domingo</a> |
-              <a href="https://doncella.com.do/">Santiago</a> |
-              <a href="#">Punta Cana</a> |
-              <a href="tel:809-638-6572">809-638-6572</a> |
-              <a href="https://doncella.com.do/#nosotros">Políticas de Privacidad</a> |
-              <a href="https://doncella.com.do/#nosotros">Site Map</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer> -->

@@ -1,3 +1,175 @@
 <!-- database user mrP_cardGame_test  -->
 
 <!-- database pass mrP_298108!? -->
+
+
+
+// < ---------------------------------------------- OLD CODE JS BELOW ---------------------------------------------- >
+// const levelThree = [
+//   "./images/levelThree/a.jpg",
+//   "./images/levelThree/a-1.jpg",
+//   "./images/levelThree/b.jpg",
+//   "./images/levelThree/b-1.jpg",
+//   // "./images/levelThree/c.jpg",
+//   // "./images/levelThree/c-1.jpg",
+//   // "./images/levelThree/d.jpg",
+//   // "./images/levelThree/d-1.jpg",
+//   // "./images/levelThree/e.jpg",
+//   // "./images/levelThree/e-1.jpg",
+//   // "./images/levelThree/f.jpg",
+//   // "./images/levelThree/f-1.jpg",
+// ];
+
+// function updateLeaderboard(nickname, email, score) {
+//   let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+//   // Check if the player already exists in the leaderboard by email
+//   let existingPlayer = leaderboard.find((player) => player.email === email);
+
+//   if (existingPlayer) {
+//     // Update the player's nickname and score if the new score is higher
+//     existingPlayer.nickname = nickname;
+//     if (existingPlayer.score < score) {
+//       existingPlayer.score = score;
+//     }
+//   } else {
+//     // Add new player to the leaderboard
+//     leaderboard.push({ nickname: nickname, email: email, score: score });
+//   }
+
+//   // Sort the leaderboard by score in descending order
+//   leaderboard.sort((a, b) => b.score - a.score);
+
+//   // Optionally trim the leaderboard to only keep the top N entries
+//   leaderboard = leaderboard.slice(0, 5);
+
+//   // Save the updated leaderboard
+//   localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+// }
+
+// function displayRound3InstructionsModal() {
+
+//   const round3InstructionsModal = document.getElementById(
+//     "Round3InstructionsModal"
+//   );
+//   round3InstructionsModal.style.display = "block";
+//   const round3ContinueBtn = document.getElementById("round3ContinueBtn");
+//   round3ContinueBtn.addEventListener("click", function () {
+//     round3InstructionsModal.style.display = "none";
+//     startTimer();
+//   });
+// }
+
+// function displayScoreBoardModal() {
+//   const scoreboardModal = document.getElementById("ScoreBoardModal");
+//   const leaderboardTable = document.getElementById("leaderboardTable");
+//   const currentPlayerResultTable = document.getElementById(
+//     "currentPlayerResultTable"
+//   );
+
+//   // Clear any existing leaderboard data
+//   leaderboardTable.querySelector("tbody").innerHTML = "";
+//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
+
+//   // Fetch leaderboard data via AJAX
+//   $.ajax({
+//     url: "PHP/get_leaderboard.php", // Path relative to your index.html
+//     method: "GET",
+//     success: function (response) {
+//       // Handle the success response from the server
+//       const leaderboardData = JSON.parse(response);
+//       console.log("Leaderboard Data:", leaderboardData); // Debugging output
+
+//       // Find the current player's data (case-insensitive)
+//       console.log(
+//         "Current Player Nickname (gameState):",
+//         gameState.playerNickname
+//       ); // Debugging output
+
+//       // Trim and lowercase the current player's nickname
+//       const currentNickname = gameState.playerNickname.trim().toLowerCase();
+//       console.log(
+//         "Trimmed and Lowercased Current Player Nickname:",
+//         currentNickname
+//       ); // Debugging output
+
+//       // Check each player nickname in leaderboard data
+//       leaderboardData.forEach((player) => {
+//         console.log(
+//           "Comparing with Leaderboard Nickname:",
+//           player.nickname.trim().toLowerCase()
+//         );
+//       });
+
+//       const currentPlayerData = leaderboardData.find(
+//         (player) => player.nickname.trim().toLowerCase() === currentNickname
+//       );
+//       console.log("Current Player Data:", currentPlayerData); // Debugging output
+
+//       // Slice the leaderboard data to get the top 5 players
+//       const topFivePlayers = leaderboardData.slice(0, 5);
+
+//       // Populate table with the top 5 players
+//       topFivePlayers.forEach((player, index) => {
+//         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
+//         const rankCell = row.insertCell(0); // Insert a new cell for the rank
+//         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
+//         const scoreCell = row.insertCell(2); // Insert a new cell for the score
+//         row.classList.add("leaderboard-row");
+
+//         rankCell.classList.add("first-cell");
+//         nicknameCell.classList.add("second-cell");
+//         scoreCell.classList.add("third-cell");
+
+//         rankCell.innerHTML = player.rank; // Use the rank from the response
+//         nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${player.nickname}`;
+//         scoreCell.innerHTML = player.score;
+//       });
+
+//       // Populate current player result
+//       if (currentPlayerData) {
+//         const row = currentPlayerResultTable.insertRow(-1);
+//         const rankCell = row.insertCell(0);
+//         const nicknameCell = row.insertCell(1);
+//         const scoreCell = row.insertCell(2);
+//         row.classList.add("leaderboard-row");
+
+//         rankCell.classList.add("first-cell");
+//         nicknameCell.classList.add("second-cell");
+//         scoreCell.classList.add("third-cell");
+
+//         rankCell.innerHTML = currentPlayerData.rank;
+//         nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${currentPlayerData.nickname}`;
+//         scoreCell.innerHTML = currentPlayerData.score;
+//       } else {
+//         const row = currentPlayerResultTable.insertRow(-1);
+//         const rankCell = row.insertCell(0);
+//         const nicknameCell = row.insertCell(1);
+//         const scoreCell = row.insertCell(2);
+//         row.classList.add("leaderboard-row");
+
+//         rankCell.classList.add("first-cell");
+//         nicknameCell.classList.add("second-cell");
+//         scoreCell.classList.add("third-cell");
+
+//         rankCell.innerHTML = "N/A";
+//         nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${gameState.playerNickname}`;
+//         scoreCell.innerHTML = gameState.scoreCount;
+//       }
+
+//       // Display the modal
+//       scoreboardModal.style.display = "block";
+//     },
+//     error: function (xhr, status, error) {
+//       console.error("Error fetching leaderboard:", error);
+//     },
+//   });
+
+//   document
+//     .getElementById("restartGameButton")
+//     .addEventListener("click", function () {
+//       resetGameState();
+//       startGame(); // Assuming startGame() is set up to reinitialize the game.
+//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
+//     });
+// }

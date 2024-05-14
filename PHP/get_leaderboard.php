@@ -1,19 +1,19 @@
 <?php
-
-
 error_reporting(E_ALL);
-ini_set('display_errors', 1); 
-
+ini_set('display_errors', 1);
 
 include 'connect.php'; // Include your connection script
 
-// Get the top scores (e.g., top 10)
-$sql = "SELECT nickname, score FROM game_data ORDER BY score DESC LIMIT 10";
+// Fetch all scores to calculate ranks
+$sql = "SELECT nickname, score FROM game_data ORDER BY score DESC";
 $result = $conn->query($sql);
 
 $leaderboardData = [];
+$rank = 1;
+
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
+        $row['rank'] = $rank++;
         $leaderboardData[] = $row;
     }
 }
@@ -21,5 +21,5 @@ if ($result->num_rows > 0) {
 // Return as JSON
 echo json_encode($leaderboardData);
 
-$conn->close(); 
+$conn->close();
 ?>

@@ -36,12 +36,13 @@ var emailInput = document.getElementById("email");
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  // showWelcomeMessage();
-  displayScoreBoardModal();
+  showWelcomeMessage();
+  // displayScoreBoardModal();
+  // displayfinalRoundCompletionModal();
+  // displayRoundScoreModal();
 });
 
 function showSignInModal() {
-  createCards(levelOne); // Start with level one cards
   const signinModal = document.getElementById("signinModal");
   signinModal.style.display = "block";
 
@@ -60,6 +61,7 @@ function showSignInModal() {
 }
 
 function showWelcomeMessage() {
+  createCards(levelOne); // Start with level one cards
   const welcomeModal = document.getElementById("welcomeModal");
   welcomeModal.style.display = "block";
   const welcomeContinueButton = document.getElementById("welcomeContinue");
@@ -411,12 +413,12 @@ function endGame() {
 
   // updateLeaderboard(nickname, email, finalScore); // Pass email here for updates/inserts
   submitScore(nickname, email, finalScore); // Pass data directly
-  // Now display the scoreboard modal
-  // Condition to check if scoreboard modal should be displayed
-  if (!gameState.finalResultsDisplayed) {
-    gameState.finalResultsDisplayed = true; // Set a flag to prevent re-display
-    displayScoreBoardModal();
-  }
+  // // Now display the scoreboard modal
+  // // Condition to check if scoreboard modal should be displayed
+  // if (!gameState.finalResultsDisplayed) {
+  //   gameState.finalResultsDisplayed = true; // Set a flag to prevent re-display
+  //   displayScoreBoardModal();
+  // }
 }
 
 function displayGameInstructionsModal() {
@@ -443,113 +445,96 @@ function displayRound2InstructionsModal() {
   });
 }
 
-//   const round3InstructionsModal = document.getElementById(
-//     "Round3InstructionsModal"
-//   );
-//   round3InstructionsModal.style.display = "block";
-//   const round3ContinueBtn = document.getElementById("round3ContinueBtn");
-//   round3ContinueBtn.addEventListener("click", function () {
-//     round3InstructionsModal.style.display = "none";
-//     startTimer();
-//   });
-// }
-
-// THERES A PROBLEM WITH THIS FUNCTION
-
-// function displayScoreBoardModal() {
-//   const scoreboardModal = document.getElementById("ScoreBoardModal");
-//   scoreboardModal.style.display = "block";
-
-//   document
-//     .getElementById("restartGameButton")
-//     .addEventListener("click", function () {
-//       resetGameState();
-//       startGame(); // Assuming startGame() is set up to reinitialize the game.
-//       document.getElementById("ScoreBoardModal").style.display = "none"; // Hide the modal after starting the game
-//     });
-// }
-
-// Fetch leaderboard data via AJAX
-// $.ajax({
-//   url: "PHP/get_leaderboard.php",
-//   method: "GET",
-//   success: function (response) {
-//     const leaderboardData = JSON.parse(response);
-
-//     // Populate table with leaderboard data (Top 5)
-//     leaderboardData.slice(0, 5).forEach((player, index) => {
-//       const row = leaderboardTable.insertRow();
-//       const rankCell = row.insertCell();
-//       const nicknameCell = row.insertCell();
-//       const scoreCell = row.insertCell();
-
-//       rankCell.textContent = index + 1; // Rank starts from 1
-//       nicknameCell.textContent = player.nickname;
-//       scoreCell.textContent = player.score;
-//     });
-
-//     // Display current player's nickname and score
-//     const currentNickname = gameState.playerNickname;
-//     const currentScore = gameState.scoreCount;
-//     playerNicknameDisplay.textContent = currentNickname;
-//     playerScoreDisplay.textContent = `Puntos: ${currentScore}`;
-
-//     // Show the modal
-//     scoreboardModal.style.display = "block";
-//   },
-//   error: function (xhr, status, error) {
-//     console.error("Error fetching leaderboard:", error);
-//     // Optionally, display an error message to the user
-//   },
-// });
 // -------------------------------------- CRUD --------------------------------------
 
 function displayScoreBoardModal() {
   const scoreboardModal = document.getElementById("ScoreBoardModal");
   const leaderboardTable = document.getElementById("leaderboardTable");
+  const currentPlayerResultTable = document.getElementById(
+    "currentPlayerResultTable"
+  );
 
   // Clear any existing leaderboard data
   leaderboardTable.querySelector("tbody").innerHTML = "";
+  currentPlayerResultTable.querySelector("tbody").innerHTML = "";
 
   // Fetch leaderboard data via AJAX
   $.ajax({
     url: "PHP/get_leaderboard.php", // Path relative to your index.html
     method: "GET",
-    success: function (response) { // Handle the success response from the server
+    success: function (response) {
+      // Handle the success response from the server
       const leaderboardData = JSON.parse(response);
+      console.log("Leaderboard Data:", leaderboardData); // Debugging output
 
-      // Populate table with leaderboard data
-      leaderboardData.forEach((player, index) => {
+      // Find the current player's data (case-insensitive)
+      console.log(
+        "Current Player Nickname (gameState):",
+        gameState.playerNickname
+      ); // Debugging output
+
+      // Trim and lowercase the current player's nickname
+      const currentNickname = gameState.playerNickname.trim().toLowerCase();
+      console.log(
+        "Trimmed and Lowercased Current Player Nickname:",
+        currentNickname
+      ); // Debugging output
+
+      // Check each player nickname in leaderboard data
+      leaderboardData.forEach((player) => {
+        console.log(
+          "Comparing with Leaderboard Nickname:",
+          player.nickname.trim().toLowerCase()
+        );
+      });
+
+      const currentPlayerData = leaderboardData.find(
+        (player) => player.nickname.trim().toLowerCase() === currentNickname
+      );
+      console.log("Current Player Data:", currentPlayerData); // Debugging output
+
+      // Slice the leaderboard data to get the top 5 players
+      const topFivePlayers = leaderboardData.slice(0, 5);
+
+      // Populate table with the top 5 players
+      topFivePlayers.forEach((player) => {
         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
-        const rankCell = row.insertCell(0); // Insert a new cell for the rank
-        const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
-        const scoreCell = row.insertCell(2); // Insert a new cell for the score
         row.classList.add("leaderboard-row");
 
-    
-        rankCell.id = "first-cell";
-        nicknameCell.id = "second-cell";
-        scoreCell.id = "third-cell";
+        const rankCell = row.insertCell(0); // Insert a new cell for the rank
+        rankCell.classList.add("first-cell");
+        rankCell.innerHTML = player.rank; // Use the rank from the response
 
-        rankCell.innerHTML = index + 1; // Rank starts from 1
-        nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon" ">${player.nickname}`;
+        const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
+        nicknameCell.classList.add("second-cell");
+        nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${player.nickname}`;
+
+        const scoreCell = row.insertCell(2); // Insert a new cell for the score
+        scoreCell.classList.add("third-cell");
         scoreCell.innerHTML = player.score;
       });
 
-      // Example current player data (use your dynamic data here)
-      const currentPlayer = {
-        rank: 15,
-        nickname: gameState.nickname,
-        score: gameState.scoreCount,
-      };
-
       // Populate current player result
-      currentPlayerResult.innerHTML = `
-    <div class="rank">${currentPlayer.rank}</div>
-    <img src="./images/Menu/user-icon-blue-circle.png" alt="User Icon">
-    <div class="nickname">${currentPlayer.nickname}</div>
-    <div class="score">${currentPlayer.score}</div>
-  `;
+      const row = currentPlayerResultTable.insertRow(-1);
+      row.classList.add("leaderboard-row");
+
+      const rankCell = row.insertCell(0);
+      rankCell.classList.add("first-cell");
+      rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
+
+      const nicknameCell = row.insertCell(1);
+      nicknameCell.classList.add("second-cell");
+      nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${
+        currentPlayerData
+          ? currentPlayerData.nickname
+          : gameState.playerNickname
+      }`;
+
+      const scoreCell = row.insertCell(2);
+      scoreCell.classList.add("third-cell");
+      scoreCell.innerHTML = currentPlayerData
+        ? currentPlayerData.score
+        : gameState.scoreCount;
 
       // Display the modal
       scoreboardModal.style.display = "block";
@@ -585,6 +570,7 @@ function submitScore(nickname, email, finalScore) {
       // Handle the success response from the server
       console.log(response); // Log success message from PHP
       // Optionally, update the UI or display a confirmation to the user
+      displayScoreBoardModal();
     },
     error: function (xhr, status, error) {
       console.error("Error submitting score:", error);
@@ -623,10 +609,10 @@ const levelOne = [
   "./images/levelOne/a-1.jpg",
   "./images/levelOne/b.jpg",
   "./images/levelOne/b-1.jpg",
-  // "./images/levelOne/c.jpg",
-  // "./images/levelOne/c-1.jpg",
-  // "./images/levelOne/d.jpg",
-  // "./images/levelOne/d-1.jpg",
+  "./images/levelOne/c.jpg",
+  "./images/levelOne/c-1.jpg",
+  "./images/levelOne/d.jpg",
+  "./images/levelOne/d-1.jpg",
   // "./images/levelOne/e.jpg",
   // "./images/levelOne/e-1.jpg",
   // "./images/levelOne/f.jpg",
@@ -638,56 +624,12 @@ const levelTwo = [
   "./images/levelTwo/a-1.jpg",
   "./images/levelTwo/b.jpg",
   "./images/levelTwo/b-1.jpg",
-  // "./images/levelTwo/c.jpg",
-  // "./images/levelTwo/c-1.jpg",
-  // "./images/levelTwo/d.jpg",
-  // "./images/levelTwo/d-1.jpg",
+  "./images/levelTwo/c.jpg",
+  "./images/levelTwo/c-1.jpg",
+  "./images/levelTwo/d.jpg",
+  "./images/levelTwo/d-1.jpg",
   // "./images/levelTwo/e.jpg",
   // "./images/levelTwo/e-1.jpg",
   // "./images/levelTwo/f.jpg",
   // "./images/levelTwo/f-1.jpg",
 ];
-
-// const levelThree = [
-//   "./images/levelThree/a.jpg",
-//   "./images/levelThree/a-1.jpg",
-//   "./images/levelThree/b.jpg",
-//   "./images/levelThree/b-1.jpg",
-//   // "./images/levelThree/c.jpg",
-//   // "./images/levelThree/c-1.jpg",
-//   // "./images/levelThree/d.jpg",
-//   // "./images/levelThree/d-1.jpg",
-//   // "./images/levelThree/e.jpg",
-//   // "./images/levelThree/e-1.jpg",
-//   // "./images/levelThree/f.jpg",
-//   // "./images/levelThree/f-1.jpg",
-// ];
-
-// function updateLeaderboard(nickname, email, score) {
-//   let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-
-//   // Check if the player already exists in the leaderboard by email
-//   let existingPlayer = leaderboard.find((player) => player.email === email);
-
-//   if (existingPlayer) {
-//     // Update the player's nickname and score if the new score is higher
-//     existingPlayer.nickname = nickname;
-//     if (existingPlayer.score < score) {
-//       existingPlayer.score = score;
-//     }
-//   } else {
-//     // Add new player to the leaderboard
-//     leaderboard.push({ nickname: nickname, email: email, score: score });
-//   }
-
-//   // Sort the leaderboard by score in descending order
-//   leaderboard.sort((a, b) => b.score - a.score);
-
-//   // Optionally trim the leaderboard to only keep the top N entries
-//   leaderboard = leaderboard.slice(0, 5);
-
-//   // Save the updated leaderboard
-//   localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-// }
-
-// function displayRound3InstructionsModal() {

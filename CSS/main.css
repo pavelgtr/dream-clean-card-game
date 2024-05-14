@@ -110,6 +110,7 @@ h5 {
 /* --------------------------------- MODAL --------------------------------- */
 
 .modal {
+  /* commenting out for placeholder to be visible  */
   display: none;
   position: fixed;
   z-index: 1;
@@ -162,7 +163,7 @@ h5 {
   height: 54px;
   border: none;
   font-family: "Montserrat-Regular", "Arial", sans-serif;
-  margin: 35px auto 0;
+  margin: 25px auto 15px;s
 }
 .score-svg-container {
   width: 1439px;
@@ -191,23 +192,35 @@ h5 {
   text-align: center;
   line-height: 30px;
   width: 458px;
-  margin-top: 20px;
+  margin: 20px;
+  border: 2px solid red;
 }
 
 #leaderboardTable,
-#currentPlayerResult {
-  width: 540px;
+#currentPlayerResultTable {
+  width: 466px;
   padding: 20px;
-  display: flex;
-  justify-content: left;
 }
 
-#leaderboardTable {
+#leaderboardTable,
+#currentPlayerResultTable {
   border-top: 3px solid #e5e4e4;
 }
 
+#leaderboardTable:before {
+  content: "";
+  display: block;
+  width: 80%; /* Adjust width to control the length of the line */
+  height: 3px;
+  background-color: #e5e4e4; /* Gray color for the line */
+  position: absolute;
+  top: -10px; /* Position the line above the table */
+  left: 50%;
+  transform: translateX(-50%); /* Center the line */
+}
+
 #leaderboardTable img,
-#currentPlayerResult img {
+#currentPlayerResultTable img {
   width: 40px;
   height: 40px;
   margin-right: 10px;
@@ -215,17 +228,14 @@ h5 {
 }
 
 #footerTitle {
-  font-family: Helvetica;
   font-size: 18px;
   color: #9a9a9a;
   margin-top: 10px;
+  font-family: "Helvetica-Bold";
+  width: 466px;
 }
 
-#currentPlayerResult {
-  border-top: 3px solid #e5e4e4;
-}
-
-#currentPlayerResult .nickname,
+#currentPlayerResultTable .nickname,
 #leaderboardTable .nickname {
   font-family: Helvetica;
   font-size: 18px;
@@ -233,35 +243,29 @@ h5 {
   text-align: left;
 }
 
-#currentPlayerResult .rank,
-#currentPlayerResult .score {
-  font-family: Helvetica-Bold;
+#currentPlayerResultTable .rank,
+#currentPlayerResultTable .score {
+  font-family: "Helvetica-Bold";
   font-size: 18px;
   color: #9a9a9a;
 }
 
-#leaderboardTable td {
+#leaderboardTable td,
+#currentPlayerResultTable td {
   font-family: "Helvetica";
   font-size: 18px;
   color: #9a9a9a;
   text-align: left;
 }
 
-#leaderboardTable tbody {
+#leaderboardTable tbody,
+#currentPlayerResultTable tbody {
   width: 100%;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
-
-.leaderboard-row {
-}
-
-/* #second-cell {
-  grid-column: span 5;
-} */
 
 #third-cell {
   display: flex;
-
   justify-content: space-between;
 }
 
@@ -275,6 +279,18 @@ h5 {
   margin: 10px auto 0;
 }
 
+#restartGameButton {
+  background-color: #f1636e;
+  border-radius: 24px;
+  font-family: "Montserrat-Regular", "Arial", sans-serif;
+  font-size: 22px;
+  color: #ffffff;
+  letter-spacing: 0.69px;
+  text-align: center;
+  width: 191px;
+  height: 52.05px;
+  border: none;
+}
 #modal-text-form-button {
   display: flex;
   flex-direction: column;
@@ -296,6 +312,9 @@ h5 {
   background-color: #33bbc6;
 }
 
+/* #viewLeaderboardBtn {
+  margin-bottom: 10px;
+} */
 .modal h4 {
   font-family: "Gotham-Book";
   font-size: 26px;

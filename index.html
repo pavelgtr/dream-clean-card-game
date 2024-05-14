@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Card Game</title>
-  <!-- <link rel="stylesheet" href="../CSS/main.css"> -->
+
   <link rel="preload" href="./CSS/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- <script src="./JS/flip-script.js" defer></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
@@ -48,13 +49,9 @@
         <h4>INICIA EL JUEGO</h4>
         <form id="signinForm">
           <div class="input-wrapper">
-            <!-- <label for="nickname" class="input-label">Tu Nombre</label>
-          <input type="text" id="nickname" name="nickname" required> -->
             <input type="text" id="nickname" name="nickname" placeholder="Tu nombre" required>
           </div>
           <div class="input-wrapper">
-            <!-- <label for="email" class="input-label">Email</label>
-          <input type="email" id="email" name="email" required> -->
             <input type="email" id="email" name="email" placeholder=" Tu e-mail" required>
           </div>
           <div class="modal-flow">
@@ -93,25 +90,13 @@
     </div>
   </div>
 
-  <!-- Round 3 Instructions Modal -->
-  <div id="Round3InstructionsModal" class="modal">
-    <div class="modal-svg-container">
-      <div class="content-inside-modal">
-        <h2>¿Cómo Jugar?</h2>
-        <p>Nivel 3: Otros Usos Sorprendentes</p>
-        <p>Encuentra el producto de limpieza Green Choice y combínalo con otros usos sorprendentes y eco-friendly.
-          Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑</p>
-        <button id="round3ContinueBtn">Jugar</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- Round 1 & 2 Score Modal -->
+
+  <!-- Round 1 Score Modal -->
   <div id="roundScoreModal" class="modal">
     <div class="modal-svg-container">
       <div class="content-inside-modal">
-        <img src="./images/Menu/yay.png" alt="">
-        <!-- <span class="close">&times;</span> -->
+        <img src="./images/Menu/yay.png" alt="yay-image">
         <h4> <span id="gameLevel"></span> </h4>
         <p>Tus Puntos: <span id="roundOneScore"></span></p>
         <p>
@@ -124,15 +109,15 @@
     </div>
   </div>
 
-  <!-- Round 3 Completion Modal -->
+  <!-- Round 3 Completion Modal THIS NEEDS CSS APPLIED  -->
   <div id="FinalRoundCompletionModal" class="modal">
     <div class="modal-svg-container">
       <div class="content-inside-modal">
-        <h2>YAY</h2>
-        <h3>NIVEL 2 COMPLETADO</h3>
+        <img src="./images/Menu/yay.png" alt="yay-image">
+        <h4>NIVEL 2 COMPLETADO</h4>
         <p>Tus Puntos: <span id="round3CompletionPoints"></span></p>
-        <p>¡Felicidades! 👏 Completaste todos los niveles.</p>
-        <p>Revisa en qué lugar quedaste entre los expertos de limpieza sostenible.</p>
+        <p>¡Felicidades! 👏 Completaste todos los niveles. Revisa en qué lugar quedaste entre los expertos de limpieza
+          sostenible.</p>
         <button id="viewLeaderboardBtn">Ver Leaderboard</button>
       </div>
     </div>
@@ -151,8 +136,12 @@
           </tbody>
         </table>
         <div id="footerTitle">Tu Resultado</div>
-        <div id="currentPlayerResult"></div>
-        <button id="restartGameButton" class="restart-button">Restart Game</button>
+        <table id="currentPlayerResultTable">
+          <tbody>
+            <!-- Dynamic data for current player inserted here -->
+          </tbody>
+        </table>
+        <button id="restartGameButton" class="restart-button">Jugar</button>
       </div>
     </div>
   </div>
@@ -249,3 +238,18 @@
         Siguiente
       </button>
     </div> -->
+
+
+
+<!-- Round 3 Instructions Modal -->
+<!-- <div id="Round3InstructionsModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h2>¿Cómo Jugar?</h2>
+        <p>Nivel 3: Otros Usos Sorprendentes</p>
+        <p>Encuentra el producto de limpieza Green Choice y combínalo con otros usos sorprendentes y eco-friendly.
+          Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑</p>
+        <button id="round3ContinueBtn">Jugar</button>
+      </div>
+    </div>
+  </div> -->
