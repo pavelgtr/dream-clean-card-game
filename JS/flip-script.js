@@ -36,8 +36,8 @@ var emailInput = document.getElementById("email");
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  showWelcomeMessage();
-  // displayScoreBoardModal();
+  // showWelcomeMessage();
+  displayScoreBoardModal();
 });
 
 function showSignInModal() {
@@ -526,9 +526,12 @@ function displayScoreBoardModal() {
         const scoreCell = row.insertCell(2); // Insert a new cell for the score
 
         rankCell.innerHTML = index + 1; // Rank starts from 1
-        nicknameCell.innerHTML = player.nickname;
+        // nicknameCell.innerHTML = player.nickname;
+        nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon" ">${player.nickname}`;
         scoreCell.innerHTML = player.score;
       });
+
+      // style="width:45px; height:45px; vertical-align:middle; margin-right:5px;
 
       // Display the modal
       scoreboardModal.style.display = "block";
