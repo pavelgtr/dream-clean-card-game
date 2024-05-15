@@ -24,6 +24,35 @@ const gameState = {
   },
 };
 
+const soundEffects = {
+  buttonClick: new Audio("./sounds/Glass Button Ding.wav"),
+  startGame: new Audio("./sounds/Cards Card Flick.wav"),
+  clickSounds: [
+    new Audio("./sounds/Mountain Audio - Cardboard Game Card Flip - 1.mp3"),
+    new Audio("./sounds/Mountain Audio - Cardboard Game Card Flip - 2.mp3"),
+    new Audio("./sounds/Mountain Audio - Cardboard Game Card Flip - 3.mp3"),
+    new Audio("./sounds/Mountain Audio - Cardboard Game Card Flip - 4.mp3"),
+    new Audio("./sounds/Mountain Audio - Cardboard Game Card Flip - 5.mp3"),
+    new Audio("./sounds/Mountain Audio - Cardboard Game Card Flip - 6.mp3"),
+  ],
+  winSounds: [
+    new Audio("./sounds/Slot Win 1.mp3"),
+    new Audio("./sounds/Slot Win 2.mp3"),
+    new Audio("./sounds/Slot Win 3.mp3"),
+    new Audio("./sounds/Slot Win 4.mp3"),
+    new Audio("./sounds/Slot Win 5.mp3"),
+    new Audio("./sounds/Slot Win 6.mp3"),
+  ],
+  loseSounds: [
+    new Audio("./sounds/Application Fail 1.mp3"),
+    new Audio("./sounds/Application Fail 2.mp3"),
+    new Audio("./sounds/Application Fail 3.mp3"),
+  ],
+  currentClickIndex: 0,
+  currentWinIndex: 0,
+  currentLoseIndex: 0,
+};
+
 const timerDisplay = document.querySelector("#timer span");
 const scoreDisplay = document.querySelector("#score span");
 
@@ -40,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // displayScoreBoardModal();
   // displayfinalRoundCompletionModal();
   // displayRoundScoreModal();
+  // createCards(levelOne);
 });
 
 function showSignInModal() {
@@ -52,6 +82,7 @@ function showSignInModal() {
     email = document.getElementById("email").value;
     // localStorage.setItem("userNickname", nickname);
     // localStorage.setItem("userEmail", email);
+    soundEffects.startGame.play(); // Play the start game sound
     signinModal.style.display = "none";
     displayGameInstructionsModal();
     startGame(nickname, email);
@@ -67,6 +98,7 @@ function showWelcomeMessage() {
   const welcomeContinueButton = document.getElementById("welcomeContinue");
   welcomeContinueButton.addEventListener("click", function () {
     welcomeModal.style.display = "none";
+    soundEffects.startGame.play(); // Play the start game sound
     showSignInModal();
   });
 }
@@ -239,6 +271,29 @@ function calculateSpeedBonus() {
 }
 
 // -------------------------------------- CARD FLIP FUNCTIONS --------------------------------------
+
+// Function to get the next click sound
+function getNextClickSound() {
+  const sound = soundEffects.clickSounds[soundEffects.currentClickIndex];
+  soundEffects.currentClickIndex =
+    (soundEffects.currentClickIndex + 1) % soundEffects.clickSounds.length;
+  return sound;
+}
+
+function getNextWinSound() {
+  const sound = soundEffects.winSounds[soundEffects.currentWinIndex];
+  soundEffects.currentWinIndex =
+    (soundEffects.currentWinIndex + 1) % soundEffects.winSounds.length;
+  return sound;
+}
+
+function getNextLoseSound() {
+  const sound = soundEffects.loseSounds[soundEffects.currentLoseIndex];
+  soundEffects.currentLoseIndex =
+    (soundEffects.currentLoseIndex + 1) % soundEffects.loseSounds.length;
+  return sound;
+}
+
 function flipCard(event) {
   if (gameState.gameBoardLocked) return;
   const card = event.currentTarget;
@@ -246,7 +301,8 @@ function flipCard(event) {
 
   if (card.classList.contains("matched")) return;
 
-  gameState.soundEffects.click.play();
+  const clickSound = getNextClickSound();
+  clickSound.play();
   card.classList.add("is-flipped");
 
   if (!gameState.hasFlippedCard) {
@@ -268,7 +324,6 @@ function checkForMatch() {
     .replace("-1", "");
   let baseName2 = gameState.flippedCard2
     .querySelector(".card__face--back img")
-
     .src.split("/")
     .pop()
     .replace(".jpg", "")
@@ -281,6 +336,10 @@ function checkForMatch() {
     const speedBonus = calculateSpeedBonus();
     incrementScore(speedBonus);
     gameState.matchedPairsCount++; // Increment matched pairs count
+    const winSound = getNextWinSound();
+    setTimeout(() => {
+      winSound.play();
+    }, 1000);
     checkEndOfRound();
   } else {
     unflipCards();
@@ -291,7 +350,8 @@ function unflipCards() {
   setTimeout(() => {
     gameState.flippedCard1.classList.remove("is-flipped");
     gameState.flippedCard2.classList.remove("is-flipped");
-    gameState.soundEffects.error.play();
+    const loseSound = getNextLoseSound();
+    loseSound.play();
     incrementError();
     resetTurn();
   }, 1500);
@@ -304,7 +364,6 @@ function disableCards() {
   gameState.flippedCard1.removeEventListener("click", flipCard);
   gameState.flippedCard2.removeEventListener("click", flipCard);
   resetTurn();
-  gameState.soundEffects.win.play();
 }
 
 // -------------------------------------- SCORE FUNCTIONS --------------------------------------
@@ -319,7 +378,7 @@ function incrementScore(speedBonus = 0) {
 function incrementError() {
   gameState.errorCount++;
   gameState.scoreCount = Math.max(0, gameState.scoreCount - 2);
-  scoreDisplay.textContent = `Puntos: ${gameState.scoreCount}`;
+  scoreDisplay.textContent = gameState.scoreCount;
 }
 
 function setPointsPerMatch() {
@@ -384,6 +443,7 @@ function displayRoundScoreModal() {
   nextRoundButton.addEventListener("click", function () {
     roundScoreModal.style.display = "none";
     displayRound2InstructionsModal();
+    soundEffects.buttonClick.play(); // Play the button click sound
   });
 }
 
@@ -399,7 +459,7 @@ function displayfinalRoundCompletionModal() {
   const viewLeaderboardBtn = document.getElementById("viewLeaderboardBtn");
   viewLeaderboardBtn.addEventListener("click", function () {
     finalRoundCompletionModal.style.display = "none";
-    // window.location.href = "./HTML/scoreboard.html";
+    soundEffects.buttonClick.play(); // Play the button click sound
     // displayScoreBoardModal();
     endGame();
   });
@@ -430,6 +490,7 @@ function displayGameInstructionsModal() {
   startGameButton.addEventListener("click", function () {
     gameInstructionsModal.style.display = "none";
     startGame();
+    soundEffects.buttonClick.play(); // Play the button click sound
   });
 }
 
@@ -441,6 +502,7 @@ function displayRound2InstructionsModal() {
   const round2ContinueBtn = document.getElementById("round2ContinueBtn");
   round2ContinueBtn.addEventListener("click", function () {
     round2InstructionsModal.style.display = "none";
+    soundEffects.startGame.play(); // Play the start game sound
     startTimer();
   });
 }
@@ -605,31 +667,51 @@ function resetGameState() {
 // < ---------------------------------------------- ARRAYS ---------------------------------------------- >
 
 const levelOne = [
-  "./images/levelOne/a.jpg",
-  "./images/levelOne/a-1.jpg",
-  "./images/levelOne/b.jpg",
-  "./images/levelOne/b-1.jpg",
-  "./images/levelOne/c.jpg",
-  "./images/levelOne/c-1.jpg",
-  "./images/levelOne/d.jpg",
-  "./images/levelOne/d-1.jpg",
-  // "./images/levelOne/e.jpg",
-  // "./images/levelOne/e-1.jpg",
-  // "./images/levelOne/f.jpg",
-  // "./images/levelOne/f-1.jpg",
+  // "./images/levelOne/a.jpg",
+  // "./images/levelOne/a-1.jpg",
+  // "./images/levelOne/b.jpg",
+  // "./images/levelOne/b-1.jpg",
+  // "./images/levelOne/c.jpg",
+  // "./images/levelOne/c-1.jpg",
+  // "./images/levelOne/d.jpg",
+  // "./images/levelOne/d-1.jpg",
+  "./images/levelOne/All Purpose Cleaner-1.png",
+  "./images/levelOne/All Purpose Cleaner.png",
+  "./images/levelOne/Bathroom Cleaner-1.png",
+  "./images/levelOne/Bathroom Cleaner.png",
+  "./images/levelOne/Detergent-1.png",
+  "./images/levelOne/Detergent.png",
+  "./images/levelOne/Dishwashing Liquid-1.png",
+  "./images/levelOne/Dishwashing Liquid.png",
+  "./images/levelOne/Glass Cleaner-1.png",
+  "./images/levelOne/Glass Cleaner.png",
+  "./images/levelOne/Neutral Floor Cleaner-1.png",
+  "./images/levelOne/Neutral Floor Cleaner.png",
 ];
 
 const levelTwo = [
-  "./images/levelTwo/a.jpg",
-  "./images/levelTwo/a-1.jpg",
-  "./images/levelTwo/b.jpg",
-  "./images/levelTwo/b-1.jpg",
-  "./images/levelTwo/c.jpg",
-  "./images/levelTwo/c-1.jpg",
-  "./images/levelTwo/d.jpg",
-  "./images/levelTwo/d-1.jpg",
+  // "./images/levelTwo/a.jpg",
+  // "./images/levelTwo/a-1.jpg",
+  // "./images/levelTwo/b.jpg",
+  // "./images/levelTwo/b-1.jpg",
+  // "./images/levelTwo/c.jpg",
+  // "./images/levelTwo/c-1.jpg",
+  // "./images/levelTwo/d.jpg",
+  // "./images/levelTwo/d-1.jpg",
   // "./images/levelTwo/e.jpg",
   // "./images/levelTwo/e-1.jpg",
   // "./images/levelTwo/f.jpg",
   // "./images/levelTwo/f-1.jpg",
+  "./images/levelTwo/All purpose cleaner-1.png",
+  "./images/levelTwo/All purpose cleaner.png",
+  "./images/levelTwo/Bathroom Cleaner-1.png",
+  "./images/levelTwo/Bathroom Cleaner.png",
+  "./images/levelTwo/Detergent-1.png",
+  "./images/levelTwo/Detergent.png",
+  "./images/levelTwo/Dishwashing Liquid-1.png",
+  "./images/levelTwo/Dishwashing Liquid.png",
+  "./images/levelTwo/Glass Cleaner-1.png",
+  "./images/levelTwo/Glass Cleaner.png",
+  "./images/levelTwo/Neutral Floor Cleaner-1.png",
+  "./images/levelTwo/Neutral Floor Cleaner.png",
 ];

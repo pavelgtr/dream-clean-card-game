@@ -193,7 +193,6 @@ h5 {
   line-height: 30px;
   width: 458px;
   margin: 20px;
-  border: 2px solid red;
 }
 
 #leaderboardTable,
@@ -390,6 +389,7 @@ h5 {
   height: 100px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 
 h1 {
@@ -398,13 +398,29 @@ h1 {
 }
 
 .navigation-elements a {
-  color: #333; /* Dark grey color for text */
-  font-family: "Open Sans", sans-serif; /* Simple and clean font */
+  color: #949292; /* Dark grey color for text */
+  font-family: "Lato-regular";
   font-size: 20px; /* Larger, readable font size */
   text-decoration: none; /* No underlines */
   margin-right: 20px; /* Space between links */
   position: relative; /* For positioning the underline */
   padding: 5px 0; /* Padding to increase clickable area */
+}
+
+.links-navigation {
+ display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50vw;
+  padding: 0 20px;
+  gap: 10px;
+  height: 100px;
+  margin-right: 400px;
+
+  @media screen and (max-width: 950px) {
+    margin-right: 0;
+
+  }
 }
 
 .navigation-elements a:last-child {
@@ -623,12 +639,13 @@ h2 {
 .game-status-bar {
   display: flex;
   justify-content: space-between;
-  width: 730px;
-  height: 61px;
+  width: 720px;
+  height: 60px;
+  
 }
 .status-item {
   width: 178px;
-  height: 52px;
+  height: 60px;
   box-shadow: 0 0 15px 0 rgba(29, 17, 86, 0.12);
   border-radius: 24px;
   display: flex;
@@ -653,8 +670,8 @@ h2 {
   text-align: center;
 }
 .status-item img {
-  width: 72px;
-  height: 61px;
+  width: 66.89px;
+  height: 60px;
 }
 
 /* <------------------------------------------ FOOTER ------------------------------------------> */
@@ -664,7 +681,7 @@ footer {
 }
 
 .footer-banner {
-  background-color: #00adb5;
+  background-color: #66CCCC;
   width: 100%;
   height: 100%;
   display: flex;
