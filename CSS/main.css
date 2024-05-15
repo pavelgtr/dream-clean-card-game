@@ -33,6 +33,25 @@ h5 {
   line-height: inherit;
 }
 
+/* Ensure the html and body elements take up the full height of the viewport */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* Make the page container flex-grow to fill the available space */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Main content should flex-grow to fill the available space */
+.main-content {
+  flex-grow: 1;
+}
 /* --------------------------------- FONTS DONCELLA --------------------------------- */
 @font-face {
   font-family: SourceSansPro-Regular;
@@ -163,8 +182,9 @@ h5 {
   height: 54px;
   border: none;
   font-family: "Montserrat-Regular", "Arial", sans-serif;
-  margin: 25px auto 15px;s
+  margin: 25px auto 15px;
 }
+
 .score-svg-container {
   width: 1439px;
   height: 883px;
@@ -389,7 +409,6 @@ h5 {
   height: 100px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
 }
 
 h1 {
@@ -408,7 +427,7 @@ h1 {
 }
 
 .links-navigation {
- display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   width: 50vw;
@@ -419,7 +438,6 @@ h1 {
 
   @media screen and (max-width: 950px) {
     margin-right: 0;
-
   }
 }
 
@@ -480,42 +498,41 @@ h1 {
   }
 }
 
-/* ---------------------------------Game --------------------------------- */
+/* ---------------------------------Game container --------------------------------- */
 
 body {
-  display: flex;
-  flex-direction: column;
   background-image: url(../images/Menu/game-clouds-background.png);
   background-position: center center; /* Move the background image to the top */
-  background-size: auto 50%; /* Adjust the background size */
-  overflow-x: hidden;
+  background-size: auto 50%;
 }
 
 .game-wrapper {
-  max-width: 720px;
-  margin: 0 auto 533px;
+  max-width: 100%;
+  margin: 0 auto 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   @media screen and (max-width: 950px) {
-    max-width: 308px;
     margin: 0 auto 40px;
   }
 }
+
+/* --------------------------------- Cards --------------------------------- */
 
 .cards-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 720px;
-  margin: 100px auto;
+  height: 534px;
+  margin: 100px auto 20px;
   gap: 5px;
 
   @media screen and (max-width: 950px) {
-    width: 308px;
+    width: 330px;
     height: 411px;
     grid-template-columns: repeat(3, 1fr);
-    margin: 0 auto;
+    margin: 20px auto 20px;
     gap: 2px;
   }
 }
@@ -541,7 +558,7 @@ h2 {
   height: 160px;
 
   @media screen and (max-width: 950px) {
-    width: 101px;
+    width: 100px;
     height: 100px;
   }
 }
@@ -587,6 +604,12 @@ h2 {
   /* border: 2px solid red; */
 }
 
+.card__face--front img {
+  @media screen and (max-width: 950px) {
+    width: 110%;
+  }
+}
+
 .card__face--back {
   /* background-color: #5fc6cc; */
   transform: rotateY(180deg);
@@ -624,6 +647,11 @@ h2 {
   height: 160px;
   margin: 0 auto 30px;
   object-fit: cover;
+
+  @media screen and (max-width: 950px) {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .card__body {
@@ -639,12 +667,18 @@ h2 {
 .game-status-bar {
   display: flex;
   justify-content: space-between;
-  width: 720px;
+  width: 715px;
   height: 60px;
-  
+
+  @media screen and (max-width: 950px) {
+    width: 330px;
+    height: 60px;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
 }
 .status-item {
-  width: 178px;
+  width: 163px;
   height: 60px;
   box-shadow: 0 0 15px 0 rgba(29, 17, 86, 0.12);
   border-radius: 24px;
@@ -655,8 +689,13 @@ h2 {
   color: white;
   font-size: 32px;
   font-family: "Montserrat-Regular", "Open Sans", sans-serif;
-}
 
+  @media screen and (max-width: 950px) {
+    width: 160px;
+    height: 60px;
+    padding-right: 10px;
+  }
+}
 #timer {
   background-color: #5fc6cc;
 }
@@ -664,29 +703,42 @@ h2 {
 #score {
   background: #fcd779;
   border-radius: 24px;
-
   color: #ffffff;
   letter-spacing: 1px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .status-item img {
   width: 66.89px;
   height: 60px;
 }
 
+#timer span,
+#score span {
+  font-family: "Gotham-Bold";
+  font-size: 26px;
+  color: #ffffff;
+  vertical-align: middle;
+  height: 25px;
+}
+
 /* <------------------------------------------ FOOTER ------------------------------------------> */
 
 footer {
   margin-top: auto;
+  width: 100%;
+  padding: 1rem 0;
+  background-color: #66cccc;
 }
 
 .footer-banner {
-  background-color: #66CCCC;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
-  /* border: 2px solid red; */
+  align-items: center;
 }
 
 .footer-content {

@@ -65,11 +65,11 @@ var emailInput = document.getElementById("email");
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  showWelcomeMessage();
+  // showWelcomeMessage();
   // displayScoreBoardModal();
   // displayfinalRoundCompletionModal();
   // displayRoundScoreModal();
-  // createCards(levelOne);
+  createCards(levelOne);
 });
 
 function showSignInModal() {
@@ -221,7 +221,6 @@ function startTimer() {
   }, 1000);
 }
 
-// Function to update the timer display
 function updateTimerDisplay(seconds) {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -232,7 +231,6 @@ function updateTimerDisplay(seconds) {
   timerDisplay.textContent = formattedTime;
 }
 
-// Function to stop the timer
 function stopTimer() {
   clearInterval(gameState.timer);
   gameState.currentTime = Date.now();
