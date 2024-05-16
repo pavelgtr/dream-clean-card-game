@@ -65,12 +65,22 @@ var emailInput = document.getElementById("email");
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  // showWelcomeMessage();
+  showWelcomeMessage();
   // displayScoreBoardModal();
   // displayfinalRoundCompletionModal();
   // displayRoundScoreModal();
-  createCards(levelOne);
+  // createCards(levelOne);
+  // showFullInstructionsModal();
 });
+
+// Temporary function to call modal on page load for testing
+
+function showFullInstructionsModal() {
+  const fullInstructionsModal = document.getElementById(
+    "FullInstructionsModal"
+  );
+  fullInstructionsModal.style.display = "block";
+}
 
 function showSignInModal() {
   const signinModal = document.getElementById("signinModal");
@@ -504,6 +514,25 @@ function displayRound2InstructionsModal() {
     startTimer();
   });
 }
+// -------------------------------------- REGLAS MODAL EVENT LISTENER--------------------------------------
+document.addEventListener("DOMContentLoaded", function () {
+  const rulesLink = document.getElementById("rulesLink");
+  const fullInstructionsModal = document.getElementById(
+    "FullInstructionsModal"
+  );
+  const closeInstructionsModal = document.getElementById(
+    "closeInstructionsModal"
+  );
+
+  rulesLink.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    fullInstructionsModal.style.display = "block";
+  });
+
+  closeInstructionsModal.addEventListener("click", function () {
+    fullInstructionsModal.style.display = "none";
+  });
+});
 
 // -------------------------------------- CRUD --------------------------------------
 

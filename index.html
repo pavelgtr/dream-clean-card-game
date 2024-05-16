@@ -19,7 +19,7 @@
           <h1><img src="./images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
           <div class="links-navigation">
             <a href="index.html">Juego</a>
-            <a href="rules.html" class="nav-link">Reglas</a>
+            <a href="#" id="rulesLink" class="nav-link">Reglas</a>
             <a href="./HTML/scoreboard.html" class="nav-link">Leaderboard</a>
           </div>
         </div>
@@ -56,6 +56,7 @@
         </div>
       </div>
     </div>
+
     <!-- Game Instructions Modal (Round 1) -->
     <div id="gameInstructionsModal" class="modal">
       <div class="modal-svg-container">
@@ -68,6 +69,7 @@
         </div>
       </div>
     </div>
+
     <!-- Round 2 Instructions Modal -->
     <div id="Round2InstructionsModal" class="modal">
       <div class="modal-svg-container">
@@ -80,6 +82,7 @@
         </div>
       </div>
     </div>
+
     <!-- Round 1 Score Modal -->
     <div id="roundScoreModal" class="modal">
       <div class="modal-svg-container">
@@ -107,6 +110,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Score Board Modal -->
     <div id="ScoreBoardModal" class="modal">
       <div class="score-svg-container">
         <div class="content-inside-modal">
@@ -130,6 +135,33 @@
         </div>
       </div>
     </div>
+
+    <!-- Full Instructions Modal -->
+    <div id="FullInstructionsModal" class="modal">
+      <div class="reglas-svg-container">
+        <div class="content-inside-modal">
+          <h2>REGLAS GREEN CHOICE MEMORY</h2>
+          <div class="instructions-content">
+            <p>¡Te damos la bienvenida! En Doncella, queremos que te diviertas mientras aprendes sobre nuestros
+              productos de limpieza ecológicos. Demuestra que eres rápido y sabes cómo mantener tu casa limpia de forma
+              sostenible.</p>
+            <h3>¿Cómo se juega?</h3>
+            <p>Para iniciar el reto, dale al botón “Jugar”. Luego, encuentra y combina tus cartas.</p>
+            <p>Nivel 1: Combina producto con producto. <br>
+              Nivel 2: Empareja cada producto con su área o uso específico de limpieza. <br>
+              Nivel 3: Descubre otros usos sorprendentes y eco-friendly. [Próximanente]</p>
+            <h3>Sistema de puntos:</h3>
+            <p>Por cada acierto sumas 10 puntos a tu score. Si eres veloz y terminas rápido, ganas puntos extra. Si te
+              equivocas, pierdes 1 punto. ¡Sorpresa! Si te sale una carta con el logo de Doncella, ganas 5 puntos.</p>
+            <h3>Ganadores y premios:</h3>
+            <p>Cada semana, el jugador que tenga más puntos se lleva el título de Campeón del Green Choice Memory. Y
+              no solo eso, te puedes ganar un kit de productos y otras sorpresas de nuestra Dream Clean Store.</p>
+          </div>
+          <button id="closeInstructionsModal" class="close-modal">Jugar</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Game window -->
     <div class="game-wrapper">
       <main class="cards-container">
