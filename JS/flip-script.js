@@ -65,12 +65,12 @@ var emailInput = document.getElementById("email");
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  showWelcomeMessage();
+  // showWelcomeMessage();
   // displayScoreBoardModal();
   // displayfinalRoundCompletionModal();
   // displayRoundScoreModal();
   // createCards(levelOne);
-  // showFullInstructionsModal();
+  showFullInstructionsModal();
 });
 
 // Temporary function to call modal on page load for testing
@@ -534,8 +534,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// -------------------------------------- CRUD --------------------------------------
-
 function displayScoreBoardModal() {
   const scoreboardModal = document.getElementById("ScoreBoardModal");
   const leaderboardTable = document.getElementById("leaderboardTable");
@@ -596,7 +594,8 @@ function displayScoreBoardModal() {
 
         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
         nicknameCell.classList.add("second-cell");
-        nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${player.nickname}`;
+        const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
+        nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
 
         const scoreCell = row.insertCell(2); // Insert a new cell for the score
         scoreCell.classList.add("third-cell");
@@ -613,7 +612,10 @@ function displayScoreBoardModal() {
 
       const nicknameCell = row.insertCell(1);
       nicknameCell.classList.add("second-cell");
-      nicknameCell.innerHTML = `<img src="images/Menu/user-icon-blue-circle.png" alt="User Icon">${
+      const currentFirstLetter = gameState.playerNickname
+        .charAt(0)
+        .toUpperCase();
+      nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
         currentPlayerData
           ? currentPlayerData.nickname
           : gameState.playerNickname
@@ -642,6 +644,84 @@ function displayScoreBoardModal() {
     });
 }
 
+// -------------------------------------- FOR TESTING SCORE BOARD CSS --------------------------------------
+// function displayScoreBoardModal() {
+//   const scoreboardModal = document.getElementById("ScoreBoardModal");
+//   const leaderboardTable = document.getElementById("leaderboardTable");
+//   const currentPlayerResultTable = document.getElementById(
+//     "currentPlayerResultTable"
+//   );
+
+//   // Clear any existing leaderboard data
+//   leaderboardTable.querySelector("tbody").innerHTML = "";
+//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
+
+//   // Placeholder data for testing
+//   const leaderboardData = [
+//     { rank: 1, nickname: "Julia", score: 180 },
+//     { rank: 2, nickname: "Pedro", score: 178 },
+//     { rank: 3, nickname: "José", score: 170 },
+//     { rank: 4, nickname: "María", score: 160 },
+//     { rank: 5, nickname: "Luisa", score: 150 },
+//   ];
+
+//   const currentPlayerData = { rank: 3, nickname: "Ana", score: 140 };
+
+//   // Slice the leaderboard data to get the top 5 players
+//   const topFivePlayers = leaderboardData.slice(0, 5);
+
+//   // Populate table with the top 5 players
+//   topFivePlayers.forEach((player) => {
+//     const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
+//     row.classList.add("leaderboard-row");
+
+//     const rankCell = row.insertCell(0); // Insert a new cell for the rank
+//     rankCell.classList.add("first-cell");
+//     rankCell.innerHTML = player.rank; // Use the rank from the response
+
+//     const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
+//     nicknameCell.classList.add("second-cell");
+//     const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
+//     nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
+
+//     const scoreCell = row.insertCell(2); // Insert a new cell for the score
+//     scoreCell.classList.add("third-cell");
+//     scoreCell.innerHTML = player.score;
+//   });
+
+//   // Populate current player result
+//   const row = currentPlayerResultTable.insertRow(-1);
+//   row.classList.add("leaderboard-row");
+
+//   const rankCell = row.insertCell(0);
+//   rankCell.classList.add("first-cell");
+//   rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
+
+//   const nicknameCell = row.insertCell(1);
+//   nicknameCell.classList.add("second-cell");
+//   const currentFirstLetter = currentPlayerData.nickname.charAt(0).toUpperCase();
+//   nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
+//     currentPlayerData ? currentPlayerData.nickname : gameState.playerNickname
+//   }`;
+
+//   const scoreCell = row.insertCell(2);
+//   scoreCell.classList.add("third-cell");
+//   scoreCell.innerHTML = currentPlayerData
+//     ? currentPlayerData.score
+//     : gameState.scoreCount;
+
+//   // Display the modal
+//   scoreboardModal.style.display = "block";
+
+//   document
+//     .getElementById("restartGameButton")
+//     .addEventListener("click", function () {
+//       resetGameState();
+//       startGame(); // Assuming startGame() is set up to reinitialize the game.
+//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
+//     });
+// }
+// -------------------------------------- CRUD --------------------------------------
 function submitScore(nickname, email, finalScore) {
   $.ajax({
     // Use jQuery to make an AJAX request
