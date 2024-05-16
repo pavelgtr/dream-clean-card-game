@@ -1,4 +1,5 @@
 <?php
+// <!-- submit_score.php -->
 include 'connect.php'; // Include your connection script
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

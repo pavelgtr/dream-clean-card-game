@@ -71,6 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // displayRoundScoreModal();
   // createCards(levelOne);
   // showFullInstructionsModal();
+
+  const leaderboardLink = document.getElementById("leaderboardLink");
+  leaderboardLink.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    displayScoreBoardModal(); // Call the function to display the scoreboard modal
+  });
 });
 
 // Temporary function to call modal on page load for testing
@@ -534,6 +540,118 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// THIS WORKS
+// function displayScoreBoardModal() {
+//   const scoreboardModal = document.getElementById("ScoreBoardModal");
+//   const leaderboardTable = document.getElementById("leaderboardTable");
+//   const currentPlayerResultTable = document.getElementById(
+//     "currentPlayerResultTable"
+//   );
+
+//   // Clear any existing leaderboard data
+//   leaderboardTable.querySelector("tbody").innerHTML = "";
+//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
+
+//   // Fetch leaderboard data via AJAX
+//   $.ajax({
+//     url: "PHP/get_leaderboard.php", // Path relative to your index.html
+//     method: "GET",
+//     success: function (response) {
+//       // Handle the success response from the server
+//       const leaderboardData = JSON.parse(response);
+//       console.log("Leaderboard Data:", leaderboardData); // Debugging output
+
+//       // Find the current player's data (case-insensitive)
+//       console.log(
+//         "Current Player Nickname (gameState):",
+//         gameState.playerNickname
+//       ); // Debugging output
+
+//       // Trim and lowercase the current player's nickname
+//       const currentNickname = gameState.playerNickname.trim().toLowerCase();
+//       console.log(
+//         "Trimmed and Lowercased Current Player Nickname:",
+//         currentNickname
+//       ); // Debugging output
+
+//       // Check each player nickname in leaderboard data
+//       leaderboardData.forEach((player) => {
+//         console.log(
+//           "Comparing with Leaderboard Nickname:",
+//           player.nickname.trim().toLowerCase()
+//         );
+//       });
+
+//       const currentPlayerData = leaderboardData.find(
+//         (player) => player.nickname.trim().toLowerCase() === currentNickname
+//       );
+//       console.log("Current Player Data:", currentPlayerData); // Debugging output
+
+//       // Slice the leaderboard data to get the top 5 players
+//       const topFivePlayers = leaderboardData.slice(0, 5);
+
+//       // Populate table with the top 5 players
+//       topFivePlayers.forEach((player) => {
+//         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
+//         row.classList.add("leaderboard-row");
+
+//         const rankCell = row.insertCell(0); // Insert a new cell for the rank
+//         rankCell.classList.add("first-cell");
+//         rankCell.innerHTML = player.rank; // Use the rank from the response
+
+//         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
+//         nicknameCell.classList.add("second-cell");
+//         const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
+//         nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
+
+//         const scoreCell = row.insertCell(2); // Insert a new cell for the score
+//         scoreCell.classList.add("third-cell");
+//         scoreCell.innerHTML = player.score;
+//       });
+
+//       // Populate current player result
+//       const row = currentPlayerResultTable.insertRow(-1);
+//       row.classList.add("leaderboard-row");
+
+//       const rankCell = row.insertCell(0);
+//       rankCell.classList.add("first-cell");
+//       rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
+
+//       const nicknameCell = row.insertCell(1);
+//       nicknameCell.classList.add("second-cell");
+//       const currentFirstLetter = gameState.playerNickname
+//         .charAt(0)
+//         .toUpperCase();
+//       nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
+//         currentPlayerData
+//           ? currentPlayerData.nickname
+//           : gameState.playerNickname
+//       }`;
+
+//       const scoreCell = row.insertCell(2);
+//       scoreCell.classList.add("third-cell");
+//       scoreCell.innerHTML = currentPlayerData
+//         ? currentPlayerData.score
+//         : gameState.scoreCount;
+
+//       // Display the modal
+//       scoreboardModal.style.display = "block";
+//     },
+//     error: function (xhr, status, error) {
+//       console.error("Error fetching leaderboard:", error);
+//     },
+//   });
+
+//   document
+//     .getElementById("restartGameButton")
+//     .addEventListener("click", function () {
+//       resetGameState();
+//       startGame(); // Assuming startGame() is set up to reinitialize the game.
+//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
+//     });
+// }
+
+// FOR TESTING SCORE wit matching score and not matching total time
 function displayScoreBoardModal() {
   const scoreboardModal = document.getElementById("ScoreBoardModal");
   const leaderboardTable = document.getElementById("leaderboardTable");
@@ -584,7 +702,7 @@ function displayScoreBoardModal() {
       const topFivePlayers = leaderboardData.slice(0, 5);
 
       // Populate table with the top 5 players
-      topFivePlayers.forEach((player) => {
+      topFivePlayers.forEach((player, index) => {
         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
         row.classList.add("leaderboard-row");
 
