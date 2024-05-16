@@ -65,12 +65,12 @@ var emailInput = document.getElementById("email");
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-  // showWelcomeMessage();
+  showWelcomeMessage();
   // displayScoreBoardModal();
   // displayfinalRoundCompletionModal();
   // displayRoundScoreModal();
   // createCards(levelOne);
-  showFullInstructionsModal();
+  // showFullInstructionsModal();
 });
 
 // Temporary function to call modal on page load for testing
@@ -115,7 +115,7 @@ function showWelcomeMessage() {
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
-  // shuffleArray(imagesArray);
+  shuffleArray(imagesArray);
   container.innerHTML = imagesArray
     .map(
       (imageSrc, index) => `
