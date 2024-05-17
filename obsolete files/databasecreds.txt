@@ -173,3 +173,168 @@ webCardGame1234!
 //       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
 //     });
 // }
+
+
+
+
+CSS DELETED 
+
+
+.back-arrow {
+  display: flex; /* Aligns the icon and text inline */
+  align-items: center; /* Centers items vertically */
+  cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+  background: none; /* Removes any default background */
+  border: none; /* Removes any default border */
+  font: inherit; /* Inherits font from parent elements */
+  padding: 10px; /* Add padding as necessary */
+  color: #788995;
+  font-family: OpenSans-Regular;
+  font-size: 12px;
+}
+
+.arrow-icon {
+  margin-right: 5px; /* Creates a small space between the icon and the text */
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
+@media screen and (max-width: 950px) {
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-svg-container {
+    width: 90%;
+    height: 70vh;
+    background-image: url("../images/Menu/Modal.svg");
+    background-size: 100% 100%;
+    padding-top: 10%;
+    box-sizing: border-box;
+    margin: 10% auto;
+  }
+
+  .reglas-svg-container {
+    width: 90%;
+    height: 70vh;
+    background-image: url("../images/Menu/final-modal.svg");
+    background-size: 100% 100%;
+    padding-top: 5%;
+    box-sizing: border-box;
+    margin: 10% auto;
+    overflow-y: auto;
+  }
+
+  .instructions-content {
+    width: 90%;
+    height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 5%;
+    box-sizing: border-box;
+  }
+
+  .modal-svg-container p {
+    width: 90%;
+    margin-top: 10px;
+  }
+
+  .modal-svg-container button,
+  .reglas-svg-container button {
+    width: 90%;
+    margin: 30px auto 15px;
+  }
+
+  .score-svg-container {
+    width: 90%;
+    height: 70vh;
+    background-image: url("../images/Menu/final-modal.svg");
+    background-size: 100% 100%;
+    padding-top: 10%;
+    box-sizing: border-box;
+    margin: 10% auto;
+  }
+
+  #leaderboard-title {
+    width: 90%;
+  }
+
+  #ScoreBoardModal p {
+    width: 90%;
+    margin: 20px;
+  }
+
+  #leaderboardTable,
+  #currentPlayerResultTable {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modal-svg-container img {
+    width: 90%;
+    margin: 10px auto 0;
+  }
+
+  #restartGameButton {
+    width: 90%;
+  }
+
+  #modal-text-form-button {
+    width: 90%;
+    padding-left: 5%;
+  }
+
+  .modal-flow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #another-color {
+    width: 90%;
+  }
+
+  .blue-circle {
+    margin-right: 5px;
+  }
+
+  .leaderboard-row {
+    margin-bottom: 5px;
+  }
+
+  .modal h4 {
+    width: 90%;
+  }
+
+  .input-wrapper {
+    width: 90%;
+    height: 50px;
+    padding-left: 5px;
+  }
+
+  .input-wrapper input {
+    font-size: 14px;
+  }
+
+  #signinForm {
+    margin-top: 30px;
+  }
+}

@@ -64,15 +64,17 @@ let nickname = document.getElementById("nickname");
 var emailInput = document.getElementById("email");
 
 // -------------------------------------- LOAD PAGE  --------------------------------------
-// displayScoreBoardModal();
-// displayfinalRoundCompletionModal();
-// displayRoundScoreModal();
-
-// showFullInstructionsModal();
 
 document.addEventListener("DOMContentLoaded", function () {
   showWelcomeMessage();
+  // displayGameInstructionsModal();
+  // displayfinalRoundCompletionModal();
+  // displayRoundScoreModal();
+  // showSignInModal();
   // createCards(levelOne);
+  // displayScoreBoardModal();
+  // showFullInstructionsModal();
+
   const leaderboardLink = document.getElementById("leaderboardLink");
   const rulesLink = document.getElementById("rulesLink");
   const navLinks = document.querySelectorAll(".navigation-elements a");
@@ -80,6 +82,14 @@ document.addEventListener("DOMContentLoaded", function () {
     "closeInstructionsModal"
   );
   const scoreboardModal = document.getElementById("ScoreBoardModal");
+
+  // function disableScrolling() {
+  //   document.body.style.overflow = "hidden";
+  // }
+
+  // function enableScrolling() {
+  //   document.body.style.overflow = "auto";
+  // }
 
   function setActiveLink(event) {
     // Remove the active class from all links
@@ -112,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault(); // Prevent the default link behavior
     document.getElementById("FullInstructionsModal").style.display = "block";
     setActiveLink(event);
+    // disableScrolling();
     pauseTimer(); // Pause the game when displaying the rules modal
   });
 
@@ -119,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("FullInstructionsModal").style.display = "none";
     highlightJuegoLink(); // Highlight the "Juego" link
     resumeTimer(); // Resume the game when closing the rules modal
+    // enableScrolling();
   });
 
   scoreboardModal
@@ -612,6 +624,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// -------------------------------------- SCOREBOARD MODAL DYNAMIC REaL  --------------------------------------
+
 function displayScoreBoardModal() {
   const scoreboardModal = document.getElementById("ScoreBoardModal");
   const leaderboardTable = document.getElementById("leaderboardTable");
@@ -737,6 +751,75 @@ function displayScoreBoardModal() {
   restartGameButton.addEventListener("click", restartGameHandler);
 }
 
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+
+// function displayScoreBoardModal() {
+//   const leaderboardTable = document.getElementById("leaderboardTable");
+//   const currentPlayerResultTable = document.getElementById(
+//     "currentPlayerResultTable"
+//   );
+
+//   // Clear any existing leaderboard data
+//   leaderboardTable.querySelector("tbody").innerHTML = "";
+//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
+
+//   // Hardcoded leaderboard data
+//   const leaderboardData = [
+//     { rank: 1, nickname: "Julia", score: 180 },
+//     { rank: 2, nickname: "Pedro", score: 178 },
+//     { rank: 3, nickname: "José", score: 170 },
+//     { rank: 4, nickname: "María", score: 160 },
+//     { rank: 5, nickname: "Luisa", score: 150 },
+//   ];
+
+//   const currentPlayerData = { rank: 3, nickname: "Ana", score: 140 };
+
+//   // Populate table with the top 5 players
+//   leaderboardData.forEach((player) => {
+//     const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
+//     row.classList.add("leaderboard-row");
+
+//     const rankCell = row.insertCell(0); // Insert a new cell for the rank
+//     rankCell.classList.add("first-cell");
+//     rankCell.innerHTML = player.rank; // Use the rank from the response
+
+//     const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
+//     nicknameCell.classList.add("second-cell");
+//     const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
+//     nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
+
+//     const scoreCell = row.insertCell(2); // Insert a new cell for the score
+//     scoreCell.classList.add("third-cell");
+//     scoreCell.innerHTML = player.score;
+//   });
+
+//   // Populate current player result
+//   const row = currentPlayerResultTable.insertRow(-1);
+//   row.classList.add("leaderboard-row");
+
+//   const rankCell = row.insertCell(0);
+//   rankCell.classList.add("first-cell");
+//   rankCell.innerHTML = currentPlayerData.rank;
+
+//   const nicknameCell = row.insertCell(1);
+//   nicknameCell.classList.add("second-cell");
+//   const currentFirstLetter = currentPlayerData.nickname.charAt(0).toUpperCase();
+//   nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${currentPlayerData.nickname}`;
+
+//   const scoreCell = row.insertCell(2);
+//   scoreCell.classList.add("third-cell");
+//   scoreCell.innerHTML = currentPlayerData.score;
+
+//   // Display the modal
+//   const scoreboardModal = document.getElementById("ScoreBoardModal");
+//   scoreboardModal.style.display = "block";
+
+//   // Add close button functionality
+//   document.querySelector(".close-button").onclick = function () {
+//     scoreboardModal.style.display = "none";
+//   };
+// }
+
 function restartGameHandler() {
   if (gameState.finalResultsDisplayed) {
     // Restart the game only if the player has completed the game
@@ -852,306 +935,3 @@ const levelTwo = [
   "./images/levelTwo/Neutral Floor Cleaner-1.png",
   "./images/levelTwo/Neutral Floor Cleaner.png",
 ];
-
-// THIS WORKS
-// function displayScoreBoardModal() {
-//   const scoreboardModal = document.getElementById("ScoreBoardModal");
-//   const leaderboardTable = document.getElementById("leaderboardTable");
-//   const currentPlayerResultTable = document.getElementById(
-//     "currentPlayerResultTable"
-//   );
-
-//   // Clear any existing leaderboard data
-//   leaderboardTable.querySelector("tbody").innerHTML = "";
-//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
-
-//   // Fetch leaderboard data via AJAX
-//   $.ajax({
-//     url: "PHP/get_leaderboard.php", // Path relative to your index.html
-//     method: "GET",
-//     success: function (response) {
-//       // Handle the success response from the server
-//       const leaderboardData = JSON.parse(response);
-//       console.log("Leaderboard Data:", leaderboardData); // Debugging output
-
-//       // Find the current player's data (case-insensitive)
-//       console.log(
-//         "Current Player Nickname (gameState):",
-//         gameState.playerNickname
-//       ); // Debugging output
-
-//       // Trim and lowercase the current player's nickname
-//       const currentNickname = gameState.playerNickname.trim().toLowerCase();
-//       console.log(
-//         "Trimmed and Lowercased Current Player Nickname:",
-//         currentNickname
-//       ); // Debugging output
-
-//       // Check each player nickname in leaderboard data
-//       leaderboardData.forEach((player) => {
-//         console.log(
-//           "Comparing with Leaderboard Nickname:",
-//           player.nickname.trim().toLowerCase()
-//         );
-//       });
-
-//       const currentPlayerData = leaderboardData.find(
-//         (player) => player.nickname.trim().toLowerCase() === currentNickname
-//       );
-//       console.log("Current Player Data:", currentPlayerData); // Debugging output
-
-//       // Slice the leaderboard data to get the top 5 players
-//       const topFivePlayers = leaderboardData.slice(0, 5);
-
-//       // Populate table with the top 5 players
-//       topFivePlayers.forEach((player) => {
-//         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
-//         row.classList.add("leaderboard-row");
-
-//         const rankCell = row.insertCell(0); // Insert a new cell for the rank
-//         rankCell.classList.add("first-cell");
-//         rankCell.innerHTML = player.rank; // Use the rank from the response
-
-//         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
-//         nicknameCell.classList.add("second-cell");
-//         const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
-//         nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
-
-//         const scoreCell = row.insertCell(2); // Insert a new cell for the score
-//         scoreCell.classList.add("third-cell");
-//         scoreCell.innerHTML = player.score;
-//       });
-
-//       // Populate current player result
-//       const row = currentPlayerResultTable.insertRow(-1);
-//       row.classList.add("leaderboard-row");
-
-//       const rankCell = row.insertCell(0);
-//       rankCell.classList.add("first-cell");
-//       rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
-
-//       const nicknameCell = row.insertCell(1);
-//       nicknameCell.classList.add("second-cell");
-//       const currentFirstLetter = gameState.playerNickname
-//         .charAt(0)
-//         .toUpperCase();
-//       nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
-//         currentPlayerData
-//           ? currentPlayerData.nickname
-//           : gameState.playerNickname
-//       }`;
-
-//       const scoreCell = row.insertCell(2);
-//       scoreCell.classList.add("third-cell");
-//       scoreCell.innerHTML = currentPlayerData
-//         ? currentPlayerData.score
-//         : gameState.scoreCount;
-
-//       // Display the modal
-//       scoreboardModal.style.display = "block";
-//     },
-//     error: function (xhr, status, error) {
-//       console.error("Error fetching leaderboard:", error);
-//     },
-//   });
-
-//   document
-//     .getElementById("restartGameButton")
-//     .addEventListener("click", function () {
-//       resetGameState();
-//       startGame(); // Assuming startGame() is set up to reinitialize the game.
-//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
-//     });
-// }
-
-// -------------------------------------- one more --------------------------------------
-
-// -------------------------------------- FOR TESTING SCORE BOARD CSS --------------------------------------
-// function displayScoreBoardModal() {
-//   const scoreboardModal = document.getElementById("ScoreBoardModal");
-//   const leaderboardTable = document.getElementById("leaderboardTable");
-//   const currentPlayerResultTable = document.getElementById(
-//     "currentPlayerResultTable"
-//   );
-
-//   // Clear any existing leaderboard data
-//   leaderboardTable.querySelector("tbody").innerHTML = "";
-//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
-
-//   // Placeholder data for testing
-//   const leaderboardData = [
-//     { rank: 1, nickname: "Julia", score: 180 },
-//     { rank: 2, nickname: "Pedro", score: 178 },
-//     { rank: 3, nickname: "José", score: 170 },
-//     { rank: 4, nickname: "María", score: 160 },
-//     { rank: 5, nickname: "Luisa", score: 150 },
-//   ];
-
-//   const currentPlayerData = { rank: 3, nickname: "Ana", score: 140 };
-
-//   // Slice the leaderboard data to get the top 5 players
-//   const topFivePlayers = leaderboardData.slice(0, 5);
-
-//   // Populate table with the top 5 players
-//   topFivePlayers.forEach((player) => {
-//     const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
-//     row.classList.add("leaderboard-row");
-
-//     const rankCell = row.insertCell(0); // Insert a new cell for the rank
-//     rankCell.classList.add("first-cell");
-//     rankCell.innerHTML = player.rank; // Use the rank from the response
-
-//     const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
-//     nicknameCell.classList.add("second-cell");
-//     const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
-//     nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
-
-//     const scoreCell = row.insertCell(2); // Insert a new cell for the score
-//     scoreCell.classList.add("third-cell");
-//     scoreCell.innerHTML = player.score;
-//   });
-
-//   // Populate current player result
-//   const row = currentPlayerResultTable.insertRow(-1);
-//   row.classList.add("leaderboard-row");
-
-//   const rankCell = row.insertCell(0);
-//   rankCell.classList.add("first-cell");
-//   rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
-
-//   const nicknameCell = row.insertCell(1);
-//   nicknameCell.classList.add("second-cell");
-//   const currentFirstLetter = currentPlayerData.nickname.charAt(0).toUpperCase();
-//   nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
-//     currentPlayerData ? currentPlayerData.nickname : gameState.playerNickname
-//   }`;
-
-//   const scoreCell = row.insertCell(2);
-//   scoreCell.classList.add("third-cell");
-//   scoreCell.innerHTML = currentPlayerData
-//     ? currentPlayerData.score
-//     : gameState.scoreCount;
-
-//   // Display the modal
-//   scoreboardModal.style.display = "block";
-
-//   document
-//     .getElementById("restartGameButton")
-//     .addEventListener("click", function () {
-//       resetGameState();
-//       startGame(); // Assuming startGame() is set up to reinitialize the game.
-//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
-//     });
-// }
-
-// FOR TESTING SCORE wit matching score and not matching total time
-// function displayScoreBoardModal() {
-//   const scoreboardModal = document.getElementById("ScoreBoardModal");
-//   const leaderboardTable = document.getElementById("leaderboardTable");
-//   const currentPlayerResultTable = document.getElementById(
-//     "currentPlayerResultTable"
-//   );
-
-//   // Clear any existing leaderboard data
-//   leaderboardTable.querySelector("tbody").innerHTML = "";
-//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
-
-//   // Fetch leaderboard data via AJAX
-//   $.ajax({
-//     url: "PHP/get_leaderboard.php", // Path relative to your index.html
-//     method: "GET",
-//     success: function (response) {
-//       // Handle the success response from the server
-//       const leaderboardData = JSON.parse(response);
-//       console.log("Leaderboard Data:", leaderboardData); // Debugging output
-
-//       // Find the current player's data (case-insensitive)
-//       console.log(
-//         "Current Player Nickname (gameState):",
-//         gameState.playerNickname
-//       ); // Debugging output
-
-//       // Trim and lowercase the current player's nickname
-//       const currentNickname = gameState.playerNickname.trim().toLowerCase();
-//       console.log(
-//         "Trimmed and Lowercased Current Player Nickname:",
-//         currentNickname
-//       ); // Debugging output
-
-//       // Check each player nickname in leaderboard data
-//       leaderboardData.forEach((player) => {
-//         console.log(
-//           "Comparing with Leaderboard Nickname:",
-//           player.nickname.trim().toLowerCase()
-//         );
-//       });
-
-//       const currentPlayerData = leaderboardData.find(
-//         (player) => player.nickname.trim().toLowerCase() === currentNickname
-//       );
-//       console.log("Current Player Data:", currentPlayerData); // Debugging output
-
-//       // Slice the leaderboard data to get the top 5 players
-//       const topFivePlayers = leaderboardData.slice(0, 5);
-
-//       // Populate table with the top 5 players
-//       topFivePlayers.forEach((player, index) => {
-//         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
-//         row.classList.add("leaderboard-row");
-
-//         const rankCell = row.insertCell(0); // Insert a new cell for the rank
-//         rankCell.classList.add("first-cell");
-//         rankCell.innerHTML = player.rank; // Use the rank from the response
-
-//         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
-//         nicknameCell.classList.add("second-cell");
-//         const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
-//         nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
-
-//         const scoreCell = row.insertCell(2); // Insert a new cell for the score
-//         scoreCell.classList.add("third-cell");
-//         scoreCell.innerHTML = player.score;
-//       });
-
-//       // Populate current player result
-//       const row = currentPlayerResultTable.insertRow(-1);
-//       row.classList.add("leaderboard-row");
-
-//       const rankCell = row.insertCell(0);
-//       rankCell.classList.add("first-cell");
-//       rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
-
-//       const nicknameCell = row.insertCell(1);
-//       nicknameCell.classList.add("second-cell");
-//       const currentFirstLetter = gameState.playerNickname
-//         .charAt(0)
-//         .toUpperCase();
-//       nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
-//         currentPlayerData
-//           ? currentPlayerData.nickname
-//           : gameState.playerNickname
-//       }`;
-
-//       const scoreCell = row.insertCell(2);
-//       scoreCell.classList.add("third-cell");
-//       scoreCell.innerHTML = currentPlayerData
-//         ? currentPlayerData.score
-//         : gameState.scoreCount;
-
-//       // Display the modal
-//       scoreboardModal.style.display = "block";
-//     },
-//     error: function (xhr, status, error) {
-//       console.error("Error fetching leaderboard:", error);
-//     },
-//   });
-
-//   document
-//     .getElementById("restartGameButton")
-//     .addEventListener("click", function () {
-//       resetGameState();
-//       startGame();
-//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
-//       highlightJuegoLink(); // Highlight the "Juego" link
-//     });
-// }
