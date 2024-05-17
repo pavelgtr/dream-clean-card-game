@@ -17,6 +17,7 @@ const gameState = {
   elapsedTime: 0,
   startTime: null,
   currentTime: null,
+  timerPaused: false,
   soundEffects: {
     click: new Audio("./sounds/flip.wav"),
     error: new Audio("./sounds/fail.wav"),
@@ -63,19 +64,76 @@ let nickname = document.getElementById("nickname");
 var emailInput = document.getElementById("email");
 
 // -------------------------------------- LOAD PAGE  --------------------------------------
+// displayScoreBoardModal();
+// displayfinalRoundCompletionModal();
+// displayRoundScoreModal();
+
+// showFullInstructionsModal();
 
 document.addEventListener("DOMContentLoaded", function () {
   showWelcomeMessage();
-  // displayScoreBoardModal();
-  // displayfinalRoundCompletionModal();
-  // displayRoundScoreModal();
   // createCards(levelOne);
-  // showFullInstructionsModal();
-
   const leaderboardLink = document.getElementById("leaderboardLink");
+  const rulesLink = document.getElementById("rulesLink");
+  const navLinks = document.querySelectorAll(".navigation-elements a");
+  const closeInstructionsModal = document.getElementById(
+    "closeInstructionsModal"
+  );
+  const scoreboardModal = document.getElementById("ScoreBoardModal");
+
+  function setActiveLink(event) {
+    // Remove the active class from all links
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+    });
+    // Add the active class to the clicked link
+    event.currentTarget.classList.add("active");
+  }
+
+  function highlightJuegoLink() {
+    // Remove the active class from all links
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+    });
+    // Add the active class to the "Juego" link
+    document
+      .querySelector(".navigation-elements a[href='index.html']")
+      .classList.add("active");
+  }
+
   leaderboardLink.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent the default link behavior
     displayScoreBoardModal(); // Call the function to display the scoreboard modal
+    setActiveLink(event);
+    pauseTimer(); // Pause the game when displaying the leaderboard modal
+  });
+
+  rulesLink.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    document.getElementById("FullInstructionsModal").style.display = "block";
+    setActiveLink(event);
+    pauseTimer(); // Pause the game when displaying the rules modal
+  });
+
+  closeInstructionsModal.addEventListener("click", function () {
+    document.getElementById("FullInstructionsModal").style.display = "none";
+    highlightJuegoLink(); // Highlight the "Juego" link
+    resumeTimer(); // Resume the game when closing the rules modal
+  });
+
+  scoreboardModal
+    .querySelector(".close-button")
+    .addEventListener("click", function () {
+      scoreboardModal.style.display = "none";
+      highlightJuegoLink(); // Highlight the "Juego" link
+      resumeTimer(); // Resume the game when closing the scoreboard modal
+    });
+
+  // Set the active class on the current page link on page load
+  navLinks.forEach((link) => {
+    if (link.href === window.location.href) {
+      link.classList.add("active");
+    }
   });
 });
 
@@ -96,9 +154,7 @@ function showSignInModal() {
     event.preventDefault();
     nickname = document.getElementById("nickname").value;
     email = document.getElementById("email").value;
-    // localStorage.setItem("userNickname", nickname);
-    // localStorage.setItem("userEmail", email);
-    soundEffects.startGame.play(); // Play the start game sound
+    soundEffects.startGame.play();
     signinModal.style.display = "none";
     displayGameInstructionsModal();
     startGame(nickname, email);
@@ -121,7 +177,7 @@ function showWelcomeMessage() {
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
-  // shuffleArray(imagesArray);
+  shuffleArray(imagesArray);
   container.innerHTML = imagesArray
     .map(
       (imageSrc, index) => `
@@ -227,14 +283,21 @@ function resetGame() {
 // -------------------------------------- TIMER FUNCTIONS --------------------------------------
 
 function startTimer() {
-  gameState.startTime = Date.now(); // Store the start time in milliseconds
+  if (gameState.timerPaused) {
+    gameState.startTime = Date.now() - gameState.secondsElapsed * 1000; // Adjust start time
+  } else {
+    gameState.startTime = Date.now(); // Store the start time in milliseconds
+  }
+
   if (gameState.timer) {
     clearInterval(gameState.timer); // Clear existing timer if it exists
   }
   gameState.timer = setInterval(() => {
-    gameState.secondsElapsed++;
+    const now = Date.now();
+    gameState.secondsElapsed = Math.floor((now - gameState.startTime) / 1000);
     updateTimerDisplay(gameState.secondsElapsed);
   }, 1000);
+  gameState.timerPaused = false; // Reset timerPaused state
 }
 
 function updateTimerDisplay(seconds) {
@@ -249,14 +312,17 @@ function updateTimerDisplay(seconds) {
 
 function stopTimer() {
   clearInterval(gameState.timer);
-  gameState.currentTime = Date.now();
-  gameState.elapsedTime = (gameState.currentTime - gameState.startTime) / 1000;
-  gameState.totalTime += gameState.elapsedTime; // Add elapsed time to total time
-  console.log(
-    `Total Time after stopping timer: ${gameState.totalTime} seconds`
-  );
-  gameState.secondsElapsed = 0; // Reset seconds elapsed
-  updateTimerDisplay(gameState.secondsElapsed);
+  gameState.timer = null;
+  gameState.timerPaused = false;
+}
+
+function pauseTimer() {
+  clearInterval(gameState.timer); // Clear the interval to stop the timer
+  gameState.timerPaused = true; // Set timerPaused to true
+}
+
+function resumeTimer() {
+  startTimer(); // Resume the timer by starting it again
 }
 
 function formatTime(seconds) {
@@ -524,6 +590,7 @@ function displayRound2InstructionsModal() {
     startTimer();
   });
 }
+
 // -------------------------------------- REGLAS MODAL EVENT LISTENER--------------------------------------
 document.addEventListener("DOMContentLoaded", function () {
   const rulesLink = document.getElementById("rulesLink");
@@ -541,10 +608,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   closeInstructionsModal.addEventListener("click", function () {
     fullInstructionsModal.style.display = "none";
+    highlightJuegoLink(); // Highlight the "Juego" link
   });
 });
 
-// FOR TESTING SCORE wit matching score and not matching total time
 function displayScoreBoardModal() {
   const scoreboardModal = document.getElementById("ScoreBoardModal");
   const leaderboardTable = document.getElementById("leaderboardTable");
@@ -586,16 +653,34 @@ function displayScoreBoardModal() {
         );
       });
 
+      // Find the current player's data in the leaderboard
       const currentPlayerData = leaderboardData.find(
         (player) => player.nickname.trim().toLowerCase() === currentNickname
       );
       console.log("Current Player Data:", currentPlayerData); // Debugging output
 
+      // If the current player is not in the top 5, add their data to the leaderboardData
+      if (!currentPlayerData) {
+        leaderboardData.push({
+          rank: "N/A",
+          nickname: gameState.playerNickname,
+          score: gameState.scoreCount,
+        });
+      }
+
+      // Sort the leaderboard data by score in descending order
+      leaderboardData.sort((a, b) => b.score - a.score);
+
+      // Assign ranks based on sorted order
+      leaderboardData.forEach((player, index) => {
+        player.rank = index + 1;
+      });
+
       // Slice the leaderboard data to get the top 5 players
       const topFivePlayers = leaderboardData.slice(0, 5);
 
       // Populate table with the top 5 players
-      topFivePlayers.forEach((player, index) => {
+      topFivePlayers.forEach((player) => {
         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
         row.classList.add("leaderboard-row");
 
@@ -646,13 +731,24 @@ function displayScoreBoardModal() {
     },
   });
 
-  document
-    .getElementById("restartGameButton")
-    .addEventListener("click", function () {
-      resetGameState();
-      startGame(); // Assuming startGame() is set up to reinitialize the game.
-      scoreboardModal.style.display = "none"; // Hide the modal after starting the game
-    });
+  // Remove the existing event listener before adding a new one to prevent multiple listeners
+  const restartGameButton = document.getElementById("restartGameButton");
+  restartGameButton.removeEventListener("click", restartGameHandler);
+  restartGameButton.addEventListener("click", restartGameHandler);
+}
+
+function restartGameHandler() {
+  if (gameState.finalResultsDisplayed) {
+    // Restart the game only if the player has completed the game
+    resetGameState();
+    startGame(); // Assuming startGame() is set up to reinitialize the game.
+  } else {
+    // Resume the game if it was paused
+    resumeTimer();
+  }
+  const scoreboardModal = document.getElementById("ScoreBoardModal");
+  scoreboardModal.style.display = "none"; // Hide the modal after starting/resuming the game
+  highlightJuegoLink(); // Highlight the "Juego" link
 }
 
 // -------------------------------------- CRUD --------------------------------------
@@ -945,5 +1041,117 @@ const levelTwo = [
 //       resetGameState();
 //       startGame(); // Assuming startGame() is set up to reinitialize the game.
 //       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
+//     });
+// }
+
+// FOR TESTING SCORE wit matching score and not matching total time
+// function displayScoreBoardModal() {
+//   const scoreboardModal = document.getElementById("ScoreBoardModal");
+//   const leaderboardTable = document.getElementById("leaderboardTable");
+//   const currentPlayerResultTable = document.getElementById(
+//     "currentPlayerResultTable"
+//   );
+
+//   // Clear any existing leaderboard data
+//   leaderboardTable.querySelector("tbody").innerHTML = "";
+//   currentPlayerResultTable.querySelector("tbody").innerHTML = "";
+
+//   // Fetch leaderboard data via AJAX
+//   $.ajax({
+//     url: "PHP/get_leaderboard.php", // Path relative to your index.html
+//     method: "GET",
+//     success: function (response) {
+//       // Handle the success response from the server
+//       const leaderboardData = JSON.parse(response);
+//       console.log("Leaderboard Data:", leaderboardData); // Debugging output
+
+//       // Find the current player's data (case-insensitive)
+//       console.log(
+//         "Current Player Nickname (gameState):",
+//         gameState.playerNickname
+//       ); // Debugging output
+
+//       // Trim and lowercase the current player's nickname
+//       const currentNickname = gameState.playerNickname.trim().toLowerCase();
+//       console.log(
+//         "Trimmed and Lowercased Current Player Nickname:",
+//         currentNickname
+//       ); // Debugging output
+
+//       // Check each player nickname in leaderboard data
+//       leaderboardData.forEach((player) => {
+//         console.log(
+//           "Comparing with Leaderboard Nickname:",
+//           player.nickname.trim().toLowerCase()
+//         );
+//       });
+
+//       const currentPlayerData = leaderboardData.find(
+//         (player) => player.nickname.trim().toLowerCase() === currentNickname
+//       );
+//       console.log("Current Player Data:", currentPlayerData); // Debugging output
+
+//       // Slice the leaderboard data to get the top 5 players
+//       const topFivePlayers = leaderboardData.slice(0, 5);
+
+//       // Populate table with the top 5 players
+//       topFivePlayers.forEach((player, index) => {
+//         const row = leaderboardTable.insertRow(-1); // Insert a new row at the end of the table
+//         row.classList.add("leaderboard-row");
+
+//         const rankCell = row.insertCell(0); // Insert a new cell for the rank
+//         rankCell.classList.add("first-cell");
+//         rankCell.innerHTML = player.rank; // Use the rank from the response
+
+//         const nicknameCell = row.insertCell(1); // Insert a new cell for the nickname
+//         nicknameCell.classList.add("second-cell");
+//         const firstLetter = player.nickname.charAt(0).toUpperCase(); // Get the first letter of the nickname
+//         nicknameCell.innerHTML = `<div class="blue-circle">${firstLetter}</div>${player.nickname}`;
+
+//         const scoreCell = row.insertCell(2); // Insert a new cell for the score
+//         scoreCell.classList.add("third-cell");
+//         scoreCell.innerHTML = player.score;
+//       });
+
+//       // Populate current player result
+//       const row = currentPlayerResultTable.insertRow(-1);
+//       row.classList.add("leaderboard-row");
+
+//       const rankCell = row.insertCell(0);
+//       rankCell.classList.add("first-cell");
+//       rankCell.innerHTML = currentPlayerData ? currentPlayerData.rank : "N/A";
+
+//       const nicknameCell = row.insertCell(1);
+//       nicknameCell.classList.add("second-cell");
+//       const currentFirstLetter = gameState.playerNickname
+//         .charAt(0)
+//         .toUpperCase();
+//       nicknameCell.innerHTML = `<div class="blue-circle">${currentFirstLetter}</div>${
+//         currentPlayerData
+//           ? currentPlayerData.nickname
+//           : gameState.playerNickname
+//       }`;
+
+//       const scoreCell = row.insertCell(2);
+//       scoreCell.classList.add("third-cell");
+//       scoreCell.innerHTML = currentPlayerData
+//         ? currentPlayerData.score
+//         : gameState.scoreCount;
+
+//       // Display the modal
+//       scoreboardModal.style.display = "block";
+//     },
+//     error: function (xhr, status, error) {
+//       console.error("Error fetching leaderboard:", error);
+//     },
+//   });
+
+//   document
+//     .getElementById("restartGameButton")
+//     .addEventListener("click", function () {
+//       resetGameState();
+//       startGame();
+//       scoreboardModal.style.display = "none"; // Hide the modal after starting the game
+//       highlightJuegoLink(); // Highlight the "Juego" link
 //     });
 // }

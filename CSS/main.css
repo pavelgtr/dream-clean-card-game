@@ -137,7 +137,7 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  /* overflow: auto; */
   /* overflow-y: scroll; */
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
@@ -511,16 +511,6 @@ h1 {
   height: 100px;
 }
 
-.navigation-elements a {
-  color: #949292; /* Dark grey color for text */
-  font-family: "Lato-regular";
-  font-size: 20px; /* Larger, readable font size */
-  text-decoration: none; /* No underlines */
-  margin-right: 20px; /* Space between links */
-  position: relative; /* For positioning the underline */
-  padding: 5px 0; /* Padding to increase clickable area */
-}
-
 .links-navigation {
   display: flex;
   justify-content: space-between;
@@ -536,17 +526,21 @@ h1 {
   }
 }
 
+.navigation-elements a {
+  position: relative; /* For positioning the underline */
+  padding: 5px 0; /* Padding to increase clickable area */
+  color: #949292; /* Dark grey color for text */
+  font-family: "Lato-regular";
+  font-size: 20px; /* Larger, readable font size */
+  text-decoration: none; /* No underlines */
+  margin-right: 20px; /* Space between links */
+}
+
 .navigation-elements a:last-child {
   margin-right: 0; /* No margin for the last item */
 }
 
-.navigation-elements a:hover,
-.navigation-elements a:focus {
-  color: #005f5f; /* A darker shade for hover state */
-}
-
-.navigation-elements a:hover::after,
-.navigation-elements a:focus::after {
+.navigation-elements a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -555,19 +549,28 @@ h1 {
   width: 100%;
   background-color: #00adb5; /* Teal color for active/hover underline */
   border-radius: 1px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.navigation-elements a:hover::after,
+.navigation-elements a:focus::after,
+.navigation-elements a.active::after {
+  /* Ensure always visible for active link */
+  opacity: 1; /* Show on hover/focus */
+}
+
+.navigation-elements a.active {
+  color: #005f5f; /* A darker shade for the active state */
+}
+
+.navigation-elements a.active::after {
+  opacity: 1; /* Ensure underline is visible for active link */
 }
 
 /* Specifically for 'Juego' to have the underline by default */
-.navigation-elements a[href="index.html"]:hover::after,
-.navigation-elements a[href="index.html"]:focus::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  height: 2px;
-  width: 100%;
-  background-color: #00adb5;
-  border-radius: 1px;
+.navigation-elements a[href="index.html"].active::after {
+  opacity: 1;
 }
 
 .game-header {
@@ -598,7 +601,7 @@ h1 {
 body {
   background-image: url(../images/Menu/game-clouds-background.png);
   background-position: center center; /* Move the background image to the top */
-  background-size: auto 50%;
+  background-size: auto 100%;
 }
 
 .game-wrapper {
@@ -620,38 +623,38 @@ body {
   grid-template-columns: repeat(4, 1fr);
   width: 720px;
   height: 534px;
-  margin: 100px auto 20px;
-  gap: 5px;
+  margin: 60px auto 20px;
 
   @media screen and (max-width: 950px) {
     width: 330px;
     height: 411px;
     grid-template-columns: repeat(3, 1fr);
     margin: 20px auto 20px;
-    gap: 2px;
   }
 }
 
+/* target modal headings  */
 h3 {
   color: var(--light);
   font-size: 40px;
 }
-
+/* target modal headings  */
 h2 {
   text-align: center;
-  font-family: "Open Sans", sans-serif; /* Keep the font consistent with h1 */
-  font-size: 3rem; /* Smaller size than h1 for visual hierarchy */
-  color: var(--secondary); /* Use the secondary color for contrast */
-  text-transform: uppercase; /* Maintain uppercase letters */
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Slightly softer text shadow */
-  margin: 20px auto; /* Balanced space around h2 */
-  padding: 10px 0; /* Less padding than h1 for a less dominant appearance */
+  font-family: "Open Sans", sans-serif;
+  font-size: 3rem;
+  color: var(--secondary);
+  text-transform: uppercase;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+  margin: 20px auto;
+  padding: 10px 0;
 }
 
 .created-card {
   width: 160px;
   height: 160px;
 
+  border-radius: 16px;
   @media screen and (max-width: 950px) {
     width: 100px;
     height: 100px;
@@ -665,6 +668,7 @@ h2 {
   transform-style: preserve-3d;
   cursor: pointer;
   position: relative;
+  border-radius: 16px;
 }
 
 .card__inner.is-flipped {
@@ -679,15 +683,16 @@ h2 {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
 }
 
 .card__face--front,
 .card__face--back {
   width: 100%;
   height: 100%;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  box-sizing: content-box;
+  border-radius: 16px; /* Ensure both faces have the same border-radius */
+  background-color: transparent;
+  overflow: visible;
 }
 
 .card__face--front {
@@ -699,6 +704,10 @@ h2 {
   /* border: 2px solid red; */
 }
 
+/* img {
+  overflow-clip-margin: initial;
+  overflow: visible;
+} */
 .card__face--front img {
   @media screen and (max-width: 950px) {
     width: 110%;
@@ -741,6 +750,7 @@ h2 {
   width: 160px;
   height: 160px;
   margin: 0 auto 30px;
+
   object-fit: cover;
 
   @media screen and (max-width: 950px) {
@@ -824,7 +834,7 @@ h2 {
 footer {
   margin-top: auto;
   width: 100%;
-  padding: 1rem 0;
+  padding: 10px 0;
   background-color: #66cccc;
 }
 
