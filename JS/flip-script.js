@@ -76,9 +76,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // displayScoreBoardModal();
   // showFullInstructionsModal();
 
+  const hamburgerMenu = document.querySelector(".hamburger-menu");
+  const mobileMenu = document.querySelector(".mobile-menu");
   const leaderboardLink = document.getElementById("leaderboardLink");
   const rulesLink = document.getElementById("rulesLink");
   const navLinks = document.querySelectorAll(".navigation-elements a");
+  const mobileRulesLink = document.getElementById("mobile-rulesLink");
+  const mobileLeaderboardLink = document.getElementById(
+    "mobile-leaderboardLink"
+  );
   const closeInstructionsModal = document.getElementById(
     "closeInstructionsModal"
   );
@@ -91,6 +97,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // function enableScrolling() {
   //   document.body.style.overflow = "auto";
   // }
+  hamburgerMenu.addEventListener("click", function () {
+    mobileMenu.style.display =
+      mobileMenu.style.display === "flex" ? "none" : "flex";
+  });
+
+  mobileRulesLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    document.getElementById("FullInstructionsModal").style.display = "block";
+    mobileMenu.style.display = "none"; // Close the mobile menu
+    pauseTimer();
+  });
+
+  mobileLeaderboardLink.addEventListener("click", function (event) {
+    event.preventDefault();
+    displayScoreBoardModal();
+    mobileMenu.style.display = "none"; // Close the mobile menu
+    pauseTimer();
+  });
 
   function setActiveLink(event) {
     // Remove the active class from all links
@@ -352,17 +376,21 @@ function formatTime(seconds) {
 }
 
 function calculateSpeedBonus() {
-  if (gameState.secondsElapsed < 60) {
-    return 30;
-  } else if (gameState.secondsElapsed >= 60 && gameState.secondsElapsed < 120) {
+  if (gameState.secondsElapsed < 30) {
+    return 25;
+  } else if (gameState.secondsElapsed >= 30 && gameState.secondsElapsed < 60) {
     return 20;
+  } else if (gameState.secondsElapsed >= 60 && gameState.secondsElapsed < 90) {
+    return 15;
+  } else if (gameState.secondsElapsed >= 90 && gameState.secondsElapsed < 120) {
+    return 10;
   } else if (
     gameState.secondsElapsed >= 120 &&
-    gameState.secondsElapsed < 180
+    gameState.secondsElapsed < 150
   ) {
-    return 10;
-  } else {
     return 5;
+  } else {
+    return 1;
   }
 }
 
@@ -411,6 +439,37 @@ function flipCard(event) {
   }
 }
 
+// function checkForMatch() {
+//   let baseName1 = gameState.flippedCard1
+//     .querySelector(".card__face--back img")
+//     .src.split("/")
+//     .pop()
+//     .replace(".jpg", "")
+//     .replace("-1", "");
+//   let baseName2 = gameState.flippedCard2
+//     .querySelector(".card__face--back img")
+//     .src.split("/")
+//     .pop()
+//     .replace(".jpg", "")
+//     .replace("-1", "");
+
+//   const isMatch = baseName1 === baseName2;
+
+//   if (isMatch) {
+//     disableCards();
+//     const speedBonus = calculateSpeedBonus();
+//     incrementScore(speedBonus);
+//     gameState.matchedPairsCount++; // Increment matched pairs count
+//     const winSound = getNextWinSound();
+//     setTimeout(() => {
+//       winSound.play();
+//     }, 1000);
+//     checkEndOfRound();
+//   } else {
+//     unflipCards();
+//   }
+// }
+
 function checkForMatch() {
   let baseName1 = gameState.flippedCard1
     .querySelector(".card__face--back img")
@@ -430,8 +489,16 @@ function checkForMatch() {
   if (isMatch) {
     disableCards();
     const speedBonus = calculateSpeedBonus();
-    incrementScore(speedBonus);
-    gameState.matchedPairsCount++; // Increment matched pairs count
+    let firstTryBonus = 0;
+
+    // Check if the match was made on the first try
+    if (gameState.errorCount === 0) {
+      firstTryBonus = 100;
+      triggerConfetti(); // Trigger the confetti animation
+    }
+
+    incrementScore(speedBonus + firstTryBonus);
+    gameState.matchedPairsCount++;
     const winSound = getNextWinSound();
     setTimeout(() => {
       winSound.play();
@@ -473,7 +540,8 @@ function incrementScore(speedBonus = 0) {
 
 function incrementError() {
   gameState.errorCount++;
-  gameState.scoreCount = Math.max(0, gameState.scoreCount - 2);
+  const deduction = 1 + (gameState.errorCount - 1) * 2; // Increase deduction by 2 for each consecutive error
+  gameState.scoreCount = Math.max(0, gameState.scoreCount - deduction);
   scoreDisplay.textContent = gameState.scoreCount;
 }
 
@@ -483,9 +551,6 @@ function setPointsPerMatch() {
   } else if (gameState.gameLevel === 2) {
     gameState.pointsPerMatch = 15;
   }
-  // else if (gameState.gameLevel === 3) {
-  //   gameState.pointsPerMatch = 20;
-  // }
 }
 
 function checkEndOfRound() {
@@ -523,6 +588,13 @@ function checkEndOfRound() {
   }
 }
 
+function triggerConfetti() {
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 },
+  });
+}
 // ---------------------------------------------MODALS ---------------------------------------------
 
 function displayRoundScoreModal() {

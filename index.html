@@ -16,17 +16,23 @@
       <nav>
         <!-- <div class="gray-top"></div> -->
         <div class="navigation-elements">
+          <img src="./images/mobile/hamburger.png" alt="Menu" class="hamburger-menu" />
           <h1><img src="./images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
           <div class="links-navigation">
             <a href="index.html">Juego</a>
             <a href="#" id="rulesLink" class="nav-link">Reglas</a>
             <a href="./HTML/scoreboard.html" id="leaderboardLink" class="nav-link">Leaderboard</a>
-
-
           </div>
         </div>
       </nav>
     </div>
+
+    <div class="mobile-menu">
+      <a href="index.html">Juego</a>
+      <a href="#" id="mobile-rulesLink">Reglas</a>
+      <a href="./HTML/scoreboard.html" id="mobile-leaderboardLink">Leaderboard</a>
+    </div>
+
     <!-- Welcome Message Modal -->
     <div id="welcomeModal" class="modal">
       <div class="modal-svg-container">
@@ -102,6 +108,7 @@
         </div>
       </div>
     </div>
+
     <!-- Round 2 Score Modal -->
     <div id="FinalRoundCompletionModal" class="modal">
       <div class="modal-svg-container">
@@ -117,7 +124,7 @@
       </div>
     </div>
 
-    <!-- Score Board Modal -->
+    <!-- Scoreboard Modal -->
     <div id="ScoreBoardModal" class="modal">
       <div class="score-svg-container">
         <div class="content-inside-modal">
@@ -172,7 +179,7 @@
     <div class="game-wrapper">
       <main class="cards-container">
         <!-- Placeholder for dynamically generated cards -->
-        <h2><img src="./images/Menu/Back.png" alt="card-back-design"></h2>
+        <!-- <h2><img src="./images/Menu/Back.png" alt="card-back-design"></h2> -->
       </main>
       <div class="game-status-bar">
         <div class="status-item" id="timer">
@@ -185,6 +192,8 @@
         </div>
       </div>
     </div>
+
+
     <!-- FOOTER -->
     <footer>
       <div class="footer-banner">
@@ -224,41 +233,9 @@
   </div>
 
   <script src="./JS/flip-script.js"></script>
+  <!-- confetti animation -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-<!-- ----------------------------------OLD ----------------------------------OLD -->
-
-
-<!-- <div class="bottom-buttons">
-      <button type="reset" class="reset">
-        <img src="images/Menu/reload.png" alt="Arrow" class="arrow-icon">
-        Reiniciar
-      </button>
-      <button type="button" class="next-button">
-        <img src="images/Menu/fwd-arrow.png" alt="Arrow" class="arrow-icon">
-        Siguiente
-      </button>
-    </div> -->
-
-
-
-<!-- Round 3 Instructions Modal -->
-<!-- <div id="Round3InstructionsModal" class="modal">
-    <div class="modal-svg-container">
-      <div class="content-inside-modal">
-        <h2>¿Cómo Jugar?</h2>
-        <p>Nivel 3: Otros Usos Sorprendentes</p>
-        <p>Encuentra el producto de limpieza Green Choice y combínalo con otros usos sorprendentes y eco-friendly.
-          Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑</p>
-        <button id="round3ContinueBtn">Jugar</button>
-      </div>
-    </div>
-  </div> -->
