@@ -32,18 +32,19 @@
       <div class="modal-svg-container">
         <div class="content-inside-modal" id="welcome-content">
           <img src="./images/Menu/logo-juego.png" alt="">
-          <p>¡Hola! 👋 ¿Estás listo para poner a prueba <br>
+          <p id="welcome-paragraph">¡Hola! 👋 ¿Estás listo para poner a prueba <br>
             tu memoria con Green Choice y ganar premios? Demuestra que eres rápido y sabes cómo se
             limpia de forma sostenible. ¡Vamo' arriba! </p>
           <button id="welcomeContinue">Jugar</button>
         </div>
       </div>
     </div>
+
     <!-- Sign-in  Modal -->
     <div id="signinModal" class="modal">
       <div class="modal-svg-container">
         <div class="content-inside-modal">
-          <h4 id="inicia-title">INICIA EL JUEGO</h4>
+          <h3 id="inicia-title">INICIA EL JUEGO</h3>
           <form id="signinForm">
             <div class="input-wrapper">
               <input type="text" id="nickname" name="nickname" placeholder="Tu nombre" required>
@@ -63,10 +64,10 @@
     <div id="gameInstructionsModal" class="modal">
       <div class="modal-svg-container">
         <div class="content-inside-modal">
-          <h3>¿Cómo Jugar?</h3>
-          <h4>Nivel 1: Conoce Nuestros Productos</h4>
+          <h3 class="como-jugar">¿Cómo Jugar?</h3>
+          <h4 id="conoce">Nivel 1: Conoce Nuestros Productos</h4>
           <p>Encuentra los pares de cartas con el mismo producto Green Choice. Mientras más rápido los encuentras y con
-            menos errores más puntos ganas. 😊</p>
+            menos errores más puntos ganas. 🤑</p>
           <button id="startGameButton">Jugar</button>
         </div>
       </div>
@@ -76,9 +77,10 @@
     <div id="Round2InstructionsModal" class="modal">
       <div class="modal-svg-container">
         <div class="content-inside-modal">
-          <h2>¿Cómo Jugar?</h2>
-          <p>Nivel 2: ¿Cómo se usan</p>
-          <p>Encuentra el producto de limpieza Green Choice y combínalo con su área o uso específico de limpieza.
+          <h3 class="como-jugar">¿Cómo Jugar?</h3>
+          <h4 id="como-usar">Nivel 2: ¿Cómo se usan?</h4>
+          <p id="nivel-2-paragraph">Encuentra el producto de limpieza Green Choice y combínalo con su área o uso
+            específico de limpieza.
             Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑;</p>
           <button id="round2ContinueBtn">Jugar</button>
         </div>
@@ -92,7 +94,7 @@
           <img src="./images/Menu/yay.png" alt="yay-image">
           <h4> <span id="gameLevel"></span> </h4>
           <p id="tus-puntos">Tus Puntos: <span id="roundOneScore"></span></p>
-          <p>
+          <p id="nivel-1-complete">
             Ya estás participando para ganar uno de nuestros
             premios semanales. ¡Continúa jugando!
           </p>
@@ -100,13 +102,15 @@
         </div>
       </div>
     </div>
+    <!-- Round 2 Score Modal -->
     <div id="FinalRoundCompletionModal" class="modal">
       <div class="modal-svg-container">
         <div class="content-inside-modal">
           <img src="./images/Menu/yay.png" alt="yay-image">
-          <h4>NIVEL 2 COMPLETADO</h4>
-          <p>Tus Puntos: <span id="round3CompletionPoints"></span></p>
-          <p>¡Felicidades! 👏 Completaste todos los niveles. Revisa en qué lugar quedaste entre los expertos de limpieza
+          <h4 id="nivel-completado">NIVEL 2 COMPLETADO</h4>
+          <p id="tus-puntos-finales">Tus Puntos: <span id="round3CompletionPoints"></span></p>
+          <p id="nivel-2-complete">¡Felicidades! 🙌 Completaste todos los niveles. Revisa en qué lugar quedaste entre
+            los expertos de limpieza
             sostenible.</p>
           <button id="viewLeaderboardBtn">Ver Leaderboard</button>
         </div>

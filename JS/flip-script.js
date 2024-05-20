@@ -68,6 +68,7 @@ var emailInput = document.getElementById("email");
 document.addEventListener("DOMContentLoaded", function () {
   showWelcomeMessage();
   // displayGameInstructionsModal();
+  // displayRound2InstructionsModal();
   // displayfinalRoundCompletionModal();
   // displayRoundScoreModal();
   // showSignInModal();

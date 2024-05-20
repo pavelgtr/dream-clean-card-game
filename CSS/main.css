@@ -153,6 +153,15 @@ body {
   margin: 200px auto;
 }
 
+#welcome-paragraph {
+  padding-top: 20px;
+  font-size: 16px;
+}
+
+#welcomeContinue {
+  color: white;
+}
+
 .reglas-svg-container {
   width: 540px;
   height: 700px;
@@ -192,7 +201,7 @@ body {
   letter-spacing: 4px;
   text-align: center;
   line-height: 30px;
-  padding-left: 10px;
+  padding-left: 30px;
 }
 
 #FullInstructionsModal h3 {
@@ -207,7 +216,13 @@ body {
 }
 
 #inicia-title {
-  margin-top: 30px;
+  margin-top: 40px;
+  font-family: "Gotham-Book";
+  font-size: 26px;
+  color: #00adbb;
+  letter-spacing: 4px;
+  text-align: center;
+  line-height: 30px;
 }
 
 #continue {
@@ -227,7 +242,8 @@ body {
   }
 }
 
-#tus-puntos {
+#tus-puntos,
+#tus-puntos-finales {
   font-family: "Gotham-Book";
   color: #00adbb;
   text-align: center;
@@ -235,28 +251,57 @@ body {
   letter-spacing: 2px;
   text-align: center;
   line-height: 30px;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+#nextRoundButton,
+#viewLeaderboardBtn {
+  color: white;
+  padding: 0;
+  font-family: "Gotham-Book";
+  margin: px auto !important;
 }
 
 #gameLevel {
   margin: 0;
 }
 
-#roundOneScore {
+#roundOneScore,
+#round3CompletionPoints {
   font-family: "Gotham-Book";
   color: #8d8b8b;
 }
 .modal-svg-container p {
   font-family: "Gotham-Book";
-  font-size: 16px;
+  font-size: 18px;
   color: #898989;
   letter-spacing: 0.26px;
   text-align: center;
   line-height: 30px;
   width: 428px;
+  /* border: 2px solid red; */
+}
+
+#nivel-1-complete,
+#nivel-2-complete {
+  font-size: 16px;
 }
 
 .modal-svg-container button {
+  background: #f1636e;
+  border-radius: 24px;
+  font-size: 22px;
+  letter-spacing: 0.69px;
+  text-align: center;
+  width: 221px;
+  height: 54px;
+  border: none;
+  font-family: "Montserrat-Regular", "Arial", sans-serif;
+  margin: 20px auto;
+  color: white;
+}
+
+#startGameButton {
   background: #f1636e;
   border-radius: 24px;
   font-size: 22px;
@@ -267,7 +312,7 @@ body {
   height: 54px;
   border: none;
   font-family: "Montserrat-Regular", "Arial", sans-serif;
-  margin: 5px auto;
+  margin: 30px auto;
 }
 
 .reglas-svg-container button {
@@ -284,13 +329,23 @@ body {
   margin: 30px auto 15px;
 }
 
+#round2ContinueBtn {
+  color: white;
+}
+
+#nivel-2-paragraph {
+  padding-top: 0;
+}
+
 .score-svg-container {
   background-image: url("../images/Menu/final-modal.svg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   padding-top: 60px;
-  box-sizing: border-box;
+  box-sizing: content-box;
   margin: 200px auto;
+  width: 540px;
+  height: 743px;
 }
 
 #leaderboard-title {
@@ -300,6 +355,9 @@ body {
   letter-spacing: 4px;
   text-align: center;
   line-height: 30px;
+  width: 458px;
+  padding-top: 40px;
+  padding-bottom: 10px;
 }
 
 #ScoreBoardModal p {
@@ -311,20 +369,14 @@ body {
   line-height: 30px;
   width: 418px;
   margin-left: 20px;
-  /* margin: 20px; */
-  /* padding: 0 5px; */
-  /* border: 2px solid red; */
-}
-
-#leaderboardTable,
-#currentPlayerResultTable {
-  width: 450px;
-  padding: 5px 30px;
+  padding-bottom: 10px;
 }
 
 #leaderboardTable,
 #currentPlayerResultTable {
   border-top: 3px solid #e5e4e4;
+  width: 380px;
+  padding: 5px;
 }
 
 #leaderboardTable:before {
@@ -350,9 +402,10 @@ body {
 #footerTitle {
   font-size: 18px;
   color: #9a9a9a;
-  /* margin-top: 10px; */
+  margin-top: 10px;
   font-family: "Helvetica-Bold";
-  width: 350px;
+  width: 420px;
+  padding-bottom: 10px;
 }
 
 #currentPlayerResultTable .nickname,
@@ -394,7 +447,7 @@ body {
   padding-left: 30px;
 }
 .modal-svg-container img {
-  width: 228px;
+  width: 200px;
   height: auto;
   margin: 0 auto;
 }
@@ -462,15 +515,36 @@ h3 {
   line-height: 30px;
   margin: 20px auto;
 }
+
+.como-jugar {
+  font-family: "Gotham-Book";
+  font-size: 26px;
+  color: #00adbb;
+  letter-spacing: 4px;
+  text-align: center;
+  line-height: 30px;
+}
+
+#conoce,
+#como-usar {
+  font-family: "Gotham-Book";
+  color: #00adbb;
+  text-align: center;
+  line-height: 22px;
+  margin: 10px 0 2px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: 500;
+  padding-bottom: 5px;
+}
 .modal h4 {
   font-family: "Gotham-Book";
-  /* font-size: 18px; */
+  font-size: 18px;
   color: #00adbb;
   text-align: center;
   line-height: 30px;
-  margin: 20px 0 2px;
-  font-size: 26px;
-  letter-spacing: 4px;
+  /* font-size: 26px; */
+  /* letter-spacing: 4px; */
   text-align: center;
   line-height: 30px;
 }
@@ -505,137 +579,6 @@ h3 {
   display: flex;
   flex-direction: column;
 }
-
-/* --------------------------------- modals mobile --------------------------------- */
-
-/* @media screen and (max-width: 950px) {
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-
-  .modal-svg-container {
-    width: 90%;
-    height: auto;
-    background-image: url("../images/Menu/Modal.svg");
-    background-size: 100% 100%;
-    padding-top: 10%;
-    box-sizing: border-box;
-    margin: 10% auto;
-  }
-
-  .reglas-svg-container {
-    width: 90%;
-    height: 70vh;
-    background-image: url("../images/Menu/final-modal.svg");
-    background-size: 100% 100%;
-    padding-top: 5%;
-    box-sizing: border-box;
-    margin: 10% auto;
-    overflow-y: auto;
-  }
-
-  .instructions-content {
-    width: 90%;
-    height: 50vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0 5%;
-    box-sizing: border-box;
-  }
-
-  .modal-svg-container p {
-    width: 90%;
-    margin-top: 10px;
-    font-size: 12px;
-  }
-
-  .modal-svg-container button,
-  .reglas-svg-container button {
-    width: 90%;
-    margin: 30px auto 15px;
-  }
-
-  .score-svg-container {
-    width: 90%;
-    height: 70vh;
-    background-image: url("../images/Menu/final-modal.svg");
-    background-size: 100% 100%;
-    padding-top: 10%;
-    box-sizing: border-box;
-    margin: 10% auto;
-  }
-  .modal-svg-container img {
-    width: 50%;
-  }
-
-  #leaderboard-title {
-    width: 90%;
-  }
-
-  #ScoreBoardModal p {
-    width: 90%;
-    margin: 20px;
-  }
-
-  #leaderboardTable,
-  #currentPlayerResultTable {
-    width: 90%;
-    padding: 20px;
-  }
-
-  #restartGameButton {
-    width: 90%;
-  }
-
-  #modal-text-form-button {
-    width: 90%;
-    padding-left: 5%;
-  }
-
-  .modal-flow {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  #another-color {
-    width: 90%;
-  }
-
-  .blue-circle {
-    margin-right: 5px;
-  }
-
-  .leaderboard-row {
-    margin-bottom: 5px;
-  }
-
-  .modal h4 {
-    width: 90%;
-  }
-
-  .input-wrapper {
-    width: 90%;
-    height: 50px;
-    padding-left: 5px;
-  }
-
-  .input-wrapper input {
-    font-size: 14px;
-  }
-
-  #signinForm {
-    margin-top: 30px;
-  }
-} */
 
 /* ---------------------------------Header Styles --------------------------------- */
 
@@ -754,14 +697,14 @@ body {
 
 .game-wrapper {
   max-width: 100%;
-  margin: 0 auto 50px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     margin: 0 auto 40px;
-  }
+  } */
 }
 
 /* --------------------------------- Cards --------------------------------- */
@@ -771,14 +714,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   width: 720px;
   height: 534px;
-  margin: 60px auto 20px;
-
-  @media screen and (max-width: 950px) {
-    width: 330px;
-    height: 411px;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 20px auto 20px;
-  }
+  margin: auto;
 }
 
 /* target modal headings  */
@@ -800,10 +736,10 @@ h2 {
   height: 160px;
 
   border-radius: 16px;
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     width: 100px;
     height: 100px;
-  }
+  } */
 }
 
 .card__inner {
@@ -854,9 +790,9 @@ h2 {
   overflow: visible;
 } */
 .card__face--front img {
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     width: 110%;
-  }
+  } */
 }
 
 .card__face--back {
@@ -898,10 +834,10 @@ h2 {
 
   object-fit: cover;
 
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     width: 100px;
     height: 100px;
-  }
+  } */
 }
 
 .card__body {
@@ -920,12 +856,12 @@ h2 {
   width: 715px;
   height: 60px;
 
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     width: 330px;
     height: 60px;
     margin: 20px auto;
     padding: 0 10px;
-  }
+  } */
 }
 .status-item {
   width: 163px;
@@ -940,11 +876,11 @@ h2 {
   font-size: 32px;
   font-family: "Montserrat-Regular", "Open Sans", sans-serif;
 
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     width: 160px;
     height: 60px;
     padding-right: 10px;
-  }
+  } */
 }
 #timer {
   background-color: #5fc6cc;
@@ -979,8 +915,9 @@ h2 {
 footer {
   margin-top: auto;
   width: 100%;
-  padding: 10px 0;
+
   background-color: #66cccc;
+  /* max-height: 203px; */
 }
 
 .footer-banner {
@@ -994,8 +931,8 @@ footer {
 .footer-content {
   display: block;
   width: 100%;
-  padding: 2% 6%;
-  padding-bottom: 4rem;
+  padding: 1% 6% 2%;
+  /* padding-bottom: 4rem; */
   margin-left: auto;
   margin-right: auto;
 }
