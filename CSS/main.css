@@ -129,7 +129,6 @@ body {
 /* --------------------------------- MODAL --------------------------------- */
 
 .modal {
-  /* commenting out for placeholder to be visible  */
   display: none;
   position: fixed;
   z-index: 1;
@@ -157,6 +156,7 @@ body {
     background-size: 100% 100%;
     width: 311px;
     height: 532px;
+    margin: 120px auto;
   }
 }
 
@@ -209,16 +209,30 @@ body {
   box-sizing: border-box;
   margin: 100px auto;
   overflow-y: auto;
+
+  @media screen and (max-width: 950px) {
+    background-image: url("../images/mobile/Modal-background.png");
+    background-size: 100% 100%;
+    width: 311px;
+    padding-top: 50px;
+    height: 554px;
+    margin: 120px auto;
+  }
 }
 
 .instructions-content {
-  width: 458px;
+  width: 500px;
   height: 380px; /* Adjust height as needed */
   overflow-y: auto;
   overflow-x: hidden; /* Prevent horizontal scrolling */
-  width: 500px;
   padding: 0 20px; /* Add padding if needed */
   box-sizing: border-box;
+
+  @media screen and (max-width: 950px) {
+    width: 227px; /* Ensure full width on mobile */
+    height: 227px;
+    padding: 0 10px;
+  }
 }
 
 .instructions-content p {
@@ -226,9 +240,16 @@ body {
   font-size: 16px;
   color: #4a4a4a;
   text-align: center;
-  width: 450px;
+  width: 100%; /* Full width on mobile */
   margin-top: 10px;
   padding: 0 25px;
+
+  @media screen and (max-width: 950px) {
+    width: 100%;
+    font-size: 16px;
+    margin: 0 auto;
+    padding: 0;
+  }
 }
 
 #FullInstructionsModal h2 {
@@ -240,6 +261,14 @@ body {
   text-align: center;
   line-height: 30px;
   padding-left: 30px;
+
+  @media screen and (max-width: 950px) {
+    width: 60%;
+    height: auto; /* Adjust to content height */
+    font-size: 18px;
+    margin: 20px auto;
+    padding: 0;
+  }
 }
 
 h2 {
@@ -251,6 +280,10 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
   margin: 20px auto;
   padding: 10px 0;
+
+  @media screen and (max-width: 950px) {
+    font-size: 2rem;
+  }
 }
 
 #FullInstructionsModal h3 {
@@ -262,6 +295,13 @@ h2 {
   text-align: center;
   line-height: 30px;
   margin-top: 15px;
+
+  @media screen and (max-width: 950px) {
+    width: 100%;
+    font-size: 16px;
+    margin: 15px auto;
+    padding: 0;
+  }
 }
 
 #inicia-title {
@@ -444,6 +484,14 @@ h2 {
   margin: 200px auto;
   width: 540px;
   height: 743px;
+
+  @media screen and (max-width: 950px) {
+    background-image: url("../images/mobile/leaderboard-mobile.png");
+    background-size: 100% 100%;
+    width: 311px;
+    height: 647px;
+    margin: 120px auto;
+  }
 }
 
 #leaderboard-title {
@@ -456,6 +504,12 @@ h2 {
   width: 458px;
   padding-top: 40px;
   padding-bottom: 10px;
+
+  @media screen and (max-width: 950px) {
+    width: 60%;
+    margin: 0 auto;
+    font-size: 22px;
+  }
 }
 
 #ScoreBoardModal p {
@@ -468,6 +522,14 @@ h2 {
   width: 418px;
   margin-left: 20px;
   padding-bottom: 10px;
+
+  @media screen and (max-width: 950px) {
+    width: 60%;
+    margin: 0 auto;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 25px;
+  }
 }
 
 #leaderboardTable,
@@ -475,6 +537,10 @@ h2 {
   border-top: 3px solid #e5e4e4;
   width: 380px;
   padding: 5px;
+
+  @media screen and (max-width: 950px) {
+    width: 233px;
+  }
 }
 
 #leaderboardTable:before {
@@ -487,6 +553,10 @@ h2 {
   top: -10px; /* Position the line above the table */
   left: 50%;
   transform: translateX(-50%); /* Center the line */
+
+  @media screen and (max-width: 950px) {
+    width: 233px;
+  }
 }
 
 #leaderboardTable img,
@@ -495,6 +565,11 @@ h2 {
   height: 40px;
   margin-right: 10px;
   vertical-align: middle;
+
+  @media screen and (max-width: 950px) {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 #footerTitle {
@@ -504,6 +579,11 @@ h2 {
   font-family: "Helvetica-Bold";
   width: 420px;
   padding-bottom: 10px;
+
+  @media screen and (max-width: 950px) {
+    width: 233px;
+    font-size: 16px;
+  }
 }
 
 #currentPlayerResultTable .nickname,
@@ -519,6 +599,10 @@ h2 {
   font-family: "Helvetica-Bold";
   font-size: 18px;
   color: #9a9a9a;
+
+  @media screen and (max-width: 950px) {
+    font-size: 16px;
+  }
 }
 
 #leaderboardTable td,
@@ -527,12 +611,20 @@ h2 {
   font-size: 18px;
   color: #9a9a9a;
   text-align: left;
+
+  @media screen and (max-width: 950px) {
+    font-size: 16px;
+  }
 }
 
 #leaderboardTable tbody,
 #currentPlayerResultTable tbody {
   width: 100%;
   /* border: 2px solid red; */
+
+  @media screen and (max-width: 950px) {
+    width: 80%;
+  }
 }
 
 #third-cell {
@@ -556,6 +648,12 @@ h2 {
   width: 191px;
   height: 52.05px;
   border: none;
+
+  @media screen and (max-width: 950px) {
+    width: 120px;
+    height: 43px;
+    margin: 20px auto;
+  }
 }
 #modal-text-form-button {
   display: flex;
@@ -589,14 +687,30 @@ h2 {
   text-align: center;
   line-height: 40px; /* This should match the height to vertically center the text */
   margin-right: 10px; /* Adjust this value to control the spacing between the circle and the nickname */
+
+  @media screen and (max-width: 950px) {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    line-height: 30px;
+  }
 }
 
 .leaderboard-row {
   margin-bottom: 10px; /* Add spacing between rows */
+
+  @media screen and (max-width: 950px) {
+    width: 233px;
+    margin: 0 auto;
+  }
 }
 
 .leaderboard-row td {
   padding: 5px 0; /* Add padding inside the cells for better spacing */
+
+  @media screen and (max-width: 950px) {
+    padding: 1px 0;
+  }
 }
 
 h3 {
@@ -804,13 +918,14 @@ h1 {
 .mobile-menu {
   display: none;
   flex-direction: column;
-  background-color: #fff;
   position: absolute;
   top: 100px; /* Adjust based on your header height */
   left: 0;
   right: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  overflow: hidden; /* Ensure items don't overflow */
+  background-color: var(--dream-clean-green);
 }
 
 .mobile-menu a {
@@ -819,8 +934,17 @@ h1 {
   text-align: center;
   color: #949292; /* Dark grey color for text */
   font-family: "Lato-regular";
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
+  color: #ffffff;
+}
+
+.mobile-menu a:last-child {
+  border-bottom: none; /* Remove border from the last item */
+}
+
+.mobile-menu a:hover {
+  background-color: var(--primary); /* Light grey background on hover */
 }
 
 @media screen and (max-width: 950px) {
@@ -868,10 +992,11 @@ body {
   margin: 15px auto;
   place-items: center; /* Center items within their grid cells */
   gap: 15px;
+
   @media screen and (max-width: 950px) {
     width: 311px;
     height: 406px;
-    margin: 20px auto;
+    margin: 50px auto;
     padding: 0 10px;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center; /* Center horizontally */

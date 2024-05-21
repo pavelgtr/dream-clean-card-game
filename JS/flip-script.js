@@ -8,6 +8,7 @@ const gameState = {
   timer: null,
   secondsElapsed: 0,
   errorCount: 0,
+  consecutiveErrors: 0,
   scoreCount: 0,
   matchedPairsCount: 0,
   gameLevel: 1,
@@ -67,6 +68,8 @@ var emailInput = document.getElementById("email");
 
 document.addEventListener("DOMContentLoaded", function () {
   showWelcomeMessage();
+
+  // TESTING calls below to be removed in final version
   // displayGameInstructionsModal();
   // displayRound2InstructionsModal();
   // displayfinalRoundCompletionModal();
@@ -90,83 +93,87 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   const scoreboardModal = document.getElementById("ScoreBoardModal");
 
-  // function disableScrolling() {
-  //   document.body.style.overflow = "hidden";
-  // }
+  if (hamburgerMenu && mobileMenu) {
+    hamburgerMenu.addEventListener("click", function () {
+      mobileMenu.style.display =
+        mobileMenu.style.display === "flex" ? "none" : "flex";
+    });
+  }
 
-  // function enableScrolling() {
-  //   document.body.style.overflow = "auto";
-  // }
-  hamburgerMenu.addEventListener("click", function () {
-    mobileMenu.style.display =
-      mobileMenu.style.display === "flex" ? "none" : "flex";
-  });
+  if (mobileRulesLink) {
+    mobileRulesLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      document.getElementById("FullInstructionsModal").style.display = "block";
+      mobileMenu.style.display = "none"; // Close the mobile menu
+      pauseTimer();
+    });
+  }
 
-  mobileRulesLink.addEventListener("click", function (event) {
-    event.preventDefault();
-    document.getElementById("FullInstructionsModal").style.display = "block";
-    mobileMenu.style.display = "none"; // Close the mobile menu
-    pauseTimer();
-  });
-
-  mobileLeaderboardLink.addEventListener("click", function (event) {
-    event.preventDefault();
-    displayScoreBoardModal();
-    mobileMenu.style.display = "none"; // Close the mobile menu
-    pauseTimer();
-  });
+  if (mobileLeaderboardLink) {
+    mobileLeaderboardLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      displayScoreBoardModal();
+      mobileMenu.style.display = "none"; // Close the mobile menu
+      pauseTimer();
+    });
+  }
 
   function setActiveLink(event) {
-    // Remove the active class from all links
     navLinks.forEach((link) => {
       link.classList.remove("active");
     });
-    // Add the active class to the clicked link
     event.currentTarget.classList.add("active");
   }
 
   function highlightJuegoLink() {
-    // Remove the active class from all links
     navLinks.forEach((link) => {
       link.classList.remove("active");
     });
-    // Add the active class to the "Juego" link
-    document
-      .querySelector(".navigation-elements a[href='index.html']")
-      .classList.add("active");
+    const juegoLink = document.querySelector(
+      ".navigation-elements a[href='index.html']"
+    );
+    if (juegoLink) {
+      juegoLink.classList.add("active");
+    }
   }
 
-  leaderboardLink.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior
-    displayScoreBoardModal(); // Call the function to display the scoreboard modal
-    setActiveLink(event);
-    pauseTimer(); // Pause the game when displaying the leaderboard modal
-  });
-
-  rulesLink.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior
-    document.getElementById("FullInstructionsModal").style.display = "block";
-    setActiveLink(event);
-    // disableScrolling();
-    pauseTimer(); // Pause the game when displaying the rules modal
-  });
-
-  closeInstructionsModal.addEventListener("click", function () {
-    document.getElementById("FullInstructionsModal").style.display = "none";
-    highlightJuegoLink(); // Highlight the "Juego" link
-    resumeTimer(); // Resume the game when closing the rules modal
-    // enableScrolling();
-  });
-
-  scoreboardModal
-    .querySelector(".close-button")
-    .addEventListener("click", function () {
-      scoreboardModal.style.display = "none";
-      highlightJuegoLink(); // Highlight the "Juego" link
-      resumeTimer(); // Resume the game when closing the scoreboard modal
+  if (leaderboardLink) {
+    leaderboardLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      displayScoreBoardModal();
+      setActiveLink(event);
+      pauseTimer();
     });
+  }
 
-  // Set the active class on the current page link on page load
+  if (rulesLink) {
+    rulesLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      document.getElementById("FullInstructionsModal").style.display = "block";
+      setActiveLink(event);
+      pauseTimer();
+    });
+  }
+
+  if (closeInstructionsModal) {
+    closeInstructionsModal.addEventListener("click", function () {
+      document.getElementById("FullInstructionsModal").style.display = "none";
+      highlightJuegoLink();
+      resumeTimer();
+    });
+  }
+
+  if (scoreboardModal) {
+    const closeButton = scoreboardModal.querySelector(".close-button");
+    if (closeButton) {
+      closeButton.addEventListener("click", function () {
+        scoreboardModal.style.display = "none";
+        highlightJuegoLink();
+        resumeTimer();
+      });
+    }
+  }
+
   navLinks.forEach((link) => {
     if (link.href === window.location.href) {
       link.classList.add("active");
@@ -214,7 +221,7 @@ function showWelcomeMessage() {
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
-  shuffleArray(imagesArray);
+  // shuffleArray(imagesArray);
   container.innerHTML = imagesArray
     .map(
       (imageSrc, index) => `
@@ -504,6 +511,7 @@ function checkForMatch() {
       winSound.play();
     }, 1000);
     checkEndOfRound();
+    gameState.consecutiveErrors = 0; // Reset consecutive errors
   } else {
     unflipCards();
   }
@@ -540,7 +548,13 @@ function incrementScore(speedBonus = 0) {
 
 function incrementError() {
   gameState.errorCount++;
-  const deduction = 1 + (gameState.errorCount - 1) * 2; // Increase deduction by 2 for each consecutive error
+  gameState.consecutiveErrors++;
+
+  let deduction = 1; // Base deduction
+  if (gameState.consecutiveErrors > 1) {
+    deduction += (gameState.consecutiveErrors - 1) * 2; // Increase deduction by 2 for each consecutive error
+  }
+
   gameState.scoreCount = Math.max(0, gameState.scoreCount - deduction);
   scoreDisplay.textContent = gameState.scoreCount;
 }
@@ -824,6 +838,110 @@ function displayScoreBoardModal() {
   restartGameButton.addEventListener("click", restartGameHandler);
 }
 
+function restartGameHandler() {
+  if (gameState.finalResultsDisplayed) {
+    // Restart the game only if the player has completed the game
+    resetGameState();
+    startGame(); // Assuming startGame() is set up to reinitialize the game.
+  } else {
+    // Resume the game if it was paused
+    resumeTimer();
+  }
+  const scoreboardModal = document.getElementById("ScoreBoardModal");
+  scoreboardModal.style.display = "none"; // Hide the modal after starting/resuming the game
+  highlightJuegoLink(); // Highlight the "Juego" link
+}
+
+// -------------------------------------- CRUD --------------------------------------
+function submitScore(nickname, email, finalScore) {
+  $.ajax({
+    // Use jQuery to make an AJAX request
+    url: "PHP/submit_score.php", // Path relative to your index.html
+    method: "POST", // Use POST method
+    data: {
+      // Pass the player data to the server
+      nickname: nickname,
+      email: email,
+      score: finalScore,
+      game_level: gameState.gameLevel,
+      total_time: gameState.totalTime,
+    },
+    success: function (response) {
+      // Handle the success response from the server
+      console.log(response); // Log success message from PHP
+      // Optionally, update the UI or display a confirmation to the user
+      displayScoreBoardModal();
+    },
+    error: function (xhr, status, error) {
+      console.error("Error submitting score:", error);
+      // Handle errors appropriately (e.g., display an error message)
+    },
+  });
+}
+
+// <-------------------------------------- RESET GAME STATE -------------------------------------->
+
+function resetGameState() {
+  gameState.hasFlippedCard = false;
+  gameState.flippedCard1 = null;
+  gameState.flippedCard2 = null;
+  gameState.gameBoardLocked = false;
+  gameState.timer = null;
+  gameState.secondsElapsed = 0;
+  gameState.errorCount = 0;
+  gameState.scoreCount = 0;
+  gameState.matchedPairsCount = 0;
+  gameState.gameLevel = 1;
+  gameState.finalResultsDisplayed = false;
+  gameState.scoreSubmitted = false;
+  gameState.totalTime = 0;
+  gameState.elapsedTime = 0;
+  gameState.startTime = null;
+  gameState.currentTime = null;
+
+  // Assuming there is a function to re-create cards or reset the UI
+  createCards(levelOne); // This should be tailored to your game's logic
+}
+// < ---------------------------------------------- ARRAYS ---------------------------------------------- >
+
+const levelOne = [
+  "./images/levelOne/All Purpose Cleaner-1.png",
+  "./images/levelOne/All Purpose Cleaner.png",
+  "./images/levelOne/Bathroom Cleaner-1.png",
+  "./images/levelOne/Bathroom Cleaner.png",
+  "./images/levelOne/Detergent-1.png",
+  "./images/levelOne/Detergent.png",
+  "./images/levelOne/Dishwashing Liquid-1.png",
+  "./images/levelOne/Dishwashing Liquid.png",
+  "./images/levelOne/Glass Cleaner-1.png",
+  "./images/levelOne/Glass Cleaner.png",
+  "./images/levelOne/Neutral Floor Cleaner-1.png",
+  "./images/levelOne/Neutral Floor Cleaner.png",
+];
+
+const levelTwo = [
+  "./images/levelTwo/All purpose cleaner-1.png",
+  "./images/levelTwo/All purpose cleaner.png",
+  "./images/levelTwo/Bathroom Cleaner-1.png",
+  "./images/levelTwo/Bathroom Cleaner.png",
+  "./images/levelTwo/Detergent-1.png",
+  "./images/levelTwo/Detergent.png",
+  "./images/levelTwo/Dishwashing Liquid-1.png",
+  "./images/levelTwo/Dishwashing Liquid.png",
+  "./images/levelTwo/Glass Cleaner-1.png",
+  "./images/levelTwo/Glass Cleaner.png",
+  "./images/levelTwo/Neutral Floor Cleaner-1.png",
+  "./images/levelTwo/Neutral Floor Cleaner.png",
+];
+
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
+// -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
 // -------------------------------------- SCOREBOARD MODAL STAIC FOR TESTING --------------------------------------
 
 // function displayScoreBoardModal() {
@@ -892,119 +1010,3 @@ function displayScoreBoardModal() {
 //     scoreboardModal.style.display = "none";
 //   };
 // }
-
-function restartGameHandler() {
-  if (gameState.finalResultsDisplayed) {
-    // Restart the game only if the player has completed the game
-    resetGameState();
-    startGame(); // Assuming startGame() is set up to reinitialize the game.
-  } else {
-    // Resume the game if it was paused
-    resumeTimer();
-  }
-  const scoreboardModal = document.getElementById("ScoreBoardModal");
-  scoreboardModal.style.display = "none"; // Hide the modal after starting/resuming the game
-  highlightJuegoLink(); // Highlight the "Juego" link
-}
-
-// -------------------------------------- CRUD --------------------------------------
-function submitScore(nickname, email, finalScore) {
-  $.ajax({
-    // Use jQuery to make an AJAX request
-    url: "PHP/submit_score.php", // Path relative to your index.html
-    method: "POST", // Use POST method
-    data: {
-      // Pass the player data to the server
-      nickname: nickname,
-      email: email,
-      score: finalScore,
-      game_level: gameState.gameLevel,
-      total_time: gameState.totalTime,
-    },
-    success: function (response) {
-      // Handle the success response from the server
-      console.log(response); // Log success message from PHP
-      // Optionally, update the UI or display a confirmation to the user
-      displayScoreBoardModal();
-    },
-    error: function (xhr, status, error) {
-      console.error("Error submitting score:", error);
-      // Handle errors appropriately (e.g., display an error message)
-    },
-  });
-}
-
-// <-------------------------------------- RESET GAME STATE -------------------------------------->
-
-function resetGameState() {
-  gameState.hasFlippedCard = false;
-  gameState.flippedCard1 = null;
-  gameState.flippedCard2 = null;
-  gameState.gameBoardLocked = false;
-  gameState.timer = null;
-  gameState.secondsElapsed = 0;
-  gameState.errorCount = 0;
-  gameState.scoreCount = 0;
-  gameState.matchedPairsCount = 0;
-  gameState.gameLevel = 1;
-  gameState.finalResultsDisplayed = false;
-  gameState.scoreSubmitted = false;
-  gameState.totalTime = 0;
-  gameState.elapsedTime = 0;
-  gameState.startTime = null;
-  gameState.currentTime = null;
-
-  // Assuming there is a function to re-create cards or reset the UI
-  createCards(levelOne); // This should be tailored to your game's logic
-}
-// < ---------------------------------------------- ARRAYS ---------------------------------------------- >
-
-const levelOne = [
-  // "./images/levelOne/a.jpg",
-  // "./images/levelOne/a-1.jpg",
-  // "./images/levelOne/b.jpg",
-  // "./images/levelOne/b-1.jpg",
-  // "./images/levelOne/c.jpg",
-  // "./images/levelOne/c-1.jpg",
-  // "./images/levelOne/d.jpg",
-  // "./images/levelOne/d-1.jpg",
-  "./images/levelOne/All Purpose Cleaner-1.png",
-  "./images/levelOne/All Purpose Cleaner.png",
-  "./images/levelOne/Bathroom Cleaner-1.png",
-  "./images/levelOne/Bathroom Cleaner.png",
-  "./images/levelOne/Detergent-1.png",
-  "./images/levelOne/Detergent.png",
-  "./images/levelOne/Dishwashing Liquid-1.png",
-  "./images/levelOne/Dishwashing Liquid.png",
-  "./images/levelOne/Glass Cleaner-1.png",
-  "./images/levelOne/Glass Cleaner.png",
-  "./images/levelOne/Neutral Floor Cleaner-1.png",
-  "./images/levelOne/Neutral Floor Cleaner.png",
-];
-
-const levelTwo = [
-  // "./images/levelTwo/a.jpg",
-  // "./images/levelTwo/a-1.jpg",
-  // "./images/levelTwo/b.jpg",
-  // "./images/levelTwo/b-1.jpg",
-  // "./images/levelTwo/c.jpg",
-  // "./images/levelTwo/c-1.jpg",
-  // "./images/levelTwo/d.jpg",
-  // "./images/levelTwo/d-1.jpg",
-  // "./images/levelTwo/e.jpg",
-  // "./images/levelTwo/e-1.jpg",
-  // "./images/levelTwo/f.jpg",
-  // "./images/levelTwo/f-1.jpg",
-  "./images/levelTwo/All purpose cleaner-1.png",
-  "./images/levelTwo/All purpose cleaner.png",
-  "./images/levelTwo/Bathroom Cleaner-1.png",
-  "./images/levelTwo/Bathroom Cleaner.png",
-  "./images/levelTwo/Detergent-1.png",
-  "./images/levelTwo/Detergent.png",
-  "./images/levelTwo/Dishwashing Liquid-1.png",
-  "./images/levelTwo/Dishwashing Liquid.png",
-  "./images/levelTwo/Glass Cleaner-1.png",
-  "./images/levelTwo/Glass Cleaner.png",
-  "./images/levelTwo/Neutral Floor Cleaner-1.png",
-  "./images/levelTwo/Neutral Floor Cleaner.png",
-];
