@@ -55,14 +55,14 @@ const soundEffects = {
   currentLoseIndex: 0,
 };
 
-const timerDisplay = document.querySelector("#timer span");
-const scoreDisplay = document.querySelector("#score span");
+let timerDisplay = document.querySelector("#timer span");
+let scoreDisplay = document.querySelector("#score span");
 
 let form = document.getElementById("signinForm");
 
 let nickname = document.getElementById("nickname");
 
-var emailInput = document.getElementById("email");
+var email = document.getElementById("email");
 
 // -------------------------------------- LOAD PAGE  --------------------------------------
 
@@ -79,107 +79,139 @@ document.addEventListener("DOMContentLoaded", function () {
   // displayScoreBoardModal();
   // showFullInstructionsModal();
 
-  const hamburgerMenu = document.querySelector(".hamburger-menu");
-  const mobileMenu = document.querySelector(".mobile-menu");
-  const leaderboardLink = document.getElementById("leaderboardLink");
-  const rulesLink = document.getElementById("rulesLink");
-  const navLinks = document.querySelectorAll(".navigation-elements a");
-  const mobileRulesLink = document.getElementById("mobile-rulesLink");
-  const mobileLeaderboardLink = document.getElementById(
-    "mobile-leaderboardLink"
-  );
-  const closeInstructionsModal = document.getElementById(
-    "closeInstructionsModal"
-  );
-  const scoreboardModal = document.getElementById("ScoreBoardModal");
+  // Initialize the necessary elements
+  const elements = {
+    hamburgerMenu: document.querySelector(".hamburger-menu"),
+    mobileMenu: document.querySelector(".mobile-menu"),
+    leaderboardLink: document.getElementById("leaderboardLink"),
+    rulesLink: document.getElementById("rulesLink"),
+    navLinks: document.querySelectorAll(".navigation-elements a"),
+    mobileRulesLink: document.getElementById("mobile-rulesLink"),
+    mobileLeaderboardLink: document.getElementById("mobile-leaderboardLink"),
+    closeInstructionsModal: document.getElementById("closeInstructionsModal"),
+    scoreboardModal: document.getElementById("ScoreBoardModal"),
+  };
 
-  if (hamburgerMenu && mobileMenu) {
-    hamburgerMenu.addEventListener("click", function () {
-      mobileMenu.style.display =
-        mobileMenu.style.display === "flex" ? "none" : "flex";
-    });
+  // Add event listeners
+  addEventListeners(elements);
+  setActiveLinkOnLoad(elements.navLinks);
+});
+
+function addEventListeners(elements) {
+  if (elements.hamburgerMenu && elements.mobileMenu) {
+    elements.hamburgerMenu.addEventListener("click", toggleMobileMenu);
   }
 
-  if (mobileRulesLink) {
-    mobileRulesLink.addEventListener("click", function (event) {
+  if (elements.mobileRulesLink) {
+    elements.mobileRulesLink.addEventListener("click", function (event) {
       event.preventDefault();
-      document.getElementById("FullInstructionsModal").style.display = "block";
-      mobileMenu.style.display = "none"; // Close the mobile menu
+      showModal("FullInstructionsModal");
+      elements.mobileMenu.style.display = "none"; // Close the mobile menu
       pauseTimer();
     });
   }
 
-  if (mobileLeaderboardLink) {
-    mobileLeaderboardLink.addEventListener("click", function (event) {
+  if (elements.mobileLeaderboardLink) {
+    elements.mobileLeaderboardLink.addEventListener("click", function (event) {
       event.preventDefault();
       displayScoreBoardModal();
-      mobileMenu.style.display = "none"; // Close the mobile menu
+      elements.mobileMenu.style.display = "none"; // Close the mobile menu
       pauseTimer();
     });
   }
 
-  function setActiveLink(event) {
-    navLinks.forEach((link) => {
-      link.classList.remove("active");
-    });
-    event.currentTarget.classList.add("active");
-  }
-
-  function highlightJuegoLink() {
-    navLinks.forEach((link) => {
-      link.classList.remove("active");
-    });
-    const juegoLink = document.querySelector(
-      ".navigation-elements a[href='index.html']"
-    );
-    if (juegoLink) {
-      juegoLink.classList.add("active");
-    }
-  }
-
-  if (leaderboardLink) {
-    leaderboardLink.addEventListener("click", function (event) {
+  if (elements.leaderboardLink) {
+    elements.leaderboardLink.addEventListener("click", function (event) {
       event.preventDefault();
       displayScoreBoardModal();
+      setActive;
       setActiveLink(event);
       pauseTimer();
     });
   }
 
-  if (rulesLink) {
-    rulesLink.addEventListener("click", function (event) {
+  if (elements.rulesLink) {
+    elements.rulesLink.addEventListener("click", function (event) {
       event.preventDefault();
-      document.getElementById("FullInstructionsModal").style.display = "block";
+      showModal("FullInstructionsModal");
       setActiveLink(event);
       pauseTimer();
     });
   }
 
-  if (closeInstructionsModal) {
-    closeInstructionsModal.addEventListener("click", function () {
-      document.getElementById("FullInstructionsModal").style.display = "none";
-      highlightJuegoLink();
+  if (elements.closeInstructionsModal) {
+    elements.closeInstructionsModal.addEventListener("click", function () {
+      closeModal("FullInstructionsModal");
+      highlightJuegoLink(elements.navLinks);
       resumeTimer();
     });
   }
 
-  if (scoreboardModal) {
-    const closeButton = scoreboardModal.querySelector(".close-button");
+  if (elements.scoreboardModal) {
+    const closeButton = elements.scoreboardModal.querySelector(".close-button");
     if (closeButton) {
       closeButton.addEventListener("click", function () {
-        scoreboardModal.style.display = "none";
-        highlightJuegoLink();
+        elements.scoreboardModal.style.display = "none";
+        highlightJuegoLink(elements.navLinks);
         resumeTimer();
       });
     }
   }
 
+  elements.navLinks.forEach((link) => {
+    link.addEventListener("click", setActiveLink);
+  });
+}
+
+function setActiveLink(event) {
+  const navLinks = document.querySelectorAll(".navigation-elements a");
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+  });
+  event.currentTarget.classList.add("active");
+}
+
+function highlightJuegoLink(navLinks) {
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+  });
+  const juegoLink = document.querySelector(
+    ".navigation-elements a[href='index.html']"
+  );
+  if (juegoLink) {
+    juegoLink.classList.add("active");
+  }
+}
+
+function setActiveLinkOnLoad(navLinks) {
   navLinks.forEach((link) => {
     if (link.href === window.location.href) {
       link.classList.add("active");
     }
   });
-});
+}
+
+function toggleMobileMenu() {
+  const mobileMenu = document.querySelector(".mobile-menu");
+  if (mobileMenu) {
+    mobileMenu.style.display =
+      mobileMenu.style.display === "flex" ? "none" : "flex";
+  }
+}
+
+function showModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "block";
+  }
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
 
 // Temporary function to call modal on page load for testing
 
@@ -194,7 +226,7 @@ function showSignInModal() {
   const signinModal = document.getElementById("signinModal");
   signinModal.style.display = "block";
 
-  document.getElementById("signinForm").onsubmit = function (event) {
+  form.onsubmit = function (event) {
     event.preventDefault();
     nickname = document.getElementById("nickname").value;
     email = document.getElementById("email").value;
@@ -350,7 +382,7 @@ function updateTimerDisplay(seconds) {
   const formattedTime = `${mins.toString().padStart(2, "0")}:${secs
     .toString()
     .padStart(2, "0")}`;
-  const timerDisplay = document.querySelector("#timer span");
+  // const timerDisplay = document.querySelector("#timer span");
   timerDisplay.textContent = formattedTime;
 }
 
@@ -446,37 +478,6 @@ function flipCard(event) {
   }
 }
 
-// function checkForMatch() {
-//   let baseName1 = gameState.flippedCard1
-//     .querySelector(".card__face--back img")
-//     .src.split("/")
-//     .pop()
-//     .replace(".jpg", "")
-//     .replace("-1", "");
-//   let baseName2 = gameState.flippedCard2
-//     .querySelector(".card__face--back img")
-//     .src.split("/")
-//     .pop()
-//     .replace(".jpg", "")
-//     .replace("-1", "");
-
-//   const isMatch = baseName1 === baseName2;
-
-//   if (isMatch) {
-//     disableCards();
-//     const speedBonus = calculateSpeedBonus();
-//     incrementScore(speedBonus);
-//     gameState.matchedPairsCount++; // Increment matched pairs count
-//     const winSound = getNextWinSound();
-//     setTimeout(() => {
-//       winSound.play();
-//     }, 1000);
-//     checkEndOfRound();
-//   } else {
-//     unflipCards();
-//   }
-// }
-
 function checkForMatch() {
   let baseName1 = gameState.flippedCard1
     .querySelector(".card__face--back img")
@@ -542,7 +543,7 @@ function disableCards() {
 function incrementScore(speedBonus = 0) {
   gameState.scoreCount += gameState.pointsPerMatch + speedBonus;
   // Update scoreDisplay to target the span for text content
-  const scoreDisplay = document.querySelector("#score span");
+  // const scoreDisplay = document.querySelector("#score span");
   scoreDisplay.textContent = gameState.scoreCount;
 }
 
