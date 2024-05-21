@@ -154,8 +154,8 @@ body {
   @media screen and (max-width: 950px) {
     background-image: url("../images/mobile/Modal-background.png");
     background-size: 100% 100%;
-    width: 311px;
-    height: 532px;
+    width: 335px;
+    height: 562px;
     margin: 120px auto;
   }
 }
@@ -174,19 +174,19 @@ body {
 
 #welcome-paragraph {
   padding-top: 20px;
-  font-size: 16px;
+  font-size: 18px;
 
   @media screen and (max-width: 950px) {
     font-family: "Gotham-Book";
-    font-size: 16px;
+    font-size: 18px;
     color: #4a4a4a;
     letter-spacing: 0.26px;
     text-align: center;
     line-height: 30px;
     width: 250px;
     height: 240px;
-
-    padding: 0 auto;
+    /* line-spacing: 36px; */
+    /* padding: 0 auto; */
   }
 }
 
@@ -196,7 +196,7 @@ body {
   @media screen and (max-width: 950px) {
     width: 120px;
     height: 33px;
-    margin: 20px auto;
+    margin: 40px auto;
   }
 }
 
@@ -221,7 +221,7 @@ body {
 }
 
 .instructions-content {
-  width: 500px;
+  width: 400px;
   height: 380px; /* Adjust height as needed */
   overflow-y: auto;
   overflow-x: hidden; /* Prevent horizontal scrolling */
@@ -358,17 +358,29 @@ h2 {
   }
 }
 
-#nextRoundButton,
-#viewLeaderboardBtn {
+#nextRoundButton {
   color: white;
   padding: 0;
   font-family: "Gotham-Book";
-  margin: 0px auto;
+  margin: 20px auto;
 
   @media screen and (max-width: 950px) {
     width: 180px;
     height: 43px;
     font-size: 18px;
+  }
+}
+#viewLeaderboardBtn {
+  color: white;
+  padding: 0;
+  font-family: "Gotham-Book";
+  margin: 10px auto 15px;
+
+  @media screen and (max-width: 950px) {
+    width: 180px;
+    height: 43px;
+    font-size: 18px;
+    margin: 5px auto 10px;
   }
 }
 
@@ -481,7 +493,7 @@ h2 {
   background-repeat: no-repeat;
   padding-top: 60px;
   box-sizing: content-box;
-  margin: 200px auto;
+  margin: 80px auto;
   width: 540px;
   height: 743px;
 
@@ -490,7 +502,7 @@ h2 {
     background-size: 100% 100%;
     width: 311px;
     height: 647px;
-    margin: 120px auto;
+    margin: 80px auto;
   }
 }
 
