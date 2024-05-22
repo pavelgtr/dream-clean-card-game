@@ -253,7 +253,7 @@ function showWelcomeMessage() {
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
-  shuffleArray(imagesArray);
+  // shuffleArray(imagesArray);
   container.innerHTML = imagesArray
     .map(
       (imageSrc, index) => `
@@ -835,8 +835,8 @@ function displayScoreBoardModal() {
 
   // Remove the existing event listener before adding a new one to prevent multiple listeners
   const restartGameButton = document.getElementById("restartGameButton");
-  restartGameButton.removeEventListener("click", restartGameHandler);
-  restartGameButton.addEventListener("click", restartGameHandler);
+  // restartGameButton.removeEventListener("click", restartGameHandler);
+  restartGameButton.addEventListener("click", restartGame);
 }
 
 function restartGameHandler() {
@@ -882,6 +882,10 @@ function submitScore(nickname, email, finalScore) {
 
 // <-------------------------------------- RESET GAME STATE -------------------------------------->
 
+function restartGame() {
+  location.reload(); // This will reload the page
+}
+
 function resetGameState() {
   gameState.hasFlippedCard = false;
   gameState.flippedCard1 = null;
@@ -901,7 +905,8 @@ function resetGameState() {
   gameState.currentTime = null;
 
   // Assuming there is a function to re-create cards or reset the UI
-  createCards(levelOne); // This should be tailored to your game's logic
+  // showWelcomeMessage(); // This should be tailored to your game's logic
+  createCards(levelOne); // Start with level one cards
 }
 // < ---------------------------------------------- ARRAYS ---------------------------------------------- >
 
