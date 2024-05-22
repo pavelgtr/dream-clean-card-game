@@ -253,7 +253,7 @@ function showWelcomeMessage() {
 
 function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
-  // shuffleArray(imagesArray);
+  shuffleArray(imagesArray);
   container.innerHTML = imagesArray
     .map(
       (imageSrc, index) => `
