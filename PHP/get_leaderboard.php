@@ -21,6 +21,8 @@ if ($result->num_rows > 0) {
     }
 }
 
+// Debugging output
+error_log("Leaderboard Data: " . print_r($leaderboardData, true));
 // Return as JSON
 echo json_encode($leaderboardData);
 
