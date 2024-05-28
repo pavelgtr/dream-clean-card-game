@@ -181,6 +181,7 @@ export function checkEndOfRound() {
   console.log("Elapsed time at this point:", gameState.elapsedTime, "seconds");
 
   if (gameState.matchedPairsCount === totalPairs) {
+    triggerConfetti();
     stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
     if (gameState.gameLevel < 2) {
@@ -193,6 +194,7 @@ export function checkEndOfRound() {
       }, 1000);
     } else {
       setTimeout(() => {
+        triggerConfetti();
         console.log("Transitioning to scoreboard...");
         displayfinalRoundCompletionModal();
       }, 1000);

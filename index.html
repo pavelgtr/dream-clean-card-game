@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Card Game</title>
   <link rel="preload" href="./CSS/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <!-- <script src="./JS/flip-script.js" defer></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -14,7 +16,6 @@
   <div class="page-container">
     <div class="game-header">
       <nav>
-        <!-- <div class="gray-top"></div> -->
         <div class="navigation-elements">
           <img src="./images/mobile/hamburger.png" alt="Menu" class="hamburger-menu" />
           <h1><img src="./images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
@@ -23,212 +24,222 @@
             <a href="#" id="rulesLink" class="nav-link">Reglas</a>
             <a href="./HTML/scoreboard.html" id="leaderboardLink" class="nav-link">Leaderboard</a>
           </div>
+          <div class="volume-control">
+            <label for="volume-slider">
+              <i class="fas fa-volume-up"></i>
+            </label>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+          </div>
         </div>
       </nav>
     </div>
+  </div>
 
-    <div class="mobile-menu">
-      <a href="index.html">Juego</a>
-      <a href="#" id="mobile-rulesLink">Reglas</a>
-      <a href="./HTML/scoreboard.html" id="mobile-leaderboardLink">Leaderboard</a>
-    </div>
+  <div class="mobile-menu">
+    <a href="index.html">Juego</a>
+    <a href="#" id="mobile-rulesLink">Reglas</a>
+    <a href="./HTML/scoreboard.html" id="mobile-leaderboardLink">Leaderboard</a>
+  </div>
 
-    <!-- Welcome Message Modal -->
-    <div id="welcomeModal" class="modal">
-      <div class="modal-svg-container">
-        <div class="content-inside-modal" id="welcome-content">
-          <img src="./images/Menu/logo-juego.png" alt="">
-          <p id="welcome-paragraph">¡Hola! 👋 ¿Estás listo para poner a prueba <br>
-            tu memoria con Green Choice y ganar premios? Demuestra que eres rápido y sabes cómo se
-            limpia de forma sostenible. ¡Vamo' arriba! </p>
-          <button id="welcomeContinue">Jugar</button>
-        </div>
+  <!-- Welcome Message Modal -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal" id="welcome-content">
+        <img src="./images/Menu/logo-juego.png" alt="">
+        <p id="welcome-paragraph">¡Hola! 👋 ¿Estás listo para poner a prueba <br>
+          tu memoria con Green Choice y ganar premios? Demuestra que eres rápido y sabes cómo se
+          limpia de forma sostenible. ¡Vamo' arriba! </p>
+        <button id="welcomeContinue">Jugar</button>
       </div>
     </div>
+  </div>
 
-    <!-- Sign-in  Modal -->
-    <div id="signinModal" class="modal">
-      <div class="modal-svg-container">
-        <div class="content-inside-modal">
-          <h3 id="inicia-title">INICIA EL JUEGO</h3>
-          <form id="signinForm">
-            <div class="input-wrapper">
-              <input type="text" id="nickname" name="nickname" placeholder="Tu nombre" required>
-            </div>
-            <div class="input-wrapper">
-              <input type="email" id="email" name="email" placeholder=" Tu e-mail" required>
-            </div>
-            <div class="modal-flow">
-              <button type="submit" class="form-button" id="continue">Jugar</button>
-            </div>
-          </form>
-        </div>
+  <!-- Sign-in  Modal -->
+  <div id="signinModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h3 id="inicia-title">INICIA EL JUEGO</h3>
+        <form id="signinForm">
+          <div class="input-wrapper">
+            <input type="text" id="nickname" name="nickname" placeholder="Tu nombre" required>
+          </div>
+          <div class="input-wrapper">
+            <input type="email" id="email" name="email" placeholder=" Tu e-mail" required>
+          </div>
+          <div class="modal-flow">
+            <button type="submit" class="form-button" id="continue">Jugar</button>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
 
-    <!-- Game Instructions Modal (Round 1) -->
-    <div id="gameInstructionsModal" class="modal">
-      <div class="modal-svg-container">
-        <div class="content-inside-modal">
-          <h3 class="como-jugar">¿Cómo Jugar?</h3>
-          <h4 id="conoce">Nivel 1: Conoce Nuestros Productos</h4>
-          <p>Encuentra los pares de cartas con el mismo producto Green Choice. Mientras más rápido los encuentras y con
-            menos errores más puntos ganas. 🤑</p>
-          <button id="startGameButton">Jugar</button>
-        </div>
+  <!-- Game Instructions Modal (Round 1) -->
+  <div id="gameInstructionsModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h3 class="como-jugar">¿Cómo Jugar?</h3>
+        <h4 id="conoce">Nivel 1: Conoce Nuestros Productos</h4>
+        <p>Encuentra los pares de cartas con el mismo producto Green Choice. Mientras más rápido los encuentras y con
+          menos errores más puntos ganas. 🤑</p>
+        <button id="startGameButton">Jugar</button>
       </div>
     </div>
+  </div>
 
-    <!-- Round 2 Instructions Modal -->
-    <div id="Round2InstructionsModal" class="modal">
-      <div class="modal-svg-container">
-        <div class="content-inside-modal">
-          <h3 class="como-jugar">¿Cómo Jugar?</h3>
-          <h4 id="como-usar">Nivel 2: ¿Cómo se usan?</h4>
-          <p id="nivel-2-paragraph">Encuentra el producto de limpieza Green Choice y combínalo con su área o uso
-            específico de limpieza.
-            Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑;</p>
-          <button id="round2ContinueBtn">Jugar</button>
-        </div>
+  <!-- Round 2 Instructions Modal -->
+  <div id="Round2InstructionsModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <h3 class="como-jugar">¿Cómo Jugar?</h3>
+        <h4 id="como-usar">Nivel 2: ¿Cómo se usan?</h4>
+        <p id="nivel-2-paragraph">Encuentra el producto de limpieza Green Choice y combínalo con su área o uso
+          específico de limpieza.
+          Mientras más rápido los encuentras y con menos errores más puntos ganas. 🤑;</p>
+        <button id="round2ContinueBtn">Jugar</button>
       </div>
     </div>
+  </div>
 
-    <!-- Round 1 Score Modal -->
-    <div id="roundScoreModal" class="modal">
-      <div class="modal-svg-container">
-        <div class="content-inside-modal">
-          <img src="./images/Menu/yay.png" alt="yay-image">
-          <h4> <span id="gameLevel"></span> </h4>
-          <p id="tus-puntos">Tus Puntos: <span id="roundOneScore"></span></p>
-          <p id="nivel-1-complete">
-            Ya estás participando para ganar uno de nuestros
-            premios semanales. ¡Continúa jugando!
-          </p>
-          <button id="nextRoundButton">Iniciar Nivel <span id="next-level"></span></button>
-        </div>
+  <!-- Round 1 Score Modal -->
+  <div id="roundScoreModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <img src="./images/Menu/yay.png" alt="yay-image">
+        <h4> <span id="gameLevel"></span> </h4>
+        <p id="tus-puntos">Tus Puntos: <span id="roundOneScore"></span></p>
+        <p id="nivel-1-complete">
+          Ya estás participando para ganar uno de nuestros
+          premios semanales. ¡Continúa jugando!
+        </p>
+        <button id="nextRoundButton">Iniciar Nivel <span id="next-level"></span></button>
       </div>
     </div>
+  </div>
 
-    <!-- Round 2 Score Modal -->
-    <div id="FinalRoundCompletionModal" class="modal">
-      <div class="modal-svg-container">
-        <div class="content-inside-modal">
-          <img src="./images/Menu/yay.png" alt="yay-image">
-          <h4 id="nivel-completado">NIVEL 2 COMPLETADO</h4>
-          <p id="tus-puntos-finales">Tus Puntos: <span id="round3CompletionPoints"></span></p>
-          <p id="nivel-2-complete">¡Felicidades! 🙌 Completaste todos los niveles. Revisa en qué lugar quedaste entre
-            los expertos de limpieza
+  <!-- Round 2 Score Modal -->
+  <div id="FinalRoundCompletionModal" class="modal">
+    <div class="modal-svg-container">
+      <div class="content-inside-modal">
+        <img src="./images/Menu/yay.png" alt="yay-image">
+        <h4 id="nivel-completado">NIVEL 2 COMPLETADO</h4>
+        <p id="tus-puntos-finales">Tus Puntos: <span id="round3CompletionPoints"></span></p>
+        <p id="nivel-2-complete">¡Felicidades! 🙌 Completaste todos los niveles. Revisa en qué lugar quedaste entre
+          los expertos de limpieza
+          sostenible.</p>
+        <button id="viewLeaderboardBtn">Ver Leaderboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scoreboard Modal -->
+  <div id="ScoreBoardModal" class="modal">
+    <div class="score-svg-container">
+      <div class="content-inside-modal">
+        <h3 id="leaderboard-title">LEADERBOARD: TOP 5</h3>
+        <p>Cada semana, el jugador que tenga más puntos se lleva el título de "Campeón del Green Choice Memory" y
+          podrá
+          ganar fabulosos premios.
+        </p>
+        <table id="leaderboardTable">
+          <tbody>
+            <!-- Dynamic data from server inserted here -->
+          </tbody>
+        </table>
+        <div id="footerTitle">Tu Resultado</div>
+        <table id="currentPlayerResultTable">
+          <tbody>
+            <!-- Dynamic data for current player inserted here -->
+          </tbody>
+        </table>
+        <button id="restartGameButton" class="restart-button">Jugar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Instructions Modal -->
+  <div id="FullInstructionsModal" class="modal">
+    <div class="reglas-svg-container">
+      <div class="content-inside-modal">
+        <h2>REGLAS GREEN CHOICE MEMORY</h2>
+        <div class="instructions-content">
+          <p>¡Te damos la bienvenida! En Doncella, queremos que te diviertas mientras aprendes sobre nuestros
+            productos de limpieza ecológicos. Demuestra que eres rápido y sabes cómo mantener tu casa limpia de forma
             sostenible.</p>
-          <button id="viewLeaderboardBtn">Ver Leaderboard</button>
+          <h3>¿Cómo se juega?</h3>
+          <p>Para iniciar el reto, dale al botón “Jugar”. Luego, encuentra y combina tus cartas.</p>
+          <p>Nivel 1: Combina producto con producto. <br>
+            Nivel 2: Empareja cada producto con su área o uso específico de limpieza. <br>
+            Nivel 3: Descubre otros usos sorprendentes y eco-friendly. [Próximanente]</p>
+          <h3>Sistema de puntos:</h3>
+          <p>Por cada acierto sumas 10 puntos a tu score. Si eres veloz y terminas rápido, ganas puntos extra. Si te
+            equivocas, pierdes 1 punto. ¡Sorpresa! Si te sale una carta con el logo de Doncella, ganas 5 puntos.</p>
+          <h3>Ganadores y premios:</h3>
+          <p>Cada semana, el jugador que tenga más puntos se lleva el título de Campeón del Green Choice Memory. Y
+            no solo eso, te puedes ganar un kit de productos y otras sorpresas de nuestra Dream Clean Store.</p>
+          <h3>Duración de la campaña:</h3>
+          <p>Podrás jugar a Green Choice Memory en cualquier momento. Sin embargo, nuestra campaña especial, que incluye
+            el concurso y la entrega de premios a los campeones del juego, se llevará a cabo exclusivamente durante el
+            mes de junio de 2024, en celebración del Día del Medio Ambiente el 5 de junio.</p>
+        </div>
+        <button id="closeInstructionsModal" class="close-modal">Jugar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game window -->
+  <div class="game-wrapper">
+    <main class="cards-container">
+      <!-- Placeholder for dynamically generated cards -->
+    </main>
+    <div class="game-status-bar">
+      <div class="status-item" id="timer">
+        <img src="./images/Menu/clock.png" alt="Clock Icon">
+        <span>00:00</span>
+      </div>
+      <div class="status-item" id="score">
+        <img src="./images/Menu/coin.png" alt="Score Icon">
+        <span>0</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-banner">
+      <div class="footer-content">
+        <div class="footer-social-media">
+          <a href="https://www.youtube.com/channel/UCLu8H0Y9CTkDJwB9FVwXPTw"><img
+              src="./images/Footer-images/Phone-logo.png" alt="Phone"></a>
+          <a href="https://www.facebook.com/doncella.do"><img src="./images/Footer-images/facebook-logo.png"
+              alt="Facebook"></a>
+          <a href="https://twitter.com/DoncellaRD"><img src="./images/Footer-images/twitter-logo.png" alt="Twitter"></a>
+          <a href="https://www.pinterest.com/doncellard/"><img src="./images/Footer-images/pinterest-logo.png"
+              alt="Pinterest"></a>
+          <a href="https://www.instagram.com/doncellard/"><img src="./images/Footer-images/instagram-logo.png"
+              alt="Instagram"></a>
+        </div>
+        <div>
+          <ul class="footer-list">
+            <li class="mobile-bottom">
+              <img src="./images/Footer-images/bottom-logo -copy.png" alt="Logo" id="footer-logo">
+              <img src="./images/Footer-images/Doncella-logo-bottom.png" alt="Logo" id="footer-logo-large">
+            </li>
+            <li class="links">
+              <a href="#">&copy; Doncella SRL 2024</a> |
+              <a href="https://doncella.com.do/">Santo Domingo</a> |
+              <a href="https://doncella.com.do/">Santiago</a> |
+              <a href="#">Punta Cana</a> |
+              <a href="tel:809-638-6572">809-638-6572</a> |
+              <a href="https://doncella.com.do/#nosotros">Políticas de Privacidad</a> |
+              <a href="https://doncella.com.do/#nosotros">Site Map</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-
-    <!-- Scoreboard Modal -->
-    <div id="ScoreBoardModal" class="modal">
-      <div class="score-svg-container">
-        <div class="content-inside-modal">
-          <h3 id="leaderboard-title">LEADERBOARD: TOP 5</h3>
-          <p>Cada semana, el jugador que tenga más puntos se lleva el título de "Campeón del Green Choice Memory" y
-            podrá
-            ganar fabulosos premios.
-          </p>
-          <table id="leaderboardTable">
-            <tbody>
-              <!-- Dynamic data from server inserted here -->
-            </tbody>
-          </table>
-          <div id="footerTitle">Tu Resultado</div>
-          <table id="currentPlayerResultTable">
-            <tbody>
-              <!-- Dynamic data for current player inserted here -->
-            </tbody>
-          </table>
-          <button id="restartGameButton" class="restart-button">Jugar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Full Instructions Modal -->
-    <div id="FullInstructionsModal" class="modal">
-      <div class="reglas-svg-container">
-        <div class="content-inside-modal">
-          <h2>REGLAS GREEN CHOICE MEMORY</h2>
-          <div class="instructions-content">
-            <p>¡Te damos la bienvenida! En Doncella, queremos que te diviertas mientras aprendes sobre nuestros
-              productos de limpieza ecológicos. Demuestra que eres rápido y sabes cómo mantener tu casa limpia de forma
-              sostenible.</p>
-            <h3>¿Cómo se juega?</h3>
-            <p>Para iniciar el reto, dale al botón “Jugar”. Luego, encuentra y combina tus cartas.</p>
-            <p>Nivel 1: Combina producto con producto. <br>
-              Nivel 2: Empareja cada producto con su área o uso específico de limpieza. <br>
-              Nivel 3: Descubre otros usos sorprendentes y eco-friendly. [Próximanente]</p>
-            <h3>Sistema de puntos:</h3>
-            <p>Por cada acierto sumas 10 puntos a tu score. Si eres veloz y terminas rápido, ganas puntos extra. Si te
-              equivocas, pierdes 1 punto. ¡Sorpresa! Si te sale una carta con el logo de Doncella, ganas 5 puntos.</p>
-            <h3>Ganadores y premios:</h3>
-            <p>Cada semana, el jugador que tenga más puntos se lleva el título de Campeón del Green Choice Memory. Y
-              no solo eso, te puedes ganar un kit de productos y otras sorpresas de nuestra Dream Clean Store.</p>
-          </div>
-          <button id="closeInstructionsModal" class="close-modal">Jugar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Game window -->
-    <div class="game-wrapper">
-      <main class="cards-container">
-        <!-- Placeholder for dynamically generated cards -->
-      </main>
-      <div class="game-status-bar">
-        <div class="status-item" id="timer">
-          <img src="./images/Menu/clock.png" alt="Clock Icon">
-          <span>00:00</span>
-        </div>
-        <div class="status-item" id="score">
-          <img src="./images/Menu/coin.png" alt="Score Icon">
-          <span>0</span>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-banner">
-        <div class="footer-content">
-          <div class="footer-social-media">
-            <a href="https://www.youtube.com/channel/UCLu8H0Y9CTkDJwB9FVwXPTw"><img
-                src="./images/Footer-images/Phone-logo.png" alt="Phone"></a>
-            <a href="https://www.facebook.com/doncella.do"><img src="./images/Footer-images/facebook-logo.png"
-                alt="Facebook"></a>
-            <a href="https://twitter.com/DoncellaRD"><img src="./images/Footer-images/twitter-logo.png"
-                alt="Twitter"></a>
-            <a href="https://www.pinterest.com/doncellard/"><img src="./images/Footer-images/pinterest-logo.png"
-                alt="Pinterest"></a>
-            <a href="https://www.instagram.com/doncellard/"><img src="./images/Footer-images/instagram-logo.png"
-                alt="Instagram"></a>
-          </div>
-          <div>
-            <ul class="footer-list">
-              <li class="mobile-bottom">
-                <img src="./images/Footer-images/bottom-logo -copy.png" alt="Logo" id="footer-logo">
-                <img src="./images/Footer-images/Doncella-logo-bottom.png" alt="Logo" id="footer-logo-large">
-              </li>
-              <li class="links">
-                <a href="#">&copy; Doncella SRL 2024</a> |
-                <a href="https://doncella.com.do/">Santo Domingo</a> |
-                <a href="https://doncella.com.do/">Santiago</a> |
-                <a href="#">Punta Cana</a> |
-                <a href="tel:809-638-6572">809-638-6572</a> |
-                <a href="https://doncella.com.do/#nosotros">Políticas de Privacidad</a> |
-                <a href="https://doncella.com.do/#nosotros">Site Map</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+  </footer>
   </div>
 
   <script type="module" src="./JS/main.js"></script>
