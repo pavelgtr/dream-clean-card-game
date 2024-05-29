@@ -183,7 +183,7 @@ body {
   background-size: 100% 100%;
   padding-top: 60px;
   box-sizing: border-box;
-  margin: 50px auto;
+  margin: 180px auto;
 
   @media screen and (max-width: 950px) {
     background-image: url("../images/mobile/Modal-background.png");
@@ -204,6 +204,66 @@ body {
     height: 80px;
     margin-bottom: 15px;
   }
+}
+
+#welcomeModal .welcome-svg-container {
+  width: 540px;
+  height: 466px;
+  background-image: url("../images/Menu/Modal.svg");
+  background-size: 100% 100%;
+  padding-top: 60px;
+  box-sizing: border-box;
+  margin: 50px auto;
+
+  @media screen and (max-width: 950px) {
+    background-image: url("../images/mobile/Modal-background.png");
+    background-size: 100% 100%;
+    width: 335px;
+    height: 562px;
+    margin: 120px auto;
+  }
+}
+
+#welcomeModal .welcome-svg-container img {
+  width: 200px;
+  height: auto;
+  margin: 0 auto;
+
+  @media screen and (max-width: 950px) {
+    width: 140px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+}
+
+#welcomeModal .welcome-svg-container p {
+  font-family: "Gotham-Book";
+  font-size: 18px;
+  color: #898989;
+  letter-spacing: 0.26px;
+  text-align: center;
+  line-height: 30px;
+  width: 428px; /* Adjust if needed */
+  padding-top: 20px; /* Added from the specific #welcome-paragraph style */
+}
+
+#welcomeModal .welcome-svg-container button {
+  background: #f1636e;
+  border-radius: 24px;
+  font-size: 22px;
+  letter-spacing: 0.69px;
+  text-align: center;
+  width: 221px;
+  height: 54px;
+  border: none;
+  font-family: "Montserrat-Regular", "Arial", sans-serif;
+  margin: 20px auto;
+  color: white;
+}
+
+#welcomeModal #welcomeContinue {
+  /* Additional specific styles for the 'Jugar' button, if any, could be placed here */
+  color: white; /* Example property, assuming you need it directly controlled */
 }
 
 #welcome-paragraph {
