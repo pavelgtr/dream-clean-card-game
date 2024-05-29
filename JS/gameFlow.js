@@ -28,6 +28,8 @@ import { submitScore } from "./leaderBoard.js";
 import { displayfinalRoundCompletionModal } from "./modals.js";
 
 export function startGame(nickname, email) {
+  resetGameState(); // Reset the game state before starting a new game
+  gameState.gameStarted = true;
   gameState.startTime = Date.now();
   gameState.gameLevel = 1;
   gameState.totalTime = 0;
@@ -181,6 +183,7 @@ export function checkEndOfRound() {
   console.log("Elapsed time at this point:", gameState.elapsedTime, "seconds");
 
   if (gameState.matchedPairsCount === totalPairs) {
+    triggerConfetti();
     stopTimer();
     console.log("All pairs matched. Proceeding to reset game...");
     if (gameState.gameLevel < 2) {
@@ -193,6 +196,7 @@ export function checkEndOfRound() {
       }, 1000);
     } else {
       setTimeout(() => {
+        triggerConfetti();
         console.log("Transitioning to scoreboard...");
         displayfinalRoundCompletionModal();
       }, 1000);

@@ -18,16 +18,18 @@ export const gameState = {
   startTime: null,
   currentTime: null,
   timerPaused: false,
-  soundEffects: {
-    click: new Audio("./sounds/flip.wav"),
-    error: new Audio("./sounds/fail.wav"),
-    win: new Audio("./sounds/cheer.wav"),
-  },
+  gameStarted: false,
+  // soundEffects: {
+  //   click: new Audio("./sounds/flip.wav"),
+  //   error: new Audio("./sounds/fail.wav"),
+  //   win: new Audio("./sounds/cheer.wav"),
+  // },
   playerNickname: "",
   playerEmail: "",
 };
 
 export function resetGameState() {
+  gameState.gameStarted = false;
   gameState.hasFlippedCard = false;
   gameState.flippedCard1 = null;
   gameState.flippedCard2 = null;

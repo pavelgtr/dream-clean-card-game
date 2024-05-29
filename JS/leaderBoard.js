@@ -1,10 +1,9 @@
 // leaderboard.js
-import { gameState, resetGameState } from "./gameState.js";
-import { startGame } from "./gameFlow.js";
-import { startTimer, stopTimer, pauseTimer, resumeTimer } from "./timer.js";
+import { gameState } from "./gameState.js";
+import { resumeTimer } from "./timer.js";
 import { levelTwo } from "./arrays.js";
 import { highlightJuegoLink } from "./dom.js";
-import { showWelcomeMessage } from "./modals.js";
+import { initializeGame } from "./main.js";
 export function submitScore(nickname, email, finalScore) {
   $.ajax({
     url: "PHP/submit_score.php",
@@ -129,14 +128,14 @@ export function displayScoreBoardModal() {
     gameState.gameLevel === 2 &&
     gameState.matchedPairsCount === levelTwo.length / 2
   ) {
-    restartGameButton.textContent = "Jugar otra vez";
+    restartGameButton.textContent = "Jugar";
     restartGameButton.onclick = function () {
       // Reset the game state and restart the game
-      resetGameState();
-      showWelcomeMessage(); // Display the welcome modal
+      location.reload();
+      initializeGame();
     };
   } else {
-    restartGameButton.textContent = "Continuar";
+    restartGameButton.textContent = "Jugar";
     restartGameButton.onclick = function () {
       // Close the leaderboard modal and continue the game
       scoreboardModal.style.display = "none";

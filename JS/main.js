@@ -1,10 +1,27 @@
 // main.js
-import { addEventListeners, setActiveLinkOnLoad } from "./dom.js";
+import { resetGameState } from "./gameState.js";
 import { showWelcomeMessage } from "./modals.js";
+import {
+  showSignInModal,
+  displayGameInstructionsModal,
+  displayRound2InstructionsModal,
+  displayRoundScoreModal,
+  displayfinalRoundCompletionModal,
+} from "./modals.js";
+import { displayScoreBoardModal } from "./leaderBoard.js";
+import { soundEffects } from "./soundEffects.js";
+import { addEventListeners, setActiveLinkOnLoad } from "./dom.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+//for testing only
+
+export function initializeGame() {
+  resetGameState();
   showWelcomeMessage();
-
+  // showSignInModal();
+  // displayRound2InstructionsModal();
+  // displayRoundScoreModal();
+  // displayfinalRoundCompletionModal();
+  // displayScoreBoardModal();
   const elements = {
     hamburgerMenu: document.querySelector(".hamburger-menu"),
     mobileMenu: document.querySelector(".mobile-menu"),
@@ -19,4 +36,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addEventListeners(elements);
   setActiveLinkOnLoad(elements.navLinks);
-});
+
+  const volumeSlider = document.getElementById("volume-slider");
+  if (volumeSlider) {
+    volumeSlider.addEventListener("input", function (event) {
+      const volume = event.target.value;
+      Object.values(soundEffects).forEach((soundGroup) => {
+        if (Array.isArray(soundGroup)) {
+          soundGroup.forEach((sound) => {
+            sound.volume = volume;
+          });
+        } else if (soundGroup instanceof Audio) {
+          soundGroup.volume = volume;
+        }
+      });
+    });
+  }
+}
+
+// Call initializeGame when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initializeGame);
