@@ -18,20 +18,18 @@
       <nav>
         <div class="navigation-elements">
           <img src="./images/mobile/hamburger.png" alt="Menu" class="hamburger-menu" />
-          <h1><img src="./images/Menu/Doncella-logo.jpg" alt="Doncella-mobile-logo"></h1>
+          <h1 class="logo"><img src="./images/Menu/Doncella-mobile-friendly-logo.png" alt="Doncella-logo"></h1>
           <div class="links-navigation">
             <a href="index.html">Juego</a>
             <a href="#" id="rulesLink" class="nav-link">Reglas</a>
             <a href="./HTML/scoreboard.html" id="leaderboardLink" class="nav-link">Leaderboard</a>
-            <div class="volume-control">
-              <label for="volume-slider">
-                <i class="fas fa-volume-up"></i>
-              </label>
-              <label for="volume-slider"></label>
-              <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
-            </div>
           </div>
-
+          <div class="volume-control">
+            <label for="volume-slider">
+              <i class="fas fa-volume-up"></i>
+            </label>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+          </div>
         </div>
       </nav>
     </div>
@@ -108,8 +106,8 @@
   <div id="roundScoreModal" class="modal">
     <div class="modal-svg-container">
       <div class="content-inside-modal">
-        <img src="./images/Menu/yay.png" alt="yay-image">
-        <h4> <span id="gameLevel"></span> </h4>
+        <img src="./images/Menu/yay.png" alt="yay-image" id="yay-image">
+        <h4 id="nivel-uno-completado"> <span id="gameLevel"></span> </h4>
         <p id="tus-puntos">Tus Puntos: <span id="roundOneScore"></span></p>
         <p id="nivel-1-complete">
           Ya estás participando para ganar uno de nuestros
@@ -120,16 +118,18 @@
     </div>
   </div>
 
-  <!-- Round 2 Score Modal -->
+  <!-- Final Round Completion Modal -->
   <div id="FinalRoundCompletionModal" class="modal">
     <div class="modal-svg-container">
       <div class="content-inside-modal">
-        <img src="./images/Menu/yay.png" alt="yay-image">
-        <h4 id="nivel-completado">NIVEL 2 COMPLETADO</h4>
-        <p id="tus-puntos-finales">Tus Puntos: <span id="round3CompletionPoints"></span></p>
-        <p id="nivel-2-complete">¡Felicidades! 🙌 Completaste todos los niveles. Revisa en qué lugar quedaste entre
+        <img src="./images/Menu/yay.png" alt="yay-image" id="yay-image">
+        <h4 id="gameLevel2">NIVEL 2 COMPLETADO</h4>
+        <p id="tus-puntos">Tus Puntos: <span id="round3CompletionPoints"></span></p>
+        <p id="nivel-2-complete">
+          ¡Felicidades! 🙌 Completaste todos los niveles. Revisa en qué lugar quedaste entre
           los expertos de limpieza
-          sostenible.</p>
+          sostenible.
+        </p>
         <button id="viewLeaderboardBtn">Ver Leaderboard</button>
       </div>
     </div>
@@ -140,9 +140,8 @@
     <div class="score-svg-container">
       <div class="content-inside-modal">
         <h3 id="leaderboard-title">LEADERBOARD: TOP 5</h3>
-        <p>Cada semana, el jugador que tenga más puntos se lleva el título de "Campeón del Green Choice Memory" y
-          podrá
-          ganar fabulosos premios.
+        <p>Cada semana, el jugador que tenga más puntos se lleva el título de "<strong>Campeón del Green Choice
+            Memory</strong>" y podrá ganar fabulosos premios.</p>
         </p>
         <table id="leaderboardTable">
           <tbody>
@@ -164,7 +163,7 @@
   <div id="FullInstructionsModal">
     <div class="reglas-svg-container">
       <div class="content-inside-modal">
-        <h2>REGLAS GREEN CHOICE MEMORY</h2>
+        <h2><span id="reglas-word">REGLAS</span> <br> GREEN CHOICE MEMORY</h2>
         <div class="instructions-content">
           <p>¡Te damos la bienvenida! En Doncella, queremos que te diviertas mientras aprendes sobre nuestros
             productos de limpieza ecológicos. Demuestra que eres rápido y sabes cómo mantener tu casa limpia de forma
@@ -249,6 +248,7 @@
 
   <!-- confetti animation -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
 
 </body>
 

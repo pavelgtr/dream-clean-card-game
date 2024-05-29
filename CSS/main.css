@@ -46,12 +46,11 @@ body {
 .page-container {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
 
 /* Main content should flex-grow to fill the available space */
 .main-content {
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 /* --------------------------------- FONTS DONCELLA --------------------------------- */
 @font-face {
@@ -164,6 +163,10 @@ body {
   width: 100%;
   height: calc(100% - 250px);
   /* background-color: rgba(0, 0, 0, 0.4); */
+
+  @media screen and (max-width: 950px) {
+    top: 120px;
+  }
 }
 
 #FullInstructionsModal {
@@ -189,7 +192,7 @@ body {
     background-image: url("../images/mobile/Modal-background.png");
     background-size: 100% 100%;
     width: 335px;
-    height: 562px;
+    height: 600px;
     margin: 120px auto;
   }
 }
@@ -206,33 +209,41 @@ body {
   }
 }
 
+#yay-image {
+  width: 200px;
+  height: auto;
+  margin: 0 auto;
+
+  @media screen and (max-width: 950px) {
+    width: 178px;
+    height: 131px;
+    margin-bottom: 15px;
+  }
+}
 #welcomeModal .welcome-svg-container {
   width: 540px;
   height: 466px;
-  background-image: url("../images/Menu/Modal.svg");
+  background-image: url("../images/Menu/modal-shape.png");
   background-size: 100% 100%;
   padding-top: 60px;
-  box-sizing: border-box;
-  margin: 50px auto;
+  box-sizing: content-box;
+  margin: -40px auto;
 
   @media screen and (max-width: 950px) {
     background-image: url("../images/mobile/Modal-background.png");
     background-size: 100% 100%;
-    width: 335px;
-    height: 562px;
-    margin: 120px auto;
+    width: 360px;
+    height: 550px;
+    margin: 0 auto;
   }
 }
 
 #welcomeModal .welcome-svg-container img {
   width: 200px;
   height: auto;
-  margin: 0 auto;
-
+  padding-top: 20px;
   @media screen and (max-width: 950px) {
-    width: 140px;
-    height: 80px;
-    margin-bottom: 15px;
+    padding-top: 10px;
   }
 }
 
@@ -243,8 +254,19 @@ body {
   letter-spacing: 0.26px;
   text-align: center;
   line-height: 30px;
-  width: 428px; /* Adjust if needed */
-  padding-top: 20px; /* Added from the specific #welcome-paragraph style */
+  width: 466px; /* Adjust if needed */
+  padding-top: 50px; /* Added from the specific #welcome-paragraph style */
+
+  @media screen and (max-width: 950px) {
+    font-family: "Gotham";
+    font-size: 16px;
+    color: #9b9b9b;
+    letter-spacing: 0.26px;
+    text-align: center;
+    line-height: 30px;
+    width: 200px;
+    padding-top: 20px;
+  }
 }
 
 #welcomeModal .welcome-svg-container button {
@@ -256,9 +278,18 @@ body {
   width: 221px;
   height: 54px;
   border: none;
-  font-family: "Montserrat-Regular", "Arial", sans-serif;
+  /* font-family: "Montserrat-Regular", "Arial", sans-serif; */
+  font-family: Helvetica;
   margin: 20px auto;
   color: white;
+  color: #ffffff;
+  letter-spacing: 0.69px;
+
+  @media screen and (max-width: 950px) {
+    width: 120px;
+    height: 32px;
+    font-size: 18px;
+  }
 }
 
 #welcomeModal #welcomeContinue {
@@ -269,17 +300,6 @@ body {
 #welcome-paragraph {
   padding-top: 20px;
   font-size: 18px;
-
-  @media screen and (max-width: 950px) {
-    font-family: "Gotham-Book";
-    font-size: 18px;
-    color: #9b9b9b;
-    letter-spacing: 0.26px;
-    text-align: center;
-    line-height: 30px;
-    width: 250px;
-    height: 240px;
-  }
 }
 
 #welcomeContinue {
@@ -305,10 +325,27 @@ body {
   @media screen and (max-width: 950px) {
     background-image: url("../images/mobile/Modal-background.png");
     background-size: 100% 100%;
-    width: 311px;
+    width: 331px;
     padding-top: 50px;
     height: 554px;
-    margin: 120px auto;
+    margin: 20px auto;
+  }
+}
+
+#reglas-word {
+  font-family: "Gotham-Book";
+  font-size: 26px;
+  color: #00adbb;
+  letter-spacing: 4px;
+  text-align: center;
+  line-height: 30px;
+  padding-top: 40px;
+
+  @media screen and (max-width: 950px) {
+    width: 311px;
+    height: 685px;
+    font-size: 22px;
+    padding-top: 20px;
   }
 }
 
@@ -330,7 +367,7 @@ body {
 .instructions-content p {
   font-family: "Gotham-Book";
   font-size: 16px;
-  color: #4a4a4a;
+  color: #898989;
   text-align: center;
   width: 100%; /* Full width on mobile */
   margin-top: 10px;
@@ -338,6 +375,7 @@ body {
 
   @media screen and (max-width: 950px) {
     width: 100%;
+    height: ;
     font-size: 16px;
     margin: 0 auto;
     padding: 0;
@@ -355,7 +393,7 @@ body {
   padding-left: 30px;
 
   @media screen and (max-width: 950px) {
-    width: 60%;
+    width: 279px;
     height: auto; /* Adjust to content height */
     font-size: 18px;
     margin: 20px auto;
@@ -397,17 +435,19 @@ h2 {
 }
 
 #inicia-title {
-  margin-top: 40px;
   font-family: "Gotham-Book";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
   text-align: center;
   line-height: 30px;
+  margin-top: 20px;
+  width: 350px;
 
-  @media screen {
-    width: 80%;
+  @media screen and (max-width: 950px) {
+    width: 175px;
     text-transform: uppercase;
+    margin-top: 40px;
   }
 }
 
@@ -422,9 +462,9 @@ h2 {
 .content-inside-modal {
   display: flex;
   flex-direction: column;
-
+  justify-content: center;
   align-items: center;
-
+  margin-bottom: 20px;
   /* @media screen and (max-width: 950px) {
     width: 90%;
     margin: 0 auto;
@@ -435,13 +475,13 @@ h2 {
 #tus-puntos,
 #tus-puntos-finales {
   font-family: "Gotham-Book";
+  font-weight: lighter;
   color: #00adbb;
   text-align: center;
   line-height: 18px;
   letter-spacing: 2px;
   text-align: center;
   line-height: 30px;
-  font-weight: 500;
 
   @media screen and (max-width: 950px) {
     width: 70%;
@@ -471,15 +511,17 @@ h2 {
   @media screen and (max-width: 950px) {
     width: 180px;
     height: 43px;
-    font-size: 18px;
-    margin: 5px auto 10px;
+    font-size: 16px;
+    margin: 50px auto 15px;
   }
 }
 
-#gameLevel {
+#gameLevel,
+#gameLevel2 {
   margin: 0;
 
   @media screen and (max-width: 950px) {
+    font-size: 28px;
   }
 }
 
@@ -508,12 +550,13 @@ h2 {
 #nivel-1-complete,
 #nivel-2-complete {
   font-size: 16px;
+  color: #898989;
 
   @media screen and (max-width: 950px) {
-    width: 210px;
-    height: 200px;
+    width: 200px;
+    height: 150px;
     font-size: 16px;
-    margin-top: 20px;
+    margin-top: 0px;
   }
 }
 
@@ -552,8 +595,8 @@ h2 {
 
   @media screen and (max-width: 950px) {
     width: 120px;
-    height: 43px;
-    margin: 20px auto;
+    height: 32px;
+    font-size: 18px;
   }
 }
 
@@ -567,8 +610,19 @@ h2 {
   width: 221px;
   height: 54px;
   border: none;
-  font-family: "Montserrat-Regular", "Arial", sans-serif;
-  margin: 30px auto 15px;
+  font-family: Helvetica;
+  margin: 40px auto 15px;
+
+  @media screen and (max-width: 950px) {
+    width: 120px;
+    height: 43px;
+    margin: 30px auto;
+    font-family: Helvetica;
+    font-size: 20px;
+    color: #ffffff;
+    letter-spacing: 0.69px;
+    text-align: center;
+  }
 }
 
 #round2ContinueBtn {
@@ -587,52 +641,58 @@ h2 {
   box-sizing: content-box;
   margin: 30px auto;
   width: 540px;
-  height: 743px;
+  height: 850px;
 
   @media screen and (max-width: 950px) {
     background-image: url("../images/mobile/leaderboard-mobile.png");
     background-size: 100% 100%;
     width: 311px;
     height: 647px;
-    margin: 80px auto;
+    margin: 10px auto;
+    padding-top: 40px;
+    padding-left: 20px;
   }
 }
 
+/* ------------------------------------------------------- LeaderBoard Modal ------------------------------------------------------- */
+
 #leaderboard-title {
   font-family: "Gotham-Book";
-  font-size: 26px;
+  font-size: 24px;
   color: #00adbb;
   letter-spacing: 4px;
   text-align: center;
   line-height: 30px;
   width: 458px;
-  padding-top: 40px;
+  padding-top: 90px;
   padding-bottom: 10px;
 
   @media screen and (max-width: 950px) {
-    width: 60%;
+    width: 280px;
     margin: 0 auto;
     font-size: 22px;
+    padding-top: 30px;
   }
 }
 
 #ScoreBoardModal p {
   font-family: "Gotham-Book";
   font-size: 16px;
-  color: #4a4a4a;
+  color: #898989;
   letter-spacing: 0.26px;
   text-align: center;
   line-height: 30px;
   width: 418px;
   margin-left: 20px;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 
   @media screen and (max-width: 950px) {
-    width: 60%;
+    width: 250px;
     margin: 0 auto;
-    font-size: 12px;
+    font-size: 16px;
     letter-spacing: 0;
     line-height: 25px;
+    padding-bottom: 10px;
   }
 }
 
@@ -641,7 +701,8 @@ h2 {
   border-top: 3px solid #e5e4e4;
   width: 380px;
   padding: 5px;
-
+  font-family: "Gotham-Book";
+  font-weight: 200;
   @media screen and (max-width: 950px) {
     width: 233px;
   }
@@ -756,7 +817,7 @@ h2 {
   @media screen and (max-width: 950px) {
     width: 120px;
     height: 43px;
-    margin: 20px auto;
+    font-size: 18px;
   }
 }
 #modal-text-form-button {
@@ -783,7 +844,7 @@ h2 {
   display: inline-block;
   width: 40px;
   height: 40px;
-  background-color: #00adbb;
+  background-color: #5fcfd5;
   border-radius: 50%;
   color: white;
   font-family: "Helvetica-Bold";
@@ -813,7 +874,7 @@ h2 {
   padding: 5px 0; /* Add padding inside the cells for better spacing */
 
   @media screen and (max-width: 950px) {
-    padding: 1px 0;
+    padding: 2px 0;
   }
 }
 
@@ -868,6 +929,13 @@ h3 {
   /* letter-spacing: 4px; */
   text-align: center;
   line-height: 30px;
+
+  @media screen and (max-width: 950px) {
+    width: 250px;
+  }
+}
+
+#nivel-completado {
 }
 
 .input-wrapper {
@@ -909,35 +977,72 @@ h3 {
 
 /* ---------------------------------Header Styles --------------------------------- */
 
+nav {
+}
+
+.game-header {
+}
+
 .navigation-elements {
   display: flex;
   justify-content: space-between; /* Distribute space between items */
-  width: 100%; /* Full width of its container */
+  width: 100%;
   align-items: center;
   padding: 0 20px;
   gap: 10px;
   height: 100px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 950px) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
 
 h1 {
-  width: 1440px;
+  width: 600px;
   height: 100px;
 }
 
+.logo {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 100px;
+
+  @media screen and (max-width: 950px) {
+    width: 400px;
+    padding: 0;
+  }
+}
+
+.logo img {
+  @media screen and (max-width: 950px) {
+    margin: 0 auto;
+  }
+}
+
+/* h1 img {
+  @media screen and (max-width: 950px) {
+    margin-right: 120px;
+  }
+} */
+
 .links-navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  width: 50vw;
+  /* width: 50vw; */
   padding: 0 20px;
   gap: 10px;
-  height: 100px;
-  margin-right: 400px;
+  margin-right: 50px;
 
   @media screen and (max-width: 950px) {
     margin-right: 0;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: center; /* Center the items horizontally */
   }
 }
 
@@ -1015,10 +1120,24 @@ h1 {
   display: flex;
   align-items: center;
   margin-left: 20px;
+
+  @media screen and (max-width: 950px) {
+    margin-left: 0;
+    margin-top: 0;
+    width: 30px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .fas {
   color: #949292;
+
+  @media screen and (max-width: 950px) {
+    width: 40px;
+    margin-left: 30px;
+  }
 }
 
 .volume-control input[type="range"] {
@@ -1027,55 +1146,53 @@ h1 {
 
 /* Style the slider track */
 #volume-slider {
-  -webkit-appearance: none; /* Override default styles */
+  display: flex;
+  -webkit-appearance: none;
   appearance: none;
-  width: 150px; /* Adjust the width of the slider */
-  height: 5px; /* Adjust the height of the slider */
-  background: #ddd; /* Track color */
-  outline: none; /* Remove default outline */
-  border-radius: 5px; /* Round the corners of the track */
-  transition: background 0.3s ease-in-out; /* Smooth transition for background color */
+  width: 150px;
+  height: 5px;
+  background: #ddd;
+  outline: none;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+
+  @media screen and (max-width: 950px) {
+    transform: rotate(-90deg);
+    width: 40px;
+    height: 3.5px;
+    margin-top: 20px;
+  }
 }
+
 /* Change thumb color for WebKit-based browsers */
 #volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 15px; /* Adjust the width of the thumb */
-  height: 15px; /* Adjust the height of the thumb */
+  width: 15px;
+  height: 15px;
   background: var(--primary);
-  border-radius: 50%; /* Make the thumb round */
+  border-radius: 50%;
   cursor: pointer;
 }
 
 /* Change thumb color for Mozilla-based browsers */
 #volume-slider::-moz-range-thumb {
-  width: 15px; /* Adjust the width of the thumb */
-  height: 15px; /* Adjust the height of the thumb */
+  width: 15px;
+  height: 15px;
   background: var(--primary);
-  border-radius: 50%; /* Make the thumb round */
+  border-radius: 50%;
   cursor: pointer;
 }
 
 /* Change track color when the slider is focused */
 #volume-slider:focus {
-  background: #ccc; /* Adjust the focus background color */
+  background: #ccc;
   color: var(--dream-clean-green);
 }
 
-/* Media queries for mobile responsiveness */
-@media (max-width: 600px) {
-  .volume-control {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 10px;
-  }
-
-  .volume-control label {
-    margin-bottom: 5px;
-  }
-
-  #volume-slider {
-    width: 100%; /* Full width on mobile */
+.volume-control label {
+  @media screen and (max-width: 950px) {
+    margin-bottom: 0;
   }
 }
 
@@ -1085,6 +1202,7 @@ h1 {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .mobile-menu {
@@ -1138,10 +1256,6 @@ body {
   background-position: center 60px; /* Center the background image */
   background-attachment: fixed; /* Fix the background to prevent scrolling */
   background-color: #c8e9f0; /* Add a fallback background color */
-}
-
-.game-wrapper {
-  /* Container for the cards and status bar */
 }
 
 /* --------------------------------- Cards --------------------------------- */
@@ -1334,9 +1448,12 @@ body {
   height: 25px;
 
   @media screen and (max-width: 950px) {
-    font-size: 18px;
-    display: inline;
+    font-size: 16px;
+    display: flex;
     vertical-align: middle;
+    font-family: "Gotham";
+    /* justify-content: center;
+    align-items: center; */
   }
 }
 

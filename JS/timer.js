@@ -1,5 +1,6 @@
 import { gameState } from "./gameState.js";
 import { updateTimerDisplay } from "./dom.js";
+import { resetGame } from "./gameFlow.js";
 
 export function startTimer() {
   // Check if the timer was paused
@@ -15,8 +16,17 @@ export function startTimer() {
   gameState.timer = setInterval(() => {
     const now = Date.now();
     gameState.secondsElapsed = Math.floor((now - gameState.startTime) / 1000);
+
+    // Check if the maximum time of 5999 seconds (99:99) has been reached
+    if (gameState.secondsElapsed >= 5999) {
+      gameState.secondsElapsed = 5999; // Cap the secondsElapsed at 5999
+      stopTimer(); // Optionally stop the timer if needed
+      resetGame(); // Reset the game if needed
+    }
+
     updateTimerDisplay(gameState.secondsElapsed);
   }, 1000);
+
   gameState.timerPaused = false;
 }
 

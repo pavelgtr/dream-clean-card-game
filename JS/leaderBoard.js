@@ -128,14 +128,14 @@ export function displayScoreBoardModal() {
     gameState.gameLevel === 2 &&
     gameState.matchedPairsCount === levelTwo.length / 2
   ) {
-    restartGameButton.textContent = "Jugar otra vez";
+    restartGameButton.textContent = "Jugar";
     restartGameButton.onclick = function () {
       // Reset the game state and restart the game
       location.reload();
       initializeGame();
     };
   } else {
-    restartGameButton.textContent = "Continuar";
+    restartGameButton.textContent = "Jugar";
     restartGameButton.onclick = function () {
       // Close the leaderboard modal and continue the game
       scoreboardModal.style.display = "none";

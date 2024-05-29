@@ -1,14 +1,27 @@
 // main.js
 import { resetGameState } from "./gameState.js";
 import { showWelcomeMessage } from "./modals.js";
+import {
+  showSignInModal,
+  displayGameInstructionsModal,
+  displayRound2InstructionsModal,
+  displayRoundScoreModal,
+  displayfinalRoundCompletionModal,
+} from "./modals.js";
+import { displayScoreBoardModal } from "./leaderBoard.js";
 import { soundEffects } from "./soundEffects.js";
 import { addEventListeners, setActiveLinkOnLoad } from "./dom.js";
 
-export function initializeGame() {
+//for testing only
 
+export function initializeGame() {
   resetGameState();
   showWelcomeMessage();
-
+  // showSignInModal();
+  // displayRound2InstructionsModal();
+  // displayRoundScoreModal();
+  // displayfinalRoundCompletionModal();
+  // displayScoreBoardModal();
   const elements = {
     hamburgerMenu: document.querySelector(".hamburger-menu"),
     mobileMenu: document.querySelector(".mobile-menu"),
