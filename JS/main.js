@@ -1,9 +1,12 @@
 // main.js
-import { addEventListeners, setActiveLinkOnLoad } from "./dom.js";
+import { resetGameState } from "./gameState.js";
 import { showWelcomeMessage } from "./modals.js";
 import { soundEffects } from "./soundEffects.js";
+import { addEventListeners, setActiveLinkOnLoad } from "./dom.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+export function initializeGame() {
+
+  resetGameState();
   showWelcomeMessage();
 
   const elements = {
@@ -21,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
   addEventListeners(elements);
   setActiveLinkOnLoad(elements.navLinks);
 
-  // Volume control functionality
   const volumeSlider = document.getElementById("volume-slider");
   if (volumeSlider) {
     volumeSlider.addEventListener("input", function (event) {
@@ -37,4 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-});
+}
+
+// Call initializeGame when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initializeGame);

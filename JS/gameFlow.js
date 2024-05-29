@@ -28,6 +28,8 @@ import { submitScore } from "./leaderBoard.js";
 import { displayfinalRoundCompletionModal } from "./modals.js";
 
 export function startGame(nickname, email) {
+  resetGameState(); // Reset the game state before starting a new game
+  gameState.gameStarted = true;
   gameState.startTime = Date.now();
   gameState.gameLevel = 1;
   gameState.totalTime = 0;

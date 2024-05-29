@@ -1,9 +1,9 @@
 // dom.js
-import { gameState } from "./gameState.js";
-import { levelOne, levelTwo } from "./arrays.js";
 import { displayScoreBoardModal } from "./leaderBoard.js";
 import { pauseTimer, resumeTimer } from "./timer.js";
 import { flipCard } from "./gameFlow.js";
+import { gameState } from "./gameState.js";
+import { showSignInModal } from "./modals.js";
 
 export function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
@@ -13,7 +13,7 @@ export function createCards(imagesArray) {
       (imageSrc, index) => `
    <div class="card created-card">
      <div class="card__inner" data-index="${index}">
-       <div class="card__face card__face--front"><img src="./images/Menu/Back.png" alt="card-back-design"></div>
+       <div class="card__face card__face--front"><img src="./images/Menu/card-front.png" alt="card-back-design"></div>
        <div class="card__face card__face--back">
              <img src="${imageSrc}" alt="Card image ${index}" class="pp">
            </div>
@@ -65,47 +65,70 @@ export function addEventListeners(elements) {
     elements.hamburgerMenu.addEventListener("click", toggleMobileMenu);
   }
 
-  if (elements.mobileRulesLink) {
-    elements.mobileRulesLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      showModal("FullInstructionsModal");
-      elements.mobileMenu.style.display = "none";
-      pauseTimer();
-    });
-  }
-
-  if (elements.mobileLeaderboardLink) {
-    elements.mobileLeaderboardLink.addEventListener("click", function (event) {
-      event.preventDefault();
-      displayScoreBoardModal();
-      elements.mobileMenu.style.display = "none";
-      pauseTimer();
-    });
-  }
-
   if (elements.leaderboardLink) {
     elements.leaderboardLink.addEventListener("click", function (event) {
       event.preventDefault();
+      hideAllModals();
       displayScoreBoardModal();
       setActiveLink(event);
-      pauseTimer();
+      if (gameState.gameStarted) {
+        pauseTimer();
+      }
     });
   }
 
   if (elements.rulesLink) {
     elements.rulesLink.addEventListener("click", function (event) {
       event.preventDefault();
+      hideAllModals();
       showModal("FullInstructionsModal");
       setActiveLink(event);
-      pauseTimer();
+      if (gameState.gameStarted) {
+        pauseTimer();
+      }
     });
+
+    if (elements.mobileRulesLink) {
+      elements.mobileRulesLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        hideAllModals();
+        showModal("FullInstructionsModal");
+        elements.mobileMenu.style.display = "none";
+        if (gameState.gameStarted) {
+          pauseTimer();
+        }
+      });
+    }
+
+    if (elements.mobileLeaderboardLink) {
+      elements.mobileLeaderboardLink.addEventListener(
+        "click",
+        function (event) {
+          event.preventDefault();
+          hideAllModals();
+          displayScoreBoardModal();
+          elements.mobileMenu.style.display = "none";
+          if (gameState.gameStarted) {
+            pauseTimer();
+          }
+        }
+      );
+    }
+
+    // add a function here to startGame  when the start button is clicked. The button is in elements.closeInstructionsModal
   }
 
   if (elements.closeInstructionsModal) {
     elements.closeInstructionsModal.addEventListener("click", function () {
       closeModal("FullInstructionsModal");
       highlightJuegoLink(elements.navLinks);
-      resumeTimer();
+      if (gameState.gameStarted) {
+        resumeTimer();
+      } else {
+        showSignInModal();
+        hideModal("welcomeModal");
+        hideModal("leaderboardModal");
+      }
     });
   }
 
@@ -115,7 +138,11 @@ export function addEventListeners(elements) {
       closeButton.addEventListener("click", function () {
         elements.scoreboardModal.style.display = "none";
         highlightJuegoLink(elements.navLinks);
-        resumeTimer();
+        if (gameState.gameStarted) {
+          resumeTimer();
+        } else {
+          showModal("welcomeModal");
+        }
       });
     }
 
@@ -125,7 +152,14 @@ export function addEventListeners(elements) {
       restartGameButton.addEventListener("click", function () {
         elements.scoreboardModal.style.display = "none";
         highlightJuegoLink(elements.navLinks);
-        resumeTimer();
+        if (gameState.gameStarted) {
+          resumeTimer();
+        } else {
+          showSignInModal();
+          hideModal("welcomeModal");
+          hideModal("leaderboardModal");
+          hideModal("fullInstructionsModal");
+        }
       });
     }
   }
@@ -133,6 +167,14 @@ export function addEventListeners(elements) {
   elements.navLinks.forEach((link) => {
     link.addEventListener("click", setActiveLink);
   });
+}
+
+// Helper function to hide all modals
+function hideAllModals() {
+  hideModal("welcomeModal");
+  hideModal("FullInstructionsModal");
+  hideModal("ScoreBoardModal");
+  hideModal("signinModal"); // Add other modals as necessary
 }
 
 export function setActiveLink(event) {
@@ -175,6 +217,13 @@ export function showModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) {
     modal.style.display = "block";
+  }
+}
+
+export function hideModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "none";
   }
 }
 
