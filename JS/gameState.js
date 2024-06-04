@@ -19,6 +19,7 @@ export const gameState = {
   currentTime: null,
   timerPaused: false,
   gameStarted: false,
+  currentCardId: null,
   // soundEffects: {
   //   click: new Audio("./sounds/flip.wav"),
   //   error: new Audio("./sounds/fail.wav"),

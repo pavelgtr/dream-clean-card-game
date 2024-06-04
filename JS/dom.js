@@ -5,6 +5,13 @@ import { flipCard } from "./gameFlow.js";
 import { gameState } from "./gameState.js";
 import { showSignInModal } from "./modals.js";
 
+export function toggleRoundTwoVisibility() {
+  const roundTwoElements = document.querySelectorAll(".round-two-show");
+  roundTwoElements.forEach((el) => {
+    el.style.display = gameState.gameLevel === 2 ? "block" : "none";
+  });
+}
+
 export function createCards(imagesArray) {
   const container = document.querySelector(".cards-container");
   shuffleArray(imagesArray);
@@ -30,6 +37,14 @@ export function createCards(imagesArray) {
   cardElements.forEach((card) => {
     card.addEventListener("click", handleCardClick);
   });
+}
+
+export function generateCardId(imgSrc) {
+  const baseName = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
+  const id = baseName
+    .replace(/-1\.png$|\.png$/, "") // Remove "-1.png" or ".png"
+    .replace(/%20/g, " "); // Replace "%20" with spaces
+  return id;
 }
 
 function handleCardClick(event) {

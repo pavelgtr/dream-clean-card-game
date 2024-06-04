@@ -1455,8 +1455,53 @@ body {
     vertical-align: middle;
     font-family: "Gotham";
     /* justify-content: center;
-    align-items: center; */
+   align-items: center; */
   }
+}
+
+/* .temp-hint-descriptors-hide {
+ display: none;
+} */
+
+#hide {
+  display: none;
+}
+
+#tips {
+  margin: -10px auto;
+  justify-content: center;
+}
+
+.tip-container {
+  background-image: url(../images/Menu/tip-description.png);
+  background-size: cover;
+  background-position: center;
+  width: 390px;
+  height: 74px;
+  display: flex;
+  margin: -5px auto;
+}
+
+.tip-text {
+  width: 280px;
+  height: 50px;
+  overflow: hidden;
+  font-size: 11.5px;
+  font-family: "gotham";
+  margin-top: 20px;
+  margin-left: 80px;
+  padding-right: 5px;
+  line-height: 16px;
+  color: var(--doncella-grey);
+}
+
+#tip-title {
+  font-family: "Gotham-Bold";
+  color: #00adbb;
+}
+
+.round-two-show {
+  display: none;
 }
 
 /* <------------------------------------------ FOOTER ------------------------------------------> */
