@@ -248,7 +248,7 @@ body {
 }
 
 #welcomeModal .welcome-svg-container p {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 18px;
   color: #898989;
   letter-spacing: 0.26px;
@@ -333,7 +333,7 @@ body {
 }
 
 #reglas-word {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -365,7 +365,7 @@ body {
 }
 
 .instructions-content p {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 16px;
   color: #898989;
   text-align: center;
@@ -384,7 +384,7 @@ body {
 
 #FullInstructionsModal h2 {
   width: 450px;
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 24px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -418,7 +418,7 @@ h2 {
 
 #FullInstructionsModal h3 {
   width: 450px;
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 18px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -435,7 +435,7 @@ h2 {
 }
 
 #inicia-title {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -474,7 +474,7 @@ h2 {
 
 #tus-puntos,
 #tus-puntos-finales {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-weight: lighter;
   color: #00adbb;
   text-align: center;
@@ -493,7 +493,7 @@ h2 {
 #nextRoundButton {
   color: white;
   padding: 0;
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   margin: 20px auto;
 
   @media screen and (max-width: 950px) {
@@ -505,7 +505,7 @@ h2 {
 #viewLeaderboardBtn {
   color: white;
   padding: 0;
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   margin: 10px auto 15px;
 
   @media screen and (max-width: 950px) {
@@ -527,11 +527,11 @@ h2 {
 
 #roundOneScore,
 #round3CompletionPoints {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   color: #8d8b8b;
 }
 .modal-svg-container p {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 18px;
   color: #898989;
   letter-spacing: 0.26px;
@@ -657,7 +657,7 @@ h2 {
 /* ------------------------------------------------------- LeaderBoard Modal ------------------------------------------------------- */
 
 #leaderboard-title {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook", sans-serif, "Arial";
   font-size: 24px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -676,7 +676,7 @@ h2 {
 }
 
 #ScoreBoardModal p {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 16px;
   color: #898989;
   letter-spacing: 0.26px;
@@ -701,7 +701,7 @@ h2 {
   border-top: 3px solid #e5e4e4;
   width: 380px;
   padding: 5px;
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-weight: 200;
   @media screen and (max-width: 950px) {
     width: 233px;
@@ -879,7 +879,7 @@ h2 {
 }
 
 h3 {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -889,7 +889,7 @@ h3 {
 }
 
 .como-jugar {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -904,7 +904,7 @@ h3 {
 
 #conoce,
 #como-usar {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   color: #00adbb;
   text-align: center;
   line-height: 22px;
@@ -920,7 +920,7 @@ h3 {
   }
 }
 .modal h4 {
-  font-family: "Gotham-Book";
+  font-family: "GothamBook";
   font-size: 18px;
   color: #00adbb;
   text-align: center;
@@ -1284,7 +1284,7 @@ body {
   @media screen and (max-width: 950px) {
     width: 311px;
     height: 406px;
-    margin: 50px auto;
+    margin: 10px auto !important;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center; /* Center horizontally */
     align-content: center; /* Center vertically */
@@ -1391,10 +1391,12 @@ body {
   height: 60px;
 
   @media screen and (max-width: 950px) {
-    width: 307px;
-    height: 48px;
-    margin: 20px auto;
+    width: 365px;
+    height: 120px;
+    margin-top: 0;
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap-reverse;
   }
 }
 .status-item {
@@ -1418,6 +1420,10 @@ body {
 }
 #timer {
   background-color: #5fc6cc;
+
+  @media screen and (max-width: 950px) {
+    order: 1;
+  }
 }
 
 #score {
@@ -1429,6 +1435,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: 950px) {
+    order: 2;
+  }
 }
 .status-item img {
   width: 66.89px;
@@ -1470,6 +1480,21 @@ body {
 #tips {
   margin: -10px auto;
   justify-content: center;
+
+  @media screen and (max-width: 950px) {
+    margin: 40px auto;
+  }
+}
+
+#tipImage {
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 950px) {
+    width: 70%;
+    height: 70%;
+    margin-left: 12px;
+  }
 }
 
 .tip-container {
@@ -1480,6 +1505,12 @@ body {
   height: 74px;
   display: flex;
   margin: -5px auto;
+
+  @media screen and (max-width: 950px) {
+    margin-left: -10px;
+
+    order: 3;
+  }
 }
 
 .tip-text {
