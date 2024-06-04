@@ -22,8 +22,8 @@ import { levelTwo } from "./arrays.js";
 
 export function initializeGame() {
   resetGameState();
-  // showWelcomeMessage();
-  createCards(levelTwo);
+  showWelcomeMessage();
+  // createCards(levelTwo);
   // showSignInModal();
   // displayRound2InstructionsModal();
   // displayRoundScoreModal();
