@@ -193,7 +193,7 @@ body {
     background-size: 100% 100%;
     width: 335px;
     height: 600px;
-    margin: 120px auto;
+    margin: 80px auto 0;
   }
 }
 
@@ -227,14 +227,14 @@ body {
   background-size: 100% 100%;
   padding-top: 60px;
   box-sizing: content-box;
-  margin: -40px auto;
+  margin: -40px auto 0;
 
   @media screen and (max-width: 950px) {
     background-image: url("../images/mobile/Modal-background.png");
     background-size: 100% 100%;
     width: 360px;
     height: 550px;
-    margin: 0 auto;
+    margin: -35px auto 0;
   }
 }
 
@@ -248,7 +248,7 @@ body {
 }
 
 #welcomeModal .welcome-svg-container p {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 18px;
   color: #898989;
   letter-spacing: 0.26px;
@@ -333,7 +333,7 @@ body {
 }
 
 #reglas-word {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -365,7 +365,7 @@ body {
 }
 
 .instructions-content p {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 16px;
   color: #898989;
   text-align: center;
@@ -384,7 +384,7 @@ body {
 
 #FullInstructionsModal h2 {
   width: 450px;
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 24px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -418,7 +418,7 @@ h2 {
 
 #FullInstructionsModal h3 {
   width: 450px;
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 18px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -435,7 +435,7 @@ h2 {
 }
 
 #inicia-title {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -474,7 +474,7 @@ h2 {
 
 #tus-puntos,
 #tus-puntos-finales {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-weight: lighter;
   color: #00adbb;
   text-align: center;
@@ -493,7 +493,7 @@ h2 {
 #nextRoundButton {
   color: white;
   padding: 0;
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   margin: 20px auto;
 
   @media screen and (max-width: 950px) {
@@ -505,7 +505,7 @@ h2 {
 #viewLeaderboardBtn {
   color: white;
   padding: 0;
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   margin: 10px auto 15px;
 
   @media screen and (max-width: 950px) {
@@ -527,11 +527,11 @@ h2 {
 
 #roundOneScore,
 #round3CompletionPoints {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   color: #8d8b8b;
 }
 .modal-svg-container p {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 18px;
   color: #898989;
   letter-spacing: 0.26px;
@@ -657,7 +657,7 @@ h2 {
 /* ------------------------------------------------------- LeaderBoard Modal ------------------------------------------------------- */
 
 #leaderboard-title {
-  font-family: "GothamBook", sans-serif, "Arial";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 24px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -676,7 +676,7 @@ h2 {
 }
 
 #ScoreBoardModal p {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 16px;
   color: #898989;
   letter-spacing: 0.26px;
@@ -701,7 +701,7 @@ h2 {
   border-top: 3px solid #e5e4e4;
   width: 380px;
   padding: 5px;
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-weight: 200;
   @media screen and (max-width: 950px) {
     width: 233px;
@@ -879,7 +879,7 @@ h2 {
 }
 
 h3 {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -889,7 +889,7 @@ h3 {
 }
 
 .como-jugar {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 26px;
   color: #00adbb;
   letter-spacing: 4px;
@@ -904,7 +904,7 @@ h3 {
 
 #conoce,
 #como-usar {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   color: #00adbb;
   text-align: center;
   line-height: 22px;
@@ -920,7 +920,7 @@ h3 {
   }
 }
 .modal h4 {
-  font-family: "GothamBook";
+  font-family: "GothamBook", sans-serif, "Arial", "Helvetica";
   font-size: 18px;
   color: #00adbb;
   text-align: center;
@@ -1410,7 +1410,7 @@ body {
   padding-right: 20px;
   color: white;
   font-size: 32px;
-  font-family: "Montserrat-Regular", "Open Sans", sans-serif;
+  font-family: "Montserrat-Regular", "Open Sans", "sans-serif";
 
   @media screen and (max-width: 950px) {
     width: 113px;
@@ -1421,9 +1421,9 @@ body {
 #timer {
   background-color: #5fc6cc;
 
-  @media screen and (max-width: 950px) {
+  /* @media screen and (max-width: 950px) {
     order: 1;
-  }
+  } */
 }
 
 #score {
@@ -1452,7 +1452,7 @@ body {
 
 #timer span,
 #score span {
-  font-family: "Gotham-Bold";
+  font-family: "Gotham-Bold", sans-serif, "Arial";
   font-size: 26px;
   color: #ffffff;
   display: inline;
@@ -1469,9 +1469,9 @@ body {
   }
 }
 
-/* .temp-hint-descriptors-hide {
- display: none;
-} */
+.temp-hint-descriptors-hide {
+  display: none;
+}
 
 #hide {
   display: none;
@@ -1509,7 +1509,7 @@ body {
   @media screen and (max-width: 950px) {
     margin-left: -10px;
 
-    order: 3;
+    /* order: 3; */
   }
 }
 

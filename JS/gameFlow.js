@@ -157,6 +157,28 @@ const tipData = {
 function showTipContainer() {
   const tipContainer = document.querySelector(".tip-container");
   const tipsId = document.querySelector("#tips");
+  const timer = document.querySelector("#timer");
+
+  // Check if a card has been flipped
+  if (!gameState.flippedCard1) {
+    document.querySelector("#tip-title").textContent = "Consejo";
+    document.querySelector(".tip-text p").innerHTML = `
+        <span id="tip-title">Consejo</span> Voltea una carta primero y recibirás un consejo.
+      `;
+    tipContainer.removeAttribute("id");
+    tipsId.style.display = "none";
+
+    // Update the timer order
+    if (window.innerWidth <= 950) {
+      timer.style.order = "1";
+    }
+
+    // Automatically hide the tip container after 1.5 seconds
+    setTimeout(() => {
+      hideTipContainer();
+    }, 1000); // Adjust the timing as needed
+    return; // Exit the function
+  }
 
   const cardId = gameState.currentCardId; // Use the stored card ID
 
@@ -169,6 +191,12 @@ function showTipContainer() {
 
   tipContainer.removeAttribute("id");
   tipsId.style.display = "none";
+
+  // Update the timer order
+  if (window.innerWidth <= 950) {
+    timer.style.order = "1";
+  }
+
   console.log("showing tip container for", cardId);
 }
 
@@ -176,8 +204,15 @@ function hideTipContainer() {
   setTimeout(() => {
     const tipContainer = document.querySelector(".tip-container");
     const tipsId = document.querySelector("#tips");
+    const timer = document.querySelector("#timer");
+
     tipContainer.setAttribute("id", "hide");
     tipsId.style.display = "block";
+
+    // Remove the timer order
+    if (window.innerWidth <= 950) {
+      timer.style.order = ""; // Remove the inline style
+    }
   }, 1000);
 }
 

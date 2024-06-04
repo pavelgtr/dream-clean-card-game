@@ -36,6 +36,7 @@ export function createCards(imagesArray) {
   const cardElements = container.querySelectorAll(".card__inner");
   cardElements.forEach((card) => {
     card.addEventListener("click", handleCardClick);
+    card.addEventListener("touchend", handleCardClick); // Add touchend event for mobile responsiveness
   });
 }
 
@@ -48,6 +49,8 @@ export function generateCardId(imgSrc) {
 }
 
 function handleCardClick(event) {
+  event.preventDefault(); // Prevent the default action to ensure smooth handling
+
   const index = event.currentTarget.dataset.index;
   flipCard(event, index);
 }
