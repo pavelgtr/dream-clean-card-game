@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     error_log("Nickname: $nickname, Email: $email, Score: $score, Game Level: $game_level, Total Time: $total_time");
 
     // Check if the player's score already exists in the database
-    $query = "SELECT score FROM card_game_data.game_data WHERE nickname = ?";
+    $query = "SELECT score FROM game_data WHERE nickname = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $nickname);
     $stmt->execute();
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Update the score only if the submitted score is higher
         if ($score > $existingScore) {
-            $updateQuery = "UPDATE card_game_data.game_data SET score = ?, game_level = ?, total_time = ? WHERE nickname = ?";
+            $updateQuery = "UPDATE game_data SET score = ?, game_level = ?, total_time = ? WHERE nickname = ?";
             $updateStmt = $conn->prepare($updateQuery);
             $updateStmt->bind_param("iiss", $score, $game_level, $total_time, $nickname);
             
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Insert a new record if the player's score doesn't exist
-        $insertQuery = "INSERT INTO card_game_data.game_data (nickname, email, score, game_level, total_time) VALUES (?, ?, ?, ?, ?)";
+        $insertQuery = "INSERT INTO game_data (nickname, email, score, game_level, total_time) VALUES (?, ?, ?, ?, ?)";
         $insertStmt = $conn->prepare($insertQuery);
         $insertStmt->bind_param("ssiii", $nickname, $email, $score, $game_level, $total_time);
         
