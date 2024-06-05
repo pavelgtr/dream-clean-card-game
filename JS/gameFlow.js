@@ -8,14 +8,15 @@ import {
 } from "./soundEffects.js";
 import {
   createCards,
+  generateCardId,
   shuffleArray,
   updateTimerDisplay,
   updateScoreDisplay,
   triggerConfetti,
+  toggleRoundTwoVisibility,
 } from "./dom.js";
 import { levelOne, levelTwo } from "./arrays.js";
 import { startTimer, stopTimer, pauseTimer, resumeTimer } from "./timer.js";
-
 import {
   incrementScore,
   incrementError,
@@ -67,6 +68,7 @@ export function resetGame() {
     }, 500);
   } else {
     gameState.gameLevel++;
+    toggleRoundTwoVisibility();
     console.log(
       "Resetting game... Current Level after increment:",
       gameState.gameLevel
@@ -90,7 +92,9 @@ export function resetGame() {
 
 export function flipCard(event) {
   if (gameState.gameBoardLocked) return;
+
   const card = event.currentTarget;
+
   if (card === gameState.flippedCard1) return;
 
   if (card.classList.contains("matched")) return;
@@ -99,15 +103,124 @@ export function flipCard(event) {
   clickSound.play();
   card.classList.add("is-flipped");
 
+  // Get the card ID from the image source
+  const imgElement = card.querySelector(".card__face--back img");
+  const imgSrc = imgElement.src;
+  const cardId = generateCardId(imgSrc);
+
+  // Log the ID
+  console.log(`Card ID: ${cardId}`);
+
+  gameState.currentCardId = cardId; // Store the current card ID
+
   if (!gameState.hasFlippedCard) {
     gameState.hasFlippedCard = true;
     gameState.flippedCard1 = card;
+    gameState.flippedCard1Id = cardId; // Store the ID
   } else {
     gameState.flippedCard2 = card;
     gameState.gameBoardLocked = true;
+    gameState.flippedCard2Id = cardId; // Store the ID
     checkForMatch();
   }
 }
+
+const tipData = {
+  "Dishwashing Liquid": {
+    title: "Dishwasher soap",
+    description: "Jabón para el lavado manual de vajillas, vasos y cubertería.",
+  },
+  "All purpose cleaner": {
+    title: "All purpose Cleaner",
+    description: "Limpiador para pisos, paredes y superficies en general.",
+  },
+  "Neutral Floor Cleaner": {
+    title: "Neutral Floor Cleaner",
+    description: "Limpiador de pisos duros como mármol, cerámica y madera.",
+  },
+  Detergent: {
+    title: "Laundry Detergent",
+    description: "Detergente concentrado para el lavado de todo tipo de ropas.",
+  },
+  "Bathroom Cleaner": {
+    title: "Bathroom Cleaner",
+    description:
+      "Remueve residuos, desinfecta y limpia las superficies del baño.",
+  },
+  "Glass Cleaner": {
+    title: "Glass Cleaner",
+    description:
+      "Limpiador para vidrios, cristales, espejos, aluminio y acero inoxidable.",
+  },
+};
+
+function showTipContainer() {
+  const tipContainer = document.querySelector(".tip-container");
+  const tipsId = document.querySelector("#tips");
+  const timer = document.querySelector("#timer");
+
+  // Check if a card has been flipped
+  if (!gameState.flippedCard1) {
+    document.querySelector("#tip-title").textContent = "Consejo";
+    document.querySelector(".tip-text p").innerHTML = `
+        <span id="tip-title">Consejo</span> Voltea una carta primero y recibirás un consejo.
+      `;
+    tipContainer.removeAttribute("id");
+    tipsId.style.display = "none";
+
+    // Update the timer order
+    if (window.innerWidth <= 950) {
+      timer.style.order = "1";
+    }
+
+    // Automatically hide the tip container after 1.5 seconds
+    setTimeout(() => {
+      hideTipContainer();
+    }, 1000); // Adjust the timing as needed
+    return; // Exit the function
+  }
+
+  const cardId = gameState.currentCardId; // Use the stored card ID
+
+  if (tipData[cardId]) {
+    document.querySelector("#tip-title").textContent = tipData[cardId].title;
+    document.querySelector(
+      ".tip-text p"
+    ).innerHTML = `<span id="tip-title">${tipData[cardId].title}</span> ${tipData[cardId].description}`;
+  }
+
+  tipContainer.removeAttribute("id");
+  tipsId.style.display = "none";
+
+  // Update the timer order
+  if (window.innerWidth <= 950) {
+    timer.style.order = "1";
+  }
+
+  console.log("showing tip container for", cardId);
+}
+
+function hideTipContainer() {
+  setTimeout(() => {
+    const tipContainer = document.querySelector(".tip-container");
+    const tipsId = document.querySelector("#tips");
+    const timer = document.querySelector("#timer");
+
+    tipContainer.setAttribute("id", "hide");
+    tipsId.style.display = "block";
+
+    // Remove the timer order
+    if (window.innerWidth <= 950) {
+      timer.style.order = ""; // Remove the inline style
+    }
+  }, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tipImage = document.querySelector("#tipImage");
+
+  tipImage.addEventListener("click", showTipContainer);
+});
 
 export function checkForMatch() {
   let baseName1 = gameState.flippedCard1
@@ -144,6 +257,8 @@ export function checkForMatch() {
     checkEndOfRound();
     gameState.consecutiveErrors = 0;
   } else {
+    // showTipContainer(); // Show the tip container if cards do not match
+
     unflipCards();
   }
 }
@@ -155,6 +270,7 @@ export function unflipCards() {
     const loseSound = getNextLoseSound();
     loseSound.play();
     incrementError();
+    hideTipContainer(); // Hide the tip container if cards do not match
     resetTurn();
   }, 1500);
 }
