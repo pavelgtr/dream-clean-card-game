@@ -47,22 +47,6 @@ export function displayScoreBoardModal() {
       const leaderboardData = JSON.parse(response);
       console.log("Leaderboard Data:", leaderboardData); // Debugging output
 
-      // Find the current player's data (case-insensitive)
-      const currentNickname = gameState.playerNickname.trim().toLowerCase();
-      let currentPlayerData = leaderboardData.find(
-        (player) => player.nickname.trim().toLowerCase() === currentNickname
-      );
-
-      // If the current player is not in the leaderboard data, add their data
-      if (!currentPlayerData) {
-        currentPlayerData = {
-          rank: "N/A",
-          nickname: gameState.playerNickname,
-          score: gameState.scoreCount,
-        };
-        leaderboardData.push(currentPlayerData);
-      }
-
       // Sort leaderboard data by score
       leaderboardData.sort((a, b) => b.score - a.score);
 
@@ -93,13 +77,25 @@ export function displayScoreBoardModal() {
         scoreCell.innerHTML = player.score;
       });
 
+      // Calculate the current player's rank
+      const currentScore = gameState.scoreCount;
+      let currentRank = 1;
+
+      for (const player of leaderboardData) {
+        if (player.score > currentScore) {
+          currentRank++;
+        } else {
+          break;
+        }
+      }
+
       // Populate current player result
       const row = currentPlayerResultTable.insertRow(-1);
       row.classList.add("leaderboard-row");
 
       const rankCell = row.insertCell(0);
       rankCell.classList.add("first-cell");
-      rankCell.innerHTML = currentPlayerData.rank;
+      rankCell.innerHTML = currentRank;
 
       const nicknameCell = row.insertCell(1);
       nicknameCell.classList.add("second-cell");
@@ -110,7 +106,7 @@ export function displayScoreBoardModal() {
 
       const scoreCell = row.insertCell(2);
       scoreCell.classList.add("third-cell");
-      scoreCell.innerHTML = currentPlayerData.score;
+      scoreCell.innerHTML = currentScore;
 
       // Display the modal
       scoreboardModal.style.display = "block";
